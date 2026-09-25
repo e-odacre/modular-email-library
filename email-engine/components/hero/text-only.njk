@@ -1,0 +1,10 @@
+[# hero/text-only: a large, typography-led hero with no image. Display headline, optional eyebrow, description, button.
+
+   Built on hero/standard with the display type level and generous padding. Works well as an announcement or a
+   sale opener, and it can't be broken by blocked images.
+
+   Compatibility
+   - Outlook desktop: text and colors honored.
+   - Gmail apps: fine, there is no image to drop.
+   - Dark mode: on the brand surface the text and background swap. On the dark and accent variants the colors stay. #]
+[[ c('hero/standard', { eyebrow: data.eyebrow, headline: data.headline, description: data.description, cta: data.cta }, { settings: { headingLevel: 'display', align: s.align, background: s.background, textColor: s.textColor, eyebrowColor: s.eyebrowColor, buttonBackground: s.buttonBackground, buttonColor: s.buttonColor, padding: s.padding, gap: s.gap, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

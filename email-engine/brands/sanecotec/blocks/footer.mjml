@@ -1,0 +1,13 @@
+[# SanEcoTec footer: keeps the shared Klaviyo address and subscription controls.
+   Outlook: table-based footer. Gmail: ordinary text links.
+   Dark mode: automatic client recoloring is untested. No claimed client verification. #]
+[[ c('email/footer', {
+  nav: [
+    { label: 'Contact SanEcoTec', href: 'https://sanecotec.com/about/contact' },
+    { label: 'Visit our website', href: 'https://sanecotec.com/' }
+  ]
+}, { settings: {
+  background: t.colors.background,
+  linkColor: t.colors.link,
+  padding: '@spacing.lg @spacing.xl @spacing.xl @spacing.xl'
+} }) ]]

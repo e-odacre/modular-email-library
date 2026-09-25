@@ -1,0 +1,17 @@
+[# editorial/storytelling: a narrative section: eyebrow, heading, paragraphs, an optional pull quote and an optional image.
+
+   A reading-width column (layout/container), so long copy stays readable. Paragraphs are plain text, the quote is
+   a content/quote. Use for brand stories, founder notes and behind-the-scenes.
+
+   Compatibility
+   - Outlook desktop: honored, it is a padded section with text.
+   - Gmail apps: fine.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set nodes = [] %]
+[% if data.image and s.imagePosition == 'top' %][% set _ = nodes.push({ component: 'content/image', data: { image: data.image }, settings: { padding: '0 0 @spacing.md 0' } }) %][% endif %]
+[% if data.eyebrow %][% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: data.eyebrow }, settings: { align: s.align } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h1', tag: 'h2', align: s.align } }) %]
+[% for para in data.paragraphs %][% set _ = nodes.push({ component: 'content/text', data: { text: para }, settings: { level: 'bodyLarge', align: s.align } }) %][% endfor %]
+[% if data.quote %][% set _ = nodes.push({ component: 'content/quote', data: { text: data.quote, author: data.quoteAuthor }, variant: 'centered', settings: { align: 'center' } }) %][% endif %]
+[% if data.image and s.imagePosition == 'bottom' %][% set _ = nodes.push({ component: 'content/image', data: { image: data.image }, settings: { padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[[ c('layout/container', { content: nodes }, { settings: { maxWidth: s.maxWidth, background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

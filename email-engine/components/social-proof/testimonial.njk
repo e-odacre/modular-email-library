@@ -1,0 +1,14 @@
+[# social-proof/testimonial: a customer quote with their name, title and an optional avatar and star rating.
+
+   Centered with a large quote mark by default, or with an accent bar. The avatar is a circular image, so it needs a
+   square source. Only publish testimonials you have permission to use.
+
+   Compatibility
+   - Outlook desktop: text and layout honored. A circular avatar renders square (border radius is ignored).
+   - Gmail apps: fine.
+   - Dark mode: text and background swap via dm-* classes when on the brand surface or background color. #]
+[% set nodes = [] %]
+[% if data.avatar %][% set _ = nodes.push({ component: 'content/image', data: { image: { src: data.avatar.src, alt: data.avatar.alt, decorative: data.avatar.decorative, width: s.avatarSize } }, variant: 'circle', settings: { align: s.align, padding: '0 0 @spacing.md 0' } }) %][% endif %]
+[% if data.rating %][% set _ = nodes.push({ component: 'decorative/star-rating', data: { rating: data.rating }, settings: { align: s.align, size: '20px' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/quote', data: { text: data.quote, author: data.name, role: data.title }, variant: ('centered' if s.layout == 'centered' else 'default'), settings: { align: s.align } }) %]
+[[ c('layout/section', { content: nodes }, { variant: s.frame, settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

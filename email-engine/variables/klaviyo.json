@@ -1,0 +1,119 @@
+{
+  "_about": "Semantic variable names mapped to Klaviyo template tags. Components and recipes ask for a name (customer.first_name) and never hard-code a tag. To target another ESP later, add another file with the same names. Every entry says whether it was checked against Klaviyo's docs. Event variables (cart, order) depend on the ecommerce integration, so Klaviyo says to copy them exactly from the event preview in your own account: treat them as a starting point. Placeholders look like ${name}, values must not contain double quotes because tags end up inside HTML attributes.",
+
+  "customer.first_name": {
+    "tag": "{{ first_name|default:'${fallback}' }}",
+    "args": { "fallback": "there" },
+    "description": "The recipient's first name, with a fallback for people who have none.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+
+  "brand.name": {
+    "tag": "{{ organization.name }}",
+    "description": "Your organization name from Klaviyo's organization settings.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+  "brand.url": {
+    "tag": "{{ organization.url }}",
+    "description": "Your website URL from Klaviyo's organization settings.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+  "brand.address": {
+    "tag": "{{ organization.full_address }}",
+    "description": "Your postal address from Klaviyo's organization settings, required in commercial email.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+
+  "date.year": {
+    "tag": "{% current_year %}",
+    "description": "The current year, for copyright lines.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115005257788"
+  },
+  "discount.expires": {
+    "tag": "{% today '%Y-%m-%d' as today %}{{ today|days_later:${days}|format_date_string|date:'${format}' }}",
+    "args": { "days": "7", "format": "F j" },
+    "description": "A date a number of days after the message is sent, for offer expiry.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115005257788"
+  },
+
+  "discount.code": {
+    "tag": "{% coupon_code '${coupon}' %}",
+    "args": { "coupon": null },
+    "description": "A unique code from the Klaviyo coupon with this name. The coupon must exist in your account.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115005084727"
+  },
+
+  "links.web_view": {
+    "tag": "{% web_view_link %}",
+    "description": "URL of the browser version of the email. Goes inside an href.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+  "links.unsubscribe": {
+    "tag": "{% unsubscribe_link %}",
+    "description": "Unsubscribe URL. Goes inside an href. The bare {% unsubscribe %} tag breaks inside an href.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+  "links.preferences": {
+    "tag": "{% manage_preferences_link %}",
+    "description": "Manage-preferences URL. Goes inside an href.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+  "email.preview_text": {
+    "tag": "{% render_variable preview_text %}",
+    "description": "The preview text set on the email screen in Klaviyo.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802648731"
+  },
+
+  "cart.items": {
+    "tag": "event.extra.line_items",
+    "description": "The list to repeat over in an abandoned-cart email (Started Checkout). A path, not a tag: it goes inside {% for item in ... %}.",
+    "verified": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/4408802445339"
+  },
+  "cart.item.title": {
+    "tag": "{{ item.product.title }}",
+    "description": "Product name inside the cart loop. Shopify shape, other platforms differ (some use item.title).",
+    "verified": true,
+    "platformDependent": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115002779071"
+  },
+  "cart.item.image": {
+    "tag": "{{ item.product.images.0.src }}",
+    "description": "Product image URL inside the cart loop. Shopify shape, other platforms differ (some use item.image_url).",
+    "verified": true,
+    "platformDependent": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115002779071"
+  },
+  "cart.item.price": {
+    "tag": "{{ item.line_price }}",
+    "description": "Line price inside the cart loop. Shopify shape, other platforms differ (some use item.variant_price).",
+    "verified": true,
+    "platformDependent": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115002779071"
+  },
+  "cart.item.quantity": {
+    "tag": "{{ item.quantity }}",
+    "description": "Quantity inside the cart loop.",
+    "verified": true,
+    "platformDependent": true,
+    "source": "https://help.klaviyo.com/hc/en-us/articles/115002779071"
+  },
+  "cart.checkout_url": {
+    "tag": "{{ event.extra.checkout_url }}",
+    "description": "Link back to the customer's checkout. Not confirmed in Klaviyo's help pages, copy it from your Started Checkout event preview.",
+    "verified": false,
+    "platformDependent": true,
+    "source": null
+  }
+}

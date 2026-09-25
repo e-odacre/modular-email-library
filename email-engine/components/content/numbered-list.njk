@@ -1,0 +1,30 @@
+[# content/numbered-list: a numbered list. Styles: decimal (1. 2. 3.), circle (numbers in filled circles), zero (01 02 03).
+
+   Decimal uses a real ol/li. Circle and zero use a two-column table so the number can be styled.
+
+   Compatibility
+   - Outlook desktop: ol/li are honored. Circles render as squares (border radius is ignored), the number is still
+     clear.
+   - Gmail apps: fine.
+   - Dark mode: text swaps via dm-text where prefers-color-scheme is honored. Number badges keep the accent color. #]
+[% set li = typoCss(s.level) + 'margin-bottom:' + s.itemGap + ';' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo(s.level) ]] padding="[[ s.padding ]]">
+[% if s.numbering == 'decimal' %]
+  <ol style="margin:0;padding:0 0 0 24px;">
+    [% for item in data.items %]<li class="dm-text" style="[[ li ]]">[[ item ]]</li>[% endfor %]
+  </ol>
+[% else %]
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+    [% for item in data.items %]
+    <tr>
+      [% if s.numbering == 'circle' %]
+      <td valign="top" width="36" style="width:36px;padding:0 0 [[ s.itemGap ]] 0;"><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" valign="middle" width="28" height="28" bgcolor="[[ s.markerColor ]]" style="width:28px;height:28px;border-radius:14px;background:[[ s.markerColor ]];color:[[ s.markerText ]];font-family:[[ t.fonts.heading ]];font-size:14px;font-weight:bold;line-height:28px;">[[ loop.index ]]</td></tr></table></td>
+      [% else %]
+      <td valign="top" width="40" style="width:40px;padding:0 0 [[ s.itemGap ]] 0;font-family:[[ t.fonts.heading ]];font-size:[[ t.type[s.level].size ]];font-weight:bold;line-height:[[ t.type[s.level].lineHeight ]];color:[[ s.markerColor ]];">[[ '0' + loop.index if loop.index < 10 else loop.index ]]</td>
+      [% endif %]
+      <td valign="top" class="dm-text" style="padding:0 0 [[ s.itemGap ]] 0;[[ typoCss(s.level) ]]">[[ item ]]</td>
+    </tr>
+    [% endfor %]
+  </table>
+[% endif %]
+</mj-text>

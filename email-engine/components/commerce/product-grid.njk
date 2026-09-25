@@ -1,0 +1,22 @@
+[# commerce/product-grid: products in a responsive grid of 1 to 4 columns, with an optional heading and a "view all" button.
+
+   Columns are configurable (columns: 1 to 4), and mobileColumns: 2 keeps two products per row on phones instead of
+   stacking. Card styling is chosen with cardVariant (default, minimal, luxury, editorial, playful), so the same
+   product data can be shown five ways. Built on layout/grid and commerce/product-card.
+
+   Compatibility
+   - Outlook desktop: each row is a table with exact widths. mobileColumns is ignored (no media queries).
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set head = [] %]
+[% if data.heading %][% set _ = head.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', align: s.headingAlign, padding: '0 0 ' + (s.gap if not data.intro else '4px') + ' 0' } }) %][% endif %]
+[% if data.intro %][% set _ = head.push({ component: 'content/text', data: { text: data.intro }, settings: { align: s.headingAlign, padding: '0' } }) %][% endif %]
+[% set items = [] %]
+[% for p in data.products %][% set _ = items.push([{ component: 'commerce/product-card', variant: s.cardVariant, data: { product: p }, settings: { align: s.align } }]) %][% endfor %]
+[% if head.length %]
+[[ c('layout/section', { content: head }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[[ c('layout/grid', { items: items }, { settings: { columns: s.columns, mobileColumns: s.mobileColumns, background: s.background, paddingY: (s.gap if head.length else s.paddingY), paddingX: s.paddingX, columnPadding: s.columnPadding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% if data.cta %]
+[[ c('layout/section', { content: [{ component: 'content/button', data: data.cta, variant: 'outline', settings: { padding: '0' } }] }, { settings: { background: s.background, padding: '0 ' + s.paddingX + ' ' + s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

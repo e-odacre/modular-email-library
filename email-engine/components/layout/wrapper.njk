@@ -1,0 +1,13 @@
+[# layout/wrapper: groups several sections inside one background, border or frame.
+
+   Use it for a framed band or a card that contains multiple sections. Sections inside keep their own
+   backgrounds, so the wrapper color shows in its padding.
+
+   Compatibility
+   - Outlook desktop: background color and padding are honored, border radius is ignored.
+   - Gmail apps: fine.
+   - Shadows (the shadow setting) are box-shadow, ignored by Outlook desktop and some other clients.
+   - Dark mode: swaps only when the wrapper sits on the brand surface or background color. #]
+<mj-wrapper[[ cc(dm(s.background, 'bg'), cls, ('shadow-' + s.shadow) if s.shadow != 'none' else '') ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]"[% if s.width == 'full' %] full-width="full-width"[% endif %][% if s.border != 'none' %] border="[[ s.border ]]"[% endif %][% if s.radius != '0' %] border-radius="[[ s.radius ]]"[% endif %]>
+  [[ data.content ]]
+</mj-wrapper>

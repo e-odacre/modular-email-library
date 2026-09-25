@@ -1,0 +1,16 @@
+[# promotional/promo-banner: a compact promotional band: eyebrow, headline, a line of text and a button.
+
+   Lighter than a hero and lighter than the discount banner: use it to promote a collection, a service or a
+   secondary offer between content sections.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% if data.eyebrow %][% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: data.eyebrow }, settings: { align: s.align, color: tn.color } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %]
+[% if data.text %][% set _ = nodes.push({ component: 'content/text', data: { text: data.text }, settings: { align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.md 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

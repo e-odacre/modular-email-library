@@ -1,0 +1,20 @@
+[# layout/media-text: an image beside text. Image left or right on desktop, stacked on mobile.
+
+   Built on layout/columns, so it shares its mobile behavior. On mobile the image comes first by default
+   (mobileLayout: stack). Set mobileLayout: reverse to put the text first.
+
+   Compatibility
+   - Outlook desktop: renders side by side as a table row. The mobile order setting only affects phones.
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set mediaNode = { component: 'content/image', data: { image: data.media } } %]
+[% set mediaFirst = (s.imagePosition == 'left') %]
+[% set textFirstOnMobile = (s.mobileLayout == 'reverse') %]
+[% set columnsMobile = 'reverse' if (mediaFirst == textFirstOnMobile) else 'stack' %]
+[% set splitReversed = s.split.split('/') | reverse | join('/') %]
+[% set splitUsed = s.split if mediaFirst else splitReversed %]
+[% if mediaFirst %]
+[[ c('layout/columns', { columns: [mediaNode, data.content] }, { settings: { split: splitUsed, valign: s.valign, background: s.background, padding: s.padding, columnPadding: s.columnPadding, mobileLayout: columnsMobile, mobileAlignment: s.mobileAlignment, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% else %]
+[[ c('layout/columns', { columns: [data.content, mediaNode] }, { settings: { split: splitUsed, valign: s.valign, background: s.background, padding: s.padding, columnPadding: s.columnPadding, mobileLayout: columnsMobile, mobileAlignment: s.mobileAlignment, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

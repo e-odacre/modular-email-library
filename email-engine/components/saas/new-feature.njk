@@ -1,0 +1,15 @@
+[# saas/new-feature: a single feature spotlight in a card: an optional image, a "New" badge, a title, a description and a button.
+
+   Smaller than saas/feature-announcement: use it for a secondary feature in a product update email.
+
+   Compatibility
+   - Outlook desktop: card background, border and padding honored, rounded corners are square.
+   - Gmail apps: fine.
+   - Dark mode: card background and text swap via dm-* classes when on the brand surface. #]
+[% set nodes = [] %]
+[% if data.image %][% set _ = nodes.push({ component: 'content/image', data: { image: data.image }, settings: { padding: '0 0 @spacing.md 0', radius: '@radius.medium' } }) %][% endif %]
+[% if data.badge %][% set _ = nodes.push({ component: 'decorative/badge', data: { text: data.badge }, settings: { align: 'left' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.title }, settings: { level: 'h3', tag: 'h2', align: 'left' } }) %]
+[% if data.description %][% set _ = nodes.push({ component: 'content/text', data: { text: data.description }, settings: { align: 'left' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/link', data: { label: data.cta.label, href: data.cta.href }, variant: 'arrow', settings: { padding: '0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { variant: 'card', settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

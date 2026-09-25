@@ -1,0 +1,17 @@
+[# promotional/mystery-gift: a "spend X, get a mystery gift" block: a gift glyph, a headline, the threshold and a button.
+
+   The gift is a text glyph (an emoji character), so there is no image to host. Emoji look different across clients
+   and Outlook desktop may draw it as a plain black-and-white symbol, which is fine here as it is decoration.
+
+   Compatibility
+   - Outlook desktop: the glyph can render as a simple monochrome symbol, everything else is honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: '&#127873;' }, settings: { level: 'display', tag: 'div', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.xs 0' } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h2', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %]
+[% if data.text %][% set _ = nodes.push({ component: 'content/text', data: { text: data.text }, settings: { align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% if data.threshold %][% set _ = nodes.push({ component: 'decorative/badge', data: { text: data.threshold }, variant: 'outline', settings: { align: s.align, color: tn.color, border: '1px solid ' + tn.color if not tn.onSurface else 'none' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.md 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

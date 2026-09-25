@@ -1,0 +1,11 @@
+[# decorative/arrow: a large arrow glyph, to point at the next block or a button ("scroll down", "next step").
+
+   A text glyph, not an image, so it needs no hosting and scales with the type.
+
+   Compatibility
+   - Outlook desktop: arrow glyphs come from the system font (Segoe UI Symbol), they render but can look slightly
+     different between versions.
+   - Gmail apps: fine.
+   - Dark mode: the accent color stays. #]
+[% set glyphs = { right: '&rarr;', left: '&larr;', down: '&darr;', up: '&uarr;' } %]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" font-family="Arial, Helvetica, sans-serif" font-size="[[ s.size ]]" line-height="1" color="[[ s.color ]]" padding="[[ s.padding ]]">[[ glyphs[s.direction] ]]</mj-text>

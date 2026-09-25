@@ -1,0 +1,23 @@
+[# commerce/product-showcase: one product shown large, with supporting information: highlights, price, button and an optional gallery.
+
+   A large image beside the details (built on layout/media-text), and below it an optional row of up to three extra
+   images. Use it for a hero product, a launch or a "product of the week".
+
+   Compatibility
+   - Outlook desktop: side by side as a table row, gallery is a table row of images.
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set p = data.product %]
+[% set content = [] %]
+[% if p.badge %][% set _ = content.push({ component: 'decorative/badge', data: { text: p.badge } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: p.name }, settings: { level: 'h2', tag: 'h2' } }) %]
+[% if p.description %][% set _ = content.push({ component: 'content/text', data: { text: p.description } }) %][% endif %]
+[% if data.highlights %][% set _ = content.push({ component: 'content/list', data: { items: data.highlights }, variant: 'checklist' }) %][% endif %]
+[% if p.price %][% set _ = content.push({ component: 'commerce/price', data: { price: p.price, salePrice: p.salePrice, discount: p.discount } }) %][% endif %]
+[% if p.cta %][% set _ = content.push({ component: 'content/button', data: p.cta, settings: { align: 'left', padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[[ c('layout/media-text', { media: p.image, content: content }, { settings: { imagePosition: s.imagePosition, split: s.split, background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% if data.gallery %]
+[% set items = [] %]
+[% for g in data.gallery %][% set _ = items.push([{ component: 'content/image', data: { image: g }, settings: { padding: '0' } }]) %][% endfor %]
+[[ c('layout/grid', { items: items }, { settings: { columns: (data.gallery | length), background: s.background, paddingY: '0', paddingX: s.paddingX, mobileColumns: 1, columnPadding: '@spacing.xs' } }) ]]
+[% endif %]

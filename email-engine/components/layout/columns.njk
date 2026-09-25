@@ -1,0 +1,28 @@
+[# layout/columns: side-by-side columns that stack on mobile. 1 to 4 columns, in any split (50/50, 60/40, 25/75).
+
+   mobileLayout: stack (default, columns stack in order), reverse (the last column comes first on mobile),
+   preserve (columns stay side by side on mobile). mobileColumns: 2 puts two columns per row on mobile.
+   mobileAlignment centers or right-aligns content on mobile (best effort).
+   Reverse uses direction="rtl" on the section with the columns in reverse order, which MJML supports.
+
+   Compatibility
+   - Outlook desktop: columns render as a table row (ghost table), stacking is not needed there. mobileColumns and
+     mobileAlignment use media queries, so Outlook desktop ignores them.
+   - Gmail apps: stacking works. Gmail on some non-Google accounts (GANGA) drops media queries, then mobile shows
+     the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set widths = s.split.split('/') %]
+[% set cols = data.columns %]
+[% set reversed = (s.mobileLayout == 'reverse') %]
+[% if reversed %][% set cols = data.columns | reverse %][% set widths = widths | reverse %][% endif %]
+[% set colCls = ('m-col-2' if s.mobileColumns == 2 else '') %]
+[% set alignCls = ('m-' + s.mobileAlignment if s.mobileAlignment != 'inherit' else '') %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]"[% if reversed %] direction="rtl"[% endif %]>
+  [% if s.mobileLayout == 'preserve' %]<mj-group>[% endif %]
+  [% for col in cols %]
+  <mj-column width="[[ widths[loop.index0] ]]%" vertical-align="[[ s.valign ]]" padding="[[ s.columnPadding ]]"[[ cc(colCls, alignCls) ]]>
+    [[ col ]]
+  </mj-column>
+  [% endfor %]
+  [% if s.mobileLayout == 'preserve' %]</mj-group>[% endif %]
+</mj-section>

@@ -1,0 +1,18 @@
+[# stats/stat-grid: two to four statistics side by side, with an optional heading.
+
+   Built on layout/grid and stats/stat. On phones the stats sit two per row (mobileColumns: 2), or stack with
+   mobileColumns: 1.
+
+   Compatibility
+   - Outlook desktop: each row is a table with exact widths. mobileColumns is ignored (no media queries).
+   - Gmail apps: two per row on phones uses a media query. Gmail on non-Google accounts shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set head = [] %]
+[% if data.heading %][% set _ = head.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', align: 'center' } }) %][% endif %]
+[% if data.intro %][% set _ = head.push({ component: 'content/text', data: { text: data.intro }, settings: { align: 'center', padding: '0' } }) %][% endif %]
+[% set items = [] %]
+[% for st in data.stats %][% set _ = items.push([{ component: 'stats/stat', data: st, variant: s.statVariant }]) %][% endfor %]
+[% if head.length %]
+[[ c('layout/section', { content: head }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[[ c('layout/grid', { items: items }, { settings: { columns: s.columns, mobileColumns: s.mobileColumns, valign: 'top', background: s.background, paddingY: s.paddingY, paddingX: s.paddingX, columnPadding: '@spacing.sm', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

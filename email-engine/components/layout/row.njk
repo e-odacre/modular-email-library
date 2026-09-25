@@ -1,0 +1,18 @@
+[# layout/row: 2 to 4 columns that stay side by side on mobile (they shrink instead of stacking).
+
+   Use it for small items like icons, stats or logos. Uses mj-group, which keeps the columns in one row.
+
+   Compatibility
+   - Outlook desktop: renders as a table row, identical to desktop.
+   - Gmail apps: fine. Columns get narrow on phones, so keep the content short.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set w = (100 / (data.items | length)) | round(2) %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-group>
+    [% for item in data.items %]
+    <mj-column width="[[ w ]]%" vertical-align="[[ s.valign ]]" padding="[[ s.columnPadding ]]">
+      [[ item ]]
+    </mj-column>
+    [% endfor %]
+  </mj-group>
+</mj-section>

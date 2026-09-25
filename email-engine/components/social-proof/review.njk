@@ -1,0 +1,15 @@
+[# social-proof/review: one customer review: stars, an optional title, the review text and who wrote it.
+
+   Sits in a column, so it works alone or in a layout/grid of reviews. Only pass reviews that are real.
+
+   Compatibility
+   - Outlook desktop: star glyphs render from the system symbol font, text is honored.
+   - Gmail apps: fine.
+   - Dark mode: text swaps via dm-text and dm-muted where prefers-color-scheme is honored. #]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'decorative/star-rating', data: { rating: data.rating }, settings: { align: s.align, size: '18px' } }) %]
+[% if data.title and s.showTitle %][% set _ = nodes.push({ component: 'content/heading', data: { text: data.title }, settings: { level: 'h4', tag: 'h3', align: s.align, padding: '0 0 4px 0' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/text', data: { text: data.body }, settings: { level: 'body', align: s.align, padding: '0 0 @spacing.sm 0' } }) %]
+[% set who = data.customer + (' &middot; Verified buyer' if data.verified else '') + (' &middot; ' + data.product if data.product else '') + (' &middot; ' + data.date if data.date else '') %]
+[% set _ = nodes.push({ component: 'content/text', data: { text: who }, settings: { level: 'caption', align: s.align, padding: '0' } }) %]
+[[ cn(nodes) ]]

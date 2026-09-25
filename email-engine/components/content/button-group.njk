@@ -1,0 +1,33 @@
+[# content/button-group: two or three buttons, side by side (inline) or one under another (stacked).
+
+   Each button is primary (filled) or secondary (outlined). Inline buttons are a table of bulletproof cells,
+   built the way MJML builds its own button: padding on the link, mso-padding-alt on the cell.
+   Stacked buttons use content/button.
+
+   Compatibility
+   - Outlook desktop: buttons render as tables, corners are square (border radius ignored).
+   - Gmail apps: fine. Inline buttons wrap under each other when the column is too narrow.
+   - Dark mode: buttons keep their own colors. #]
+[% if s.layout == 'stacked' %]
+[% for b in data.buttons %]
+[[ c('button', { label: b.label, href: b.href }, { variant: ('outline' if b.style == 'secondary' else 'default'), settings: { align: s.align, padding: s.gap + ' 0', background: s.background if b.style != 'secondary' else 'transparent', darkMode: 'none' } }) ]]
+[% endfor %]
+[% else %]
+<mj-raw>
+<tr>
+  <td align="[[ s.align ]]" style="font-size:0px;padding:[[ s.padding ]];word-break:break-word;">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;">
+      <tr>
+        [% for b in data.buttons %]
+        [% set secondary = (b.style == 'secondary') %]
+        [% if not loop.first %]<td style="width:[[ s.gap ]];font-size:0;line-height:0;">&nbsp;</td>[% endif %]
+        <td align="center" bgcolor="[[ 'transparent' if secondary else s.background ]]" role="presentation" style="border:[[ ('2px solid ' + s.background) if secondary else 'none' ]];border-radius:[[ s.radius ]];background:[[ 'transparent' if secondary else s.background ]];mso-padding-alt:[[ s.innerPadding ]];">
+          <a href="[[ b.href ]]" style="display:inline-block;background:[[ 'transparent' if secondary else s.background ]];[[ typoCss('button', { color: (s.background if secondary else s.color) }) ]]padding:[[ s.innerPadding ]];border-radius:[[ s.radius ]];text-decoration:none;" target="_blank">[[ b.label ]]</a>
+        </td>
+        [% endfor %]
+      </tr>
+    </table>
+  </td>
+</tr>
+</mj-raw>
+[% endif %]

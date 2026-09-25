@@ -1,0 +1,14 @@
+[# social-proof/rating: a rating summary: filled stars, the score out of the maximum, and how many reviews it is based on.
+
+   Renders as stars, "4.9 / 5" and "Based on 2,000+ reviews". The count and source are text, so they can be Klaviyo
+   tags or fixed numbers. Pass a real rating, this component does not make claims for you.
+
+   Compatibility
+   - Outlook desktop: star glyphs render from the system symbol font, text is honored.
+   - Gmail apps: fine.
+   - Dark mode: text swaps via dm-text where prefers-color-scheme is honored. #]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'decorative/star-rating', data: { rating: data.rating }, settings: { align: s.align, size: s.starSize, padding: '0 0 4px 0' } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.rating + ' / ' + data.outOf }, settings: { level: s.scoreLevel, tag: 'div', align: s.align, padding: '0 0 4px 0' } }) %]
+[% if data.count %][% set _ = nodes.push({ component: 'content/text', data: { text: 'Based on ' + data.count + ' reviews' + (' on ' + data.source if data.source else '') }, settings: { level: 'bodySmall', align: s.align, color: '@colors.mutedText', padding: '0' } }) %][% endif %]
+[[ cn(nodes) ]]

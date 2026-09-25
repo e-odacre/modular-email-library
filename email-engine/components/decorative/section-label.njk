@@ -1,0 +1,15 @@
+[# decorative/section-label: a centered label with a line on each side ("NEW ARRIVALS", "OUR STORY").
+
+   A three-cell table: line, text, line. The lines are thin colored cells, so no images.
+
+   Compatibility
+   - Outlook desktop: table cells and colors are honored.
+   - Gmail apps: fine.
+   - Dark mode: line color swaps through dm-border where prefers-color-scheme is honored, the label swaps via dm-muted. #]
+<mj-text[[ cc(cls) ]] align="center" padding="[[ s.padding ]]">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
+    <td valign="middle" class="dm-border" style="border-top:[[ s.thickness ]] solid [[ s.color ]];font-size:0;line-height:0;">&nbsp;</td>
+    <td valign="middle" align="center" class="dm-muted" style="padding:0 [[ s.gap ]];white-space:nowrap;[[ typoCss('eyebrow', { color: s.textColor }) ]]">[[ data.text ]]</td>
+    <td valign="middle" class="dm-border" style="border-top:[[ s.thickness ]] solid [[ s.color ]];font-size:0;line-height:0;">&nbsp;</td>
+  </tr></table>
+</mj-text>

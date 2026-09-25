@@ -1,0 +1,63 @@
+[# Base layout: head, dark-mode CSS and body wrapper. Flows and campaigns extend this and fill the `body` block.
+   Optionally override `title` and `preview` (the inbox preview text).
+
+   Dark mode: color-scheme meta plus prefers-color-scheme CSS, only emitted when the brand defines `dark` tokens.
+   Honored by Apple Mail and iOS Mail, and partly by Gmail apps (which may invert colors on their own).
+   Outlook desktop ignores it. Components opt in by adding the dm-* css-classes below. #]
+<mjml>
+  <mj-head>
+    <mj-title>[% block title %][[ t.brand.name ]][% endblock %]</mj-title>
+    <mj-preview>[% block preview %][% endblock %]</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="[[ t.fonts.body ]]" />
+      <mj-text [[ typo('body') ]] />
+      <mj-section background-color="[[ t.colors.surface ]]" />
+    </mj-attributes>
+    <mj-style>
+      a { color: [[ t.colors.link ]]; }
+      /* Responsive visibility (hideOnMobile / hideOnDesktop settings). Outlook desktop ignores media queries,
+         so hide-desktop content is hidden there and hide-mobile content always shows. */
+      .hide-desktop { display: none !important; max-height: 0 !important; overflow: hidden !important; }
+      @media only screen and (max-width: 480px) {
+        .hide-mobile { display: none !important; max-height: 0 !important; overflow: hidden !important; }
+        .hide-desktop { display: block !important; max-height: none !important; overflow: visible !important; }
+      }
+      /* Shadows (shadow setting on sections and wrappers). Ignored by Outlook desktop and some other clients. */
+      .shadow-small { box-shadow: [[ t.shadow.small ]]; }
+      .shadow-medium { box-shadow: [[ t.shadow.medium ]]; }
+      .shadow-large { box-shadow: [[ t.shadow.large ]]; }
+      /* Mobile column counts (mobileColumns: 2 puts two columns side by side) and mobile alignment. */
+      @media only screen and (max-width: 479px) {
+        .m-col-2 { width: 50% !important; max-width: 50% !important; }
+        .m-center, .m-center div, .m-center p, .m-center td, .m-center h1, .m-center h2, .m-center h3, .m-center h4 { text-align: center !important; }
+        .m-center table { margin-left: auto !important; margin-right: auto !important; }
+        .m-right, .m-right div, .m-right p, .m-right td, .m-right h1, .m-right h2, .m-right h3, .m-right h4 { text-align: right !important; }
+        .m-right table { margin-left: auto !important; margin-right: 0 !important; }
+        .m-left, .m-left div, .m-left p, .m-left td, .m-left h1, .m-left h2, .m-left h3, .m-left h4 { text-align: left !important; }
+        .m-left table { margin-left: 0 !important; margin-right: auto !important; }
+      }
+[% if t.dark %]
+      .logo-dark { display: none !important; }
+      @media (prefers-color-scheme: dark) {
+        .dm-bg { background-color: [[ t.dark.colors.background ]] !important; }
+        .dm-surface, .dm-surface > table { background: [[ t.dark.colors.surface ]] !important; background-color: [[ t.dark.colors.surface ]] !important; }
+        .dm-text, .dm-text div, .dm-text p, .dm-text h1, .dm-text h2 { color: [[ t.dark.colors.text ]] !important; }
+        .dm-muted, .dm-muted div, .dm-muted p { color: [[ t.dark.colors.mutedText ]] !important; }
+        .dm-text a, .dm-muted a { color: [[ t.dark.colors.link ]] !important; }
+        .dm-border, .dm-border p { border-color: [[ t.dark.colors.border ]] !important; }
+        .dm-button a, .dm-button td { background-color: [[ t.dark.colors.primary ]] !important; color: [[ t.dark.colors.primaryText ]] !important; }
+        .dm-button-outline a, .dm-button-outline td { background-color: transparent !important; color: [[ t.dark.colors.primary ]] !important; border-color: [[ t.dark.colors.primary ]] !important; }
+        .logo-light { display: none !important; }
+        .logo-dark { display: block !important; }
+      }
+[% endif %]
+    </mj-style>
+    <mj-raw>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+    </mj-raw>
+  </mj-head>
+  <mj-body width="[[ t.layout.width ]]" background-color="[[ t.colors.background ]]" css-class="dm-bg">
+    [% block body %][% endblock %]
+  </mj-body>
+</mjml>

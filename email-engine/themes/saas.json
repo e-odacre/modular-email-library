@@ -1,0 +1,71 @@
+{
+  "name": "SaaS",
+  "description": "Clean product marketing: tight, modern type, medium radii, hairline cards with a whisper of shadow.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "44px",
+        "letterSpacing": "-1px"
+      },
+      "h1": {
+        "size": "32px",
+        "letterSpacing": "-0.5px"
+      },
+      "h2": {
+        "size": "22px",
+        "letterSpacing": "-0.25px"
+      },
+      "eyebrow": {
+        "size": "12px",
+        "letterSpacing": "1.5px",
+        "weight": "700"
+      }
+    },
+    "radius": {
+      "small": "4px",
+      "medium": "8px",
+      "large": "12px"
+    }
+  },
+  "button": {
+    "radius": "@radius.medium",
+    "innerPadding": "14px 28px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.border",
+    "borderWidth": "1px",
+    "radius": "@radius.large",
+    "padding": "@spacing.lg",
+    "shadow": "small"
+  },
+  "section": {
+    "paddingY": "@spacing.xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.accent",
+    "color": "@colors.white",
+    "radius": "@radius.pill"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.border",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.medium"
+  },
+  "accent": {
+    "color": "@colors.accent",
+    "lineWidth": "3px",
+    "lineLength": "40px"
+  },
+  "components": {
+    "decorative/badge": {
+      "variant": "pill"
+    }
+  }
+}

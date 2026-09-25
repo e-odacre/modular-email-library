@@ -1,0 +1,20 @@
+[# promotional/coupon: a ticket-style coupon: the value on a colored panel, the details and code beside it.
+
+   Two table cells inside a dashed border. The call to action is a text link (a coupon is a ticket, not a button),
+   use promotional/discount-banner when you want a button.
+
+   Compatibility
+   - Outlook desktop: cells, colors and text are honored, the dashed border can render solid.
+   - Gmail apps: fine. On narrow phones the two cells stay side by side, keep the value short.
+   - Dark mode: the coupon keeps its own colors. #]
+<mj-text[[ cc(cls) ]] align="center" padding="[[ s.padding ]]">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="border:2px dashed [[ s.borderColor ]];border-radius:[[ s.radius ]];"><tr>
+    <td width="36%" align="center" valign="middle" bgcolor="[[ s.valueBackground ]]" style="width:36%;padding:20px 12px;background:[[ s.valueBackground ]];font-family:[[ t.fonts.heading ]];font-size:[[ s.valueSize ]];font-weight:bold;line-height:1.1;color:[[ s.valueColor ]];">[[ data.value ]]</td>
+    <td valign="middle" style="padding:16px 20px;background:[[ s.background ]];">
+      [% if data.description %]<div style="[[ typoCss('body', { color: s.textColor }) ]]padding-bottom:6px;">[[ data.description ]]</div>[% endif %]
+      <div style="font-family:[[ t.fonts.heading ]];font-size:20px;font-weight:bold;letter-spacing:2px;color:[[ s.valueBackground ]];">[[ data.code ]]</div>
+      [% if data.expires %]<div style="[[ typoCss('caption') ]]padding-top:4px;">[[ data.expires ]]</div>[% endif %]
+      [% if data.cta %]<div style="padding-top:8px;"><a href="[[ data.cta.href ]]" style="[[ typoCss('bodySmall', { color: s.valueBackground, weight: '700' }) ]]text-decoration:underline;">[[ data.cta.label ]] &rarr;</a></div>[% endif %]
+    </td>
+  </tr></table>
+</mj-text>

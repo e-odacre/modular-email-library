@@ -1,0 +1,13 @@
+[# decorative/line: a decorative rule. Variants: accent (short thick bar), double, dotted, ornament (a row of dots).
+
+   For a plain separator use layout/divider. This one is for emphasis and rhythm.
+
+   Compatibility
+   - Outlook desktop: solid bars are honored. Dotted and double styles can render as solid.
+   - Gmail apps: fine.
+   - Dark mode: the accent color stays. Ornament text uses the muted color. #]
+[% if s.style == 'ornament' %]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" font-size="18px" line-height="1" letter-spacing="8px" color="[[ s.color ]]" padding="[[ s.padding ]]">&bull;&bull;&bull;</mj-text>
+[% else %]
+<mj-divider[[ cc(cls) ]] border-width="[[ s.thickness ]]" border-style="[[ s.style ]]" border-color="[[ s.color ]]" width="[[ s.length ]]" align="[[ s.align ]]" padding="[[ s.padding ]]" />
+[% endif %]

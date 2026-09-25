@@ -1,0 +1,17 @@
+[# hero/product: a single product feature: image, eyebrow, name, description, price and button.
+
+   Meant for a launch or a hero product. The price uses commerce/price, so a sale price shows the original struck
+   through beside it.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored.
+   - Gmail apps: fine. The product image is a real img.
+   - Dark mode: swaps via dm-* classes on the brand surface or background. #]
+[% set content = [] %]
+[% if data.eyebrow %][% set _ = content.push({ component: 'decorative/eyebrow', data: { text: data.eyebrow }, settings: { align: s.align } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: data.name }, settings: { level: 'h1', tag: 'h1', align: s.align } }) %]
+[% if data.description %][% set _ = content.push({ component: 'content/text', data: { text: data.description }, settings: { level: 'bodyLarge', align: s.align } }) %][% endif %]
+[% if data.price %][% set _ = content.push({ component: 'commerce/price', data: { price: data.price, salePrice: data.salePrice, discount: data.discount }, settings: { align: s.align } }) %][% endif %]
+[% if data.cta %][% set _ = content.push({ component: 'content/button', data: data.cta, settings: { align: s.align, padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: [{ component: 'content/image', data: { image: data.image }, settings: { padding: '0' } }] }, { settings: { background: s.background, padding: '0', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[[ c('layout/section', { content: content }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

@@ -1,0 +1,17 @@
+[# events/speaker-card: a speaker: a round photo, name, title, a short bio and an optional profile link.
+
+   Sits in a column, so a row of speakers is a layout/grid of these. The photo needs alt text, and a square source
+   so the circular crop looks right (Outlook desktop shows it square).
+
+   Compatibility
+   - Outlook desktop: text and photo honored, the circular crop is square.
+   - Gmail apps: fine. The photo alt text names the speaker if images are blocked.
+   - Dark mode: text swaps via dm-text and dm-muted where prefers-color-scheme is honored. #]
+[% set sp = data.speaker %]
+[% set nodes = [] %]
+[% if sp.photo %][% set _ = nodes.push({ component: 'content/image', data: { image: { src: sp.photo.src, alt: sp.photo.alt, decorative: sp.photo.decorative, width: s.photoSize } }, variant: 'circle', settings: { align: s.align, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: sp.name }, settings: { level: 'h4', tag: 'h3', align: s.align, padding: '0 0 2px 0' } }) %]
+[% if sp.title %][% set _ = nodes.push({ component: 'content/text', data: { text: sp.title }, settings: { level: 'caption', align: s.align, padding: '0 0 @spacing.xs 0' } }) %][% endif %]
+[% if sp.bio %][% set _ = nodes.push({ component: 'content/text', data: { text: sp.bio }, settings: { level: 'bodySmall', align: s.align, padding: '0 0 @spacing.xs 0' } }) %][% endif %]
+[% if sp.href %][% set _ = nodes.push({ component: 'content/link', data: { label: s.linkLabel, href: sp.href }, variant: 'arrow', settings: { align: s.align, level: 'bodySmall', padding: '0' } }) %][% endif %]
+[[ cn(nodes) ]]

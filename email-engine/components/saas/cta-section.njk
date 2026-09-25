@@ -1,0 +1,18 @@
+[# saas/cta-section: the closing call to action: a headline, a line of text and one or two buttons on a colored band.
+
+   With a secondary action the two buttons sit side by side (content/button-group), the second is outlined.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored. Rounded button corners are square.
+   - Gmail apps: fine. Side-by-side buttons wrap under each other when the column is narrow.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h1', tag: 'h2', align: 'center', color: tn.color, darkMode: tn.darkMode } }) %]
+[% if data.text %][% set _ = nodes.push({ component: 'content/text', data: { text: data.text }, settings: { level: 'bodyLarge', align: 'center', color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% if data.secondary %]
+[% set _ = nodes.push({ component: 'content/button-group', data: { buttons: [{ label: data.primary.label, href: data.primary.href, style: 'primary' }, { label: data.secondary.label, href: data.secondary.href, style: 'secondary' }] }, settings: { background: s.buttonBackground, color: s.buttonColor } }) %]
+[% else %]
+[% set _ = nodes.push({ component: 'content/button', data: data.primary, settings: { background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.xs 0 0 0' } }) %]
+[% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

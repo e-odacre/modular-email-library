@@ -1,0 +1,24 @@
+[# promotional/countdown: a countdown block: a timer image, with the end time written out as text.
+
+   Email clients do not run JavaScript, so a live ticking timer is impossible inside an email. The usual technique is
+   an image URL served by an external countdown-timer service that draws the time left each time the email is opened.
+   Pass that URL as `timerImage`. Without one this shows the end time as large text, which is the honest fallback:
+   it is also what everyone sees when images are blocked. The image alt text always carries the end time.
+   Check the service you use for how it caches images, some show the time from the first open.
+
+   Compatibility
+   - Outlook desktop: a normal image (animated GIF timers show only their first frame in Outlook desktop).
+   - Gmail apps: images load through Google's proxy, which can cache them, so a timer may show a stale time.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% if data.headline %][% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h2', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %][% endif %]
+[% if data.timerImage %]
+[% set _ = nodes.push({ component: 'content/image', data: { image: { src: data.timerImage, alt: 'Offer ends ' + data.endsAt } }, settings: { align: s.align, padding: '0 0 @spacing.sm 0' } }) %]
+[% set _ = nodes.push({ component: 'content/text', data: { text: 'Ends ' + data.endsAt }, settings: { level: 'bodySmall', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %]
+[% else %]
+[% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: s.label }, settings: { align: s.align, color: tn.color } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.endsAt }, settings: { level: 'h1', tag: 'div', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %]
+[% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

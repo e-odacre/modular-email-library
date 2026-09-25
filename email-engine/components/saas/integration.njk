@@ -1,0 +1,18 @@
+[# saas/integration: announce an integration: your logo, a plus sign, the partner's logo, then a headline, description and button.
+
+   Your logo comes from the brand tokens (with the dark-mode swap), the partner's logo is passed in with alt text.
+   The two logos and the plus sign stay side by side on phones.
+
+   Compatibility
+   - Outlook desktop: honored, three table cells.
+   - Gmail apps: fine. Logos are images, so alt text carries the names if images are blocked.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set plus = [{ component: 'content/heading', data: { text: '+' }, settings: { level: 'display', tag: 'div', align: 'center', padding: '0' } }] %]
+[% set partner = [{ component: 'content/image', data: { image: { src: data.partner.src, alt: data.partner.alt, href: data.partner.href, width: (data.partner.width or s.logoWidth) } }, settings: { padding: '0' } }] %]
+[% set ours = [{ component: 'content/logo', settings: { width: s.logoWidth, padding: '0' } }] %]
+[[ c('layout/columns', { columns: [ours, plus, partner] }, { settings: { split: '40/20/40', valign: 'middle', mobileLayout: 'preserve', background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h2', tag: 'h1', align: 'center' } }) %]
+[% if data.description %][% set _ = nodes.push({ component: 'content/text', data: { text: data.description }, settings: { align: 'center' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

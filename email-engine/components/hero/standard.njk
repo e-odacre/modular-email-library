@@ -1,0 +1,31 @@
+[# hero/standard: eyebrow, headline, description and button, with an image below (or above) the text.
+
+   The everyday hero. Composed from library components (eyebrow, heading, text, button, image), so its type,
+   spacing and button style come from the theme. Set a dark or colored background through settings and the text
+   colors follow (the hero/text-only variants show how).
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored. Rounded image corners are ignored.
+   - Gmail apps: fine. The image is a real <img>, not a background, so it is never dropped.
+   - Dark mode: on the brand surface or background the text and background swap via dm-* classes. On a colored
+     background (settings.background) the colors stay as they are. #]
+[% set onSurface = (dm(s.background, 'bg') != '') %]
+[% set textColor = 'auto' if onSurface else s.textColor %]
+[% set content = [] %]
+[% if data.eyebrow %][% set _ = content.push({ component: 'decorative/eyebrow', data: { text: data.eyebrow }, settings: { align: s.align, color: (s.eyebrowColor if not onSurface else 'auto') } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: s.headingLevel, tag: 'h1', align: s.align, color: textColor, darkMode: onSurface, padding: '0 0 ' + s.gap + ' 0' } }) %]
+[% if data.description %][% set _ = content.push({ component: 'content/text', data: { text: data.description }, settings: { level: 'bodyLarge', align: s.align, color: textColor, darkMode: onSurface } }) %][% endif %]
+[% if data.cta %][% set _ = content.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: ('solid' if onSurface else 'none'), padding: s.gap + ' 0 0 0' } }) %][% endif %]
+[% set textSection = { component: 'layout/section', data: { content: content }, settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } } %]
+[% if data.image %]
+[% set imageSection = { component: 'layout/section', data: { content: [{ component: 'content/image', data: { image: data.image }, settings: { padding: '0', radius: '0' } }] }, settings: { background: s.background, padding: '0', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } } %]
+[% if s.imagePosition == 'above' %]
+[[ c('layout/section', imageSection.data, { settings: imageSection.settings }) ]]
+[[ c('layout/section', textSection.data, { settings: textSection.settings }) ]]
+[% else %]
+[[ c('layout/section', textSection.data, { settings: textSection.settings }) ]]
+[[ c('layout/section', imageSection.data, { settings: imageSection.settings }) ]]
+[% endif %]
+[% else %]
+[[ c('layout/section', textSection.data, { settings: textSection.settings }) ]]
+[% endif %]

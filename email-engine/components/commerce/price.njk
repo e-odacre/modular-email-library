@@ -1,0 +1,17 @@
+[# commerce/price: a price, or an original price struck through beside a sale price, with an optional discount label.
+
+   Prices are text, pass them formatted ("$120.00", "{{ item.price|floatformat:2 }}"), so currency and Klaviyo tags
+   are yours to control. The struck-through price uses the price type level in the muted color.
+
+   Compatibility
+   - Outlook desktop: line-through is honored.
+   - Gmail apps: fine.
+   - Dark mode: price text swaps via dm-text where prefers-color-scheme is honored. The sale price keeps its color. #]
+[% set mcls = ('m-' + s.mobileAlignment) if s.mobileAlignment != 'inherit' else '' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls, mcls) ]] align="[[ s.align ]]" [[ typo('price') ]] padding="[[ s.padding ]]">
+[% if data.salePrice %]
+  <span style="[[ typoCss('price', { color: 'mutedText', size: s.originalSize, weight: '400' }) ]]text-decoration:line-through;">[[ data.price ]]</span>&nbsp;&nbsp;<span style="[[ typoCss('salePrice') ]]">[[ data.salePrice ]]</span>[% if data.discount %]&nbsp;&nbsp;<span style="[[ typoCss('bodySmall', { color: 'success', weight: '700' }) ]]">[[ data.discount ]]</span>[% endif %]
+[% else %]
+  <span style="[[ typoCss('price') ]]">[[ data.price ]]</span>
+[% endif %]
+</mj-text>

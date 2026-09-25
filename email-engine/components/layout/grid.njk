@@ -1,0 +1,21 @@
+[# layout/grid: items in rows of 1 to 6 columns. A short last row keeps the same column width, so items line up.
+
+   Every item is a slot of content components. Rows are separate sections, so they wrap cleanly. With
+   mobileColumns: 2 each item takes half the width on mobile (2 per row), otherwise items stack.
+
+   Compatibility
+   - Outlook desktop: each row is a table, widths are exact. mobileColumns is ignored (no media queries).
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set w = (100 / s.columns) | round(2) %]
+[% set colCls = ('m-col-2' if s.mobileColumns == 2 else '') %]
+[% set alignCls = ('m-' + s.mobileAlignment if s.mobileAlignment != 'inherit' else '') %]
+[% for row in data.items | batch(s.columns, '') %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.paddingY if loop.first else '0' ]] [[ s.paddingX ]] [[ s.paddingY if loop.last else '0' ]] [[ s.paddingX ]]">
+  [% for item in row %]
+  <mj-column width="[[ w ]]%" vertical-align="[[ s.valign ]]" padding="[[ s.columnPadding ]]"[[ cc(colCls, alignCls) ]]>
+    [[ item ]]
+  </mj-column>
+  [% endfor %]
+</mj-section>
+[% endfor %]

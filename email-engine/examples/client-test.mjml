@@ -1,0 +1,71 @@
+[# examples/client-test: an email for testing in real clients (Klaviyo, Gmail, Apple Mail, Outlook desktop).
+
+   Each numbered block exercises one risky behavior from docs/limitations.md, so a failure points at one component. Every
+   block says in plain text what it should look like when it works, so the person testing does not need this file open.
+   Only tags marked verified in variables/klaviyo.json are used. Builds for the placeholder brand only (placeholder images). #]
+[% extends "layouts/base.mjml" %]
+
+[% block body %]
+[[ c('email/preheader', { text: 'Client test: 8 numbered blocks, each one checks a single behavior.' }) ]]
+
+[[ c('email/view-in-browser') ]]
+
+[[ c('layout/section', { content: [
+  { component: 'content/heading', variant: 'title', data: { text: 'Client test email' } },
+  { component: 'content/text', data: { text: 'Block 1, Klaviyo tags. If this works you read "Hi Friend," (the fallback) or your own first name, never curly braces: Hi ' + v('customer.first_name', { fallback: 'Friend' }) + ',' } },
+  { component: 'content/text', variant: 'caption', data: { text: 'Every block below says what it should look like. Note anything that differs, and which client and mode (light or dark) you saw it in.' } }
+] }) ]]
+
+[[ c('hero/full-bleed', {
+  heading: 'Block 2, background image',
+  subheading: 'Expected: white text over a photo, centered. Outlook desktop: the photo should still show (VML), or a solid color.',
+  cta: { label: 'Hero button', href: v('brand.url') },
+  image: 'https://placehold.co/600x320/png?text=Background+image'
+}) ]]
+
+[[ c('layout/section', { content: [
+  { component: 'content/heading', variant: 'subheading', data: { text: 'Block 3, buttons' } },
+  { component: 'content/text', variant: 'small', data: { text: 'Expected: three buttons. Rounded corners in Gmail and Apple Mail. Outlook desktop: the first is square (known), the second has true rounded corners (VML), the third is an outline.' } },
+  { component: 'content/button', data: { label: 'Standard button', href: v('brand.url') } },
+  { component: 'email/outlook-safe-button', data: { label: 'Outlook-safe button', href: v('brand.url') } },
+  { component: 'content/button', variant: 'outline', data: { label: 'Outline button', href: v('brand.url') } }
+] }) ]]
+
+[[ c('layout/columns', { columns: [
+  [ { component: 'content/image', data: { image: { src: 'https://placehold.co/300x200/png?text=Column+A', alt: 'Placeholder image for column A' } } } ],
+  [ { component: 'content/heading', variant: 'subheading', data: { text: 'Block 4, mobile reverse' } },
+    { component: 'content/text', variant: 'small', data: { text: 'Expected on desktop: image left, this text right. On a phone: this text first, then the image (reversed). Outlook desktop and non-Google Gmail ignore this and show the desktop layout.' } } ]
+] }, { variant: 'split-40-60', settings: { mobileLayout: 'reverse' } }) ]]
+
+[[ c('layout/columns', { columns: [
+  [ { component: 'content/text', variant: 'centered', data: { text: 'Block 5, two columns on phones. Tile 1' } } ],
+  [ { component: 'content/text', variant: 'centered', data: { text: 'Tile 2' } } ],
+  [ { component: 'content/text', variant: 'centered', data: { text: 'Tile 3' } } ],
+  [ { component: 'content/text', variant: 'centered', data: { text: 'Tile 4' } } ]
+] }, { variant: 'four-column', settings: { mobileColumns: 2 } }) ]]
+
+[[ c('email/desktop-only', { content: [
+  { component: 'layout/section', data: { content: [
+    { component: 'content/text', data: { text: 'Block 6a, desktop only. Expected: visible on a computer, hidden on a phone. Gmail on non-Google accounts and Outlook desktop may show it on phones too.' } }
+  ] } }
+] }) ]]
+
+[[ c('email/mobile-only', { content: [
+  { component: 'layout/section', data: { content: [
+    { component: 'content/text', data: { text: 'Block 6b, mobile only. Expected: visible on a phone, hidden on a computer.' } }
+  ] } }
+] }) ]]
+
+[[ c('layout/section', { content: [
+  { component: 'content/heading', variant: 'subheading', data: { text: 'Block 7, dark mode' } },
+  { component: 'content/text', data: { text: 'Expected in Apple Mail with dark mode on: the page and this block turn dark and the text turns light, with readable contrast everywhere. Gmail apps may recolor on their own. Outlook desktop ignores dark mode. Images are never recolored.' } },
+  { component: 'content/image', data: { image: { src: 'https://placehold.co/560x120/png?text=Image+on+dark', alt: 'Placeholder banner image used to check dark mode' } } }
+] }) ]]
+
+[[ c('layout/section', { content: [
+  { component: 'content/heading', variant: 'subheading', data: { text: 'Block 8, footer and compliance' } },
+  { component: 'content/text', variant: 'small', data: { text: 'Expected: below are an unsubscribe link and your organization address, filled in by Klaviyo. Curly braces here mean the tags did not resolve.' } }
+] }) ]]
+
+[[ c('email/footer') ]]
+[% endblock %]

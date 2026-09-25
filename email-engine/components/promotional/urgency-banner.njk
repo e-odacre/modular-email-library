@@ -1,0 +1,16 @@
+[# promotional/urgency-banner: a band that says time is running out: headline, a line of text, the deadline and a button.
+
+   Use it only when the deadline is real. The deadline is text ("Ends tonight at midnight PT"), so it can be a
+   Klaviyo tag or a fixed date. For a countdown image see promotional/countdown.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on the red band the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: data.deadline }, settings: { align: s.align, color: tn.color } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h1', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %]
+[% if data.text %][% set _ = nodes.push({ component: 'content/text', data: { text: data.text }, settings: { align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.md 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

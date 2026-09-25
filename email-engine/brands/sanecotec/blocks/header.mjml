@@ -1,0 +1,7 @@
+[# SanEcoTec header: public logo, website link, no campaign-specific navigation.
+   Outlook: table-based header. Gmail: PNG logo with alt text.
+   Dark mode: no alternate logo supplied; automatic client recoloring is untested. #]
+[[ c('email/header', {}, { variant: 'left', settings: {
+  background: t.colors.background,
+  padding: '@spacing.lg @spacing.xl'
+} }) ]]

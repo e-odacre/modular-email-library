@@ -1,0 +1,32 @@
+{
+  "name": "modular-email-blocks",
+  "version": "1.0.0",
+  "description": "A modular email design system: MJML components, variants, themes and campaign recipes, built with Nunjucks tokens, for Klaviyo",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\"",
+    "build": "node scripts/build.js",
+    "build:brand": "node scripts/build.js",
+    "build:themes": "node scripts/build.js --theme all",
+    "preview": "node scripts/preview.js",
+    "gallery:brand": "node scripts/brand-gallery.js",
+    "remix": "node scripts/remix.js",
+    "docs": "node scripts/docs.js",
+    "docs:check": "node scripts/docs.js --check",
+    "new:component": "node scripts/new-component.js",
+    "new:theme": "node scripts/new-theme.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-odacre/modular-email-blocks.git"
+  },
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "mjml": "^5.4.1",
+    "nunjucks": "^3.2.4"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

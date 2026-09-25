@@ -1,0 +1,22 @@
+[# layout/section: a full-width section holding one column of content components.
+
+   The generic building block: put any content-level components (heading, text, image, button...) inside it.
+   Variants: default (constrained to the email width), full-width (background runs edge to edge), tinted, card.
+
+   Compatibility
+   - Outlook desktop: background color and padding are honored. Border radius is ignored (square corners).
+   - Gmail apps: fine. Full-width backgrounds show edge to edge on desktop web, mobile apps use the email width.
+   - Shadows (the shadow setting) are box-shadow, ignored by Outlook desktop and some other clients, so never rely on one.
+   - Dark mode: swaps to the dark surface via dm-* classes when it sits on the brand surface or background color.
+     Sections with their own background color keep it. #]
+[% from "components/_partials.njk" import section %]
+[% set extra = '' %]
+[% if s.width == 'full' %][% set extra = extra + ' full-width="full-width"' %][% endif %]
+[% if s.border != 'none' %][% set extra = extra + ' border="' + s.border + '"' %][% endif %]
+[% if s.radius != '0' %][% set extra = extra + ' border-radius="' + s.radius + '"' %][% endif %]
+[% set klass = (cls + ' shadow-' + s.shadow) if s.shadow != 'none' else cls %]
+[% call section(s, klass, extra) %]
+<mj-column padding="[[ s.columnPadding ]]">
+  [[ data.content ]]
+</mj-column>
+[% endcall %]

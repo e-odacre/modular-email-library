@@ -1,0 +1,16 @@
+[# layout/container: a narrower, centered column of content inside the email width.
+
+   Good for text-heavy sections that read better at 480px than at the full 600px. The side padding is
+   worked out from the email width and maxWidth, so it stays centered at any email width.
+
+   Compatibility
+   - Outlook desktop: honored, it is just section padding.
+   - Gmail apps: fine.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set outer = (((t.layout.width | replace('px', '') | int) - (s.maxWidth | replace('px', '') | int)) / 2) | round(0, 'floor') %]
+[% if outer < 0 %][% set outer = 0 %][% endif %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.paddingY ]] [[ outer ]]px">
+  <mj-column>
+    [[ data.content ]]
+  </mj-column>
+</mj-section>

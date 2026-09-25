@@ -1,0 +1,12 @@
+[# commerce/product-carousel: an email-safe stand-in for a product carousel: a compact row of products with a "view all" link.
+
+   Email clients do not run JavaScript, and CSS-only carousels (checkbox or scroll-snap tricks) break in Gmail and
+   Outlook, so a real swipeable carousel is not reliable. This shows the first products in a compact row (three
+   across, two per row on phones) and sends everyone else to the full collection with the view-all button. It is
+   a static, robust approximation, not an interactive carousel.
+
+   Compatibility
+   - Outlook desktop: a plain row of products, no interaction needed.
+   - Gmail apps: works everywhere because there is nothing interactive. Two per row on phones uses a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[[ c('commerce/product-grid', { heading: data.heading, products: data.products, cta: data.cta }, { variant: s.gridVariant, settings: { columns: s.columns, mobileColumns: s.mobileColumns, background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

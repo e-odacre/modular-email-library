@@ -1,0 +1,11 @@
+[# content/rich-text: body copy with inline HTML (bold, italics, links, line breaks, small lists).
+
+   Use it when the copy needs formatting. For a plain paragraph use content/text. Only inline HTML that email
+   clients support: p, br, strong, em, a, ul, ol, li, span. Links pick up the brand link color.
+
+   Compatibility
+   - Outlook desktop: paragraph margins can differ slightly, keep formatting simple.
+   - Gmail apps: fine.
+   - Dark mode: text and link colors swap via the dm-text class where prefers-color-scheme is honored. #]
+[% set mcls = ('m-' + s.mobileAlignment) if s.mobileAlignment != 'inherit' else '' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls, mcls) ]] align="[[ s.align ]]" [[ typo(s.level, { color: s.color }) ]] padding="[[ s.padding ]]">[[ data.html ]]</mj-text>

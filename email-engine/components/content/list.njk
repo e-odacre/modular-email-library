@@ -1,0 +1,27 @@
+[# content/list: a bulleted list. Markers: disc, circle, square, none, or glyph markers (check, dash, arrow).
+
+   Native markers use a real ul/li. Glyph markers use a two-column table so the marker can be colored and the
+   text wraps under itself, not under the marker.
+
+   Compatibility
+   - Outlook desktop: ul/li are honored with the explicit styles used here. Glyph markers are table cells, honored.
+   - Gmail apps: fine.
+   - Dark mode: text swaps via dm-text where prefers-color-scheme is honored. Marker glyphs keep the accent color. #]
+[% set glyphs = { check: '&#10003;', dash: '&ndash;', arrow: '&rarr;' } %]
+[% set li = typoCss(s.level) + 'margin-bottom:' + s.itemGap + ';' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo(s.level) ]] padding="[[ s.padding ]]">
+[% if s.marker in glyphs %]
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+    [% for item in data.items %]
+    <tr>
+      <td valign="top" width="24" style="width:24px;padding:0 0 [[ s.itemGap ]] 0;font-size:[[ t.type[s.level].size ]];line-height:[[ t.type[s.level].lineHeight ]];color:[[ s.markerColor ]];font-weight:bold;">[[ glyphs[s.marker] ]]</td>
+      <td valign="top" class="dm-text" style="padding:0 0 [[ s.itemGap ]] 0;[[ typoCss(s.level) ]]">[[ item ]]</td>
+    </tr>
+    [% endfor %]
+  </table>
+[% else %]
+  <ul style="margin:0;padding:0 0 0 20px;list-style-type:[[ s.marker ]];">
+    [% for item in data.items %]<li class="dm-text" style="[[ li ]]">[[ item ]]</li>[% endfor %]
+  </ul>
+[% endif %]
+</mj-text>

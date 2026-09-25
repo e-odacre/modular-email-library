@@ -1,0 +1,17 @@
+[# features/feature-card: one feature: an icon (or a step number), a title, a short description and an optional link.
+
+   Sits in a column, so it works alone or inside a layout/grid. The icon is an image (SVG is not supported in most
+   email clients, export PNGs at 2x). With no icon and a `number`, a number marker is shown instead.
+
+   Compatibility
+   - Outlook desktop: text and images honored. A circular icon crop renders square.
+   - Gmail apps: fine. Images are blocked by default in some clients, so the title carries the meaning.
+   - Dark mode: text swaps via dm-text where prefers-color-scheme is honored. Icons are not recolored. #]
+[% set f = data.feature %]
+[% set nodes = [] %]
+[% if f.icon %][% set _ = nodes.push({ component: 'content/icon', data: { icon: f.icon }, settings: { size: s.iconSize, align: s.align, radius: s.iconRadius } }) %]
+[% elif f.number %][% set _ = nodes.push({ component: 'decorative/number-marker', data: { number: f.number }, settings: { align: s.align } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: f.title }, settings: { level: 'h4', tag: 'h3', align: s.align, padding: '0 0 4px 0' } }) %]
+[% if f.description %][% set _ = nodes.push({ component: 'content/text', data: { text: f.description }, settings: { level: 'bodySmall', align: s.align, padding: '0 0 @spacing.xs 0' } }) %][% endif %]
+[% if f.cta %][% set _ = nodes.push({ component: 'content/link', data: { label: f.cta.label, href: f.cta.href }, variant: 'arrow', settings: { align: s.align, level: 'bodySmall', padding: '0' } }) %][% endif %]
+[[ cn(nodes) ]]

@@ -1,0 +1,14 @@
+[# decorative/badge: a small label chip ("New", "-25%", "Sold out", "Limited"). Also covers pills and tags through variants.
+
+   Built as a table cell with a background, not an inline-block span, because Outlook desktop ignores padding on
+   inline elements. Corner radius is ignored there, so a pill renders as a rectangle.
+
+   Compatibility
+   - Outlook desktop: background, padding and border are honored, rounded corners are not (square chip).
+   - Gmail apps: fine.
+   - Dark mode: chips keep their own colors. #]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="[[ s.align ]]" style="display:inline-table;"><tr>
+    <td bgcolor="[[ s.background if s.background != 'transparent' else '' ]]" style="background:[[ s.background ]];border:[[ s.border ]];border-radius:[[ s.radius ]];padding:[[ s.innerPadding ]];font-family:[[ t.fonts.heading ]];font-size:[[ s.size ]];font-weight:bold;letter-spacing:[[ s.tracking ]];line-height:1.2;text-transform:[[ s.transform ]];color:[[ s.color ]];">[[ data.text ]]</td>
+  </tr></table>
+</mj-text>

@@ -1,0 +1,14 @@
+[# SanEcoTec consultation: draft copy with a normal contact-page destination.
+   Outlook: live text, square button corners as fallback. Gmail: ordinary link.
+   Dark mode: colored band uses its explicit colors; client recoloring is untested. #]
+[[ c('saas/cta-section', {
+  headline: 'Start with your water challenges',
+  text: 'Tell the SanEcoTec team about your facility, your current setup, and what you would like to improve.',
+  primary: { label: 'Talk to SanEcoTec', href: 'https://sanecotec.com/about/contact' }
+}, { settings: {
+  background: t.colors.primary,
+  textColor: t.colors.primaryText,
+  buttonBackground: t.colors.accent,
+  buttonColor: t.colors.background,
+  padding: '@spacing.xl @spacing.xl'
+} }) ]]

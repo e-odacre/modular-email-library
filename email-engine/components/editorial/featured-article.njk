@@ -1,0 +1,27 @@
+[# editorial/featured-article: the lead story: a large image, category, a big title, excerpt, byline and a read button.
+
+   Image on top by default, or beside the text with the split variant. The title links to the article.
+
+   Compatibility
+   - Outlook desktop: text and images honored, side by side in the split variant as a table row.
+   - Gmail apps: fine. The split variant stacks on phones through a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set a = data.article %]
+[% set content = [] %]
+[% if a.category %][% set _ = content.push({ component: 'decorative/eyebrow', data: { text: a.category }, settings: { align: s.align } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: '<a href="' + a.href + '" style="color:' + t.colors.text + ';text-decoration:none;">' + a.title + '</a>' }, settings: { level: 'h1', tag: 'h2', align: s.align } }) %]
+[% if a.excerpt %][% set _ = content.push({ component: 'content/text', data: { text: a.excerpt }, settings: { level: 'bodyLarge', align: s.align } }) %][% endif %]
+[% set meta = [] %]
+[% if a.author %][% set _ = meta.push(a.author) %][% endif %]
+[% if a.date %][% set _ = meta.push(a.date) %][% endif %]
+[% if a.readTime %][% set _ = meta.push(a.readTime) %][% endif %]
+[% if meta.length %][% set _ = content.push({ component: 'content/text', data: { text: meta | join(' &middot; ') }, settings: { level: 'caption', align: s.align } }) %][% endif %]
+[% set _ = content.push({ component: 'content/button', data: { label: s.linkLabel, href: a.href }, settings: { align: s.align, padding: '@spacing.xs 0 0 0' } }) %]
+[% if s.layout == 'split' and a.image %]
+[[ c('layout/media-text', { media: { src: a.image.src, alt: a.image.alt, decorative: a.image.decorative, href: a.href }, content: content }, { settings: { split: '50/50', background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% else %]
+[% if a.image %]
+[[ c('layout/section', { content: [{ component: 'content/image', data: { image: { src: a.image.src, alt: a.image.alt, decorative: a.image.decorative, href: a.href } }, settings: { padding: '0', radius: '0' } }] }, { settings: { background: s.background, padding: '0', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[[ c('layout/section', { content: content }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

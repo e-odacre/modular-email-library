@@ -1,0 +1,20 @@
+[# editorial/image-article: an image with the article text: heading, byline, body copy and an optional button.
+
+   The image sits on top, or beside the text with the side variants. The body is rich text, so it can carry
+   paragraphs, links and short lists.
+
+   Compatibility
+   - Outlook desktop: text and images honored, the side variants are a table row.
+   - Gmail apps: fine. The side variants stack on phones through a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set content = [] %]
+[% set _ = content.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', tag: 'h2' } }) %]
+[% if data.byline %][% set _ = content.push({ component: 'content/text', data: { text: data.byline }, settings: { level: 'caption' } }) %][% endif %]
+[% set _ = content.push({ component: 'content/rich-text', data: { html: data.body } }) %]
+[% if data.cta %][% set _ = content.push({ component: 'content/button', data: data.cta, settings: { align: 'left', padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[% if s.layout == 'top' %]
+[[ c('layout/section', { content: [{ component: 'content/image', data: { image: data.image }, settings: { padding: '0', radius: '0' } }] }, { settings: { background: s.background, padding: '0', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[[ c('layout/section', { content: content }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% else %]
+[[ c('layout/media-text', { media: data.image, content: content }, { settings: { imagePosition: s.layout, split: '40/60', background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

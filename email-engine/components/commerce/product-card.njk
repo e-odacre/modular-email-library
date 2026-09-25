@@ -1,0 +1,19 @@
+[# commerce/product-card: one product: image, badge, name, description, price (with sale price and discount) and a button.
+
+   Every part except the image and name is optional and can be switched off with the show* settings. The variants
+   (default, minimal, luxury, editorial, playful) change only styling: same data, same structure. Built from library
+   components, so type and button style follow the theme. Meant to sit inside a column or a layout/grid cell.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored. Rounded image corners and pill buttons render square.
+   - Gmail apps: fine. The product image is a real img with alt text, and is linked when the product has a url.
+   - Dark mode: text swaps via dm-text where prefers-color-scheme is honored. Images are not recolored. #]
+[% set p = data.product %]
+[% set img = { src: p.image.src, alt: p.image.alt, decorative: p.image.decorative, href: (p.image.href or p.url) } %]
+[% set nodes = [{ component: 'content/image', data: { image: img }, settings: { radius: s.imageRadius, padding: s.imagePadding, align: 'center' } }] %]
+[% if s.showBadge and p.badge %][% set _ = nodes.push({ component: 'decorative/badge', data: { text: p.badge }, variant: s.badgeVariant, settings: { align: s.align } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: p.name }, settings: { level: s.nameLevel, tag: 'h3', align: s.align, transform: s.nameTransform, tracking: s.nameTracking, padding: '0 0 ' + s.gap + ' 0' } }) %]
+[% if s.showDescription and p.description %][% set _ = nodes.push({ component: 'content/text', data: { text: p.description }, settings: { level: 'bodySmall', align: s.align, padding: '0 0 ' + s.gap + ' 0' } }) %][% endif %]
+[% if s.showPrice and p.price %][% set _ = nodes.push({ component: 'commerce/price', data: { price: p.price, salePrice: p.salePrice, discount: p.discount }, settings: { align: s.align, padding: '0 0 ' + s.gap + ' 0' } }) %][% endif %]
+[% if s.showButton and p.cta %][% set _ = nodes.push({ component: 'content/button', data: p.cta, variant: s.buttonVariant, settings: { align: s.align, size: 'small', radius: s.buttonRadius, padding: '0' } }) %][% endif %]
+[[ cn(nodes) ]]

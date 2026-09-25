@@ -1,0 +1,38 @@
+[# events/event-block: an event: title, date, time, location, description, speaker and a button.
+
+   The details (date, time, location) are a two-column label/value table, so they line up and read like a ticket.
+   Times and dates are text, so state the time zone yourself ("7:00 pm PT"). Add-to-calendar links go in the button or
+   the description, this component does not make calendar files.
+
+   Compatibility
+   - Outlook desktop: honored, the details are a plain table.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface the text and background swap via dm-* classes, on the dark variant the colors stay. #]
+[% from "components/_partials.njk" import section %]
+[% set tn = tone(s) %]
+[% set labelColor = ('mutedText' if tn.onSurface else s.textColor) %]
+[% set rows = [] %]
+[% if data.date %][% set _ = rows.push(['Date', data.date]) %][% endif %]
+[% if data.time %][% set _ = rows.push(['Time', data.time]) %][% endif %]
+[% if data.location %][% set _ = rows.push(['Where', data.location]) %][% endif %]
+[% call section(s, cls) %]
+<mj-column>
+  [% if data.eyebrow %][[ c('decorative/eyebrow', { text: data.eyebrow }, { settings: { align: s.align, color: tn.color } }) ]][% endif %]
+  [[ c('content/heading', { text: data.title }, { settings: { level: 'h1', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) ]]
+  [% if rows.length %]
+  <mj-text align="[[ s.align ]]" padding="0 0 [[ s.gap ]] 0">
+    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
+      [% for r in rows %]
+      <tr>
+        <td width="72" valign="top" class="dm-muted" style="width:72px;padding:6px 12px 6px 0;[[ typoCss('caption', { color: labelColor, transform: 'uppercase', letterSpacing: '1px' }) ]]">[[ r[0] ]]</td>
+        <td valign="top"[% if tn.darkMode %] class="dm-text"[% endif %] style="padding:6px 0;[[ typoCss('body', { color: tn.color, weight: '700' }) ]]">[[ r[1] ]]</td>
+      </tr>
+      [% endfor %]
+    </table>
+  </mj-text>
+  [% endif %]
+  [% if data.description %][[ c('content/text', { text: data.description }, { settings: { align: s.align, color: tn.color, darkMode: tn.darkMode } }) ]][% endif %]
+  [% if data.speaker %][[ c('content/text', { text: 'With ' + data.speaker }, { settings: { level: 'bodySmall', align: s.align, color: tn.color, darkMode: tn.darkMode } }) ]][% endif %]
+  [% if data.cta %][[ c('content/button', data.cta, { settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.xs 0 0 0' } }) ]][% endif %]
+</mj-column>
+[% endcall %]

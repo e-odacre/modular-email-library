@@ -1,0 +1,36 @@
+[# Fixture: Klaviyo syntax in every position we use it. tests/klaviyo-syntax.test.js compiles this and asserts
+   every tag survives. Includes the required footer tags so the output checks pass too. #]
+[% extends "layouts/base.mjml" %]
+
+[% block body %]
+<mj-raw>{% if person.first_name %}</mj-raw>
+<mj-section>
+  <mj-column>
+    <mj-text>Hi {{ person.first_name|default:"there" }}</mj-text>
+  </mj-column>
+</mj-section>
+<mj-raw>{% elif person.email %}</mj-raw>
+<mj-section>
+  <mj-column>
+    <mj-text>Hello {{ person.email }}</mj-text>
+  </mj-column>
+</mj-section>
+<mj-raw>{% else %}</mj-raw>
+<mj-section>
+  <mj-column>
+    <mj-text>Hello</mj-text>
+  </mj-column>
+</mj-section>
+<mj-raw>{% endif %}</mj-raw>
+
+<mj-section>
+  <mj-column>
+    <mj-text>{% for item in event.extra.items %}<p>{{ item.name }}: {{ item.price|floatformat:2 }}</p>{% endfor %}</mj-text>
+    <mj-button href="{{ event.extra.checkout_url }}">Return to {{ organization.name }}</mj-button>
+    <mj-image src="{{ event.extra.image_url }}" href="{% web_view_link %}" alt="Product" />
+    <mj-text><a href="{{ event.extra.order_url }}?utm_source=email&amp;utm_medium=flow">Order {{ event.extra.order_id }}</a></mj-text>
+  </mj-column>
+</mj-section>
+
+[[ c('email/footer') ]]
+[% endblock %]

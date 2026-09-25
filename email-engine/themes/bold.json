@@ -1,0 +1,86 @@
+{
+  "name": "Bold",
+  "description": "Loud and confident: heavy uppercase headlines, chunky square buttons, thick rules and high contrast.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "56px",
+        "weight": "900",
+        "letterSpacing": "-1px",
+        "transform": "uppercase",
+        "lineHeight": "1"
+      },
+      "h1": {
+        "size": "38px",
+        "weight": "900",
+        "transform": "uppercase",
+        "lineHeight": "1.05"
+      },
+      "h2": {
+        "size": "26px",
+        "weight": "800",
+        "transform": "uppercase"
+      },
+      "h3": {
+        "weight": "800"
+      },
+      "eyebrow": {
+        "weight": "900",
+        "letterSpacing": "3px"
+      },
+      "button": {
+        "weight": "900",
+        "size": "17px",
+        "letterSpacing": "1px",
+        "transform": "uppercase"
+      }
+    },
+    "spacing": {
+      "lg": "28px",
+      "xl": "40px",
+      "2xl": "56px"
+    },
+    "radius": {
+      "small": "0",
+      "medium": "0",
+      "large": "0"
+    }
+  },
+  "button": {
+    "radius": "@radius.none",
+    "innerPadding": "18px 40px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.primary",
+    "borderWidth": "3px",
+    "radius": "@radius.none",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.2xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.accent",
+    "color": "@colors.white",
+    "radius": "@radius.none"
+  },
+  "divider": {
+    "width": "4px",
+    "color": "@colors.primary",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.accent",
+    "lineWidth": "8px",
+    "lineLength": "80px"
+  },
+  "components": {}
+}

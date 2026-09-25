@@ -1,0 +1,24 @@
+[# saas/feature-announcement: announce a feature: a badge, a headline, a short description, key points, a button and a screenshot.
+
+   Stacked (text above a framed screenshot) or split (text beside the screenshot). The screenshot sits in a card frame
+   from the theme, and needs alt text that describes what it shows.
+
+   Compatibility
+   - Outlook desktop: honored. The split layout is a table row, rounded frame corners are square.
+   - Gmail apps: fine. The split layout stacks on phones through a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set content = [] %]
+[% if data.badge %][% set _ = content.push({ component: 'decorative/badge', data: { text: data.badge }, variant: 'pill', settings: { align: s.align } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h1', tag: 'h1', align: s.align } }) %]
+[% if data.description %][% set _ = content.push({ component: 'content/text', data: { text: data.description }, settings: { level: 'bodyLarge', align: s.align } }) %][% endif %]
+[% if data.points %][% set _ = content.push({ component: 'content/list', data: { items: data.points }, variant: 'checklist', settings: { align: 'left' } }) %][% endif %]
+[% if data.cta %][% set _ = content.push({ component: 'content/button', data: data.cta, settings: { align: s.align, padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[% if s.layout == 'split' and data.screenshot %]
+[[ c('layout/media-text', { media: data.screenshot, content: content }, { settings: { imagePosition: 'right', split: '55/45', background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% else %]
+[[ c('layout/section', { content: content }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% if data.screenshot %]
+[[ c('layout/section', { content: [{ component: 'content/image', data: { image: data.screenshot }, settings: { padding: '0', radius: '@radius.medium' } }] }, { variant: 'card', settings: { background: s.background, padding: '@spacing.xs', columnPadding: '0' } }) ]]
+[[ c('layout/gap', {}, { settings: { background: s.background, height: '@spacing.lg' } }) ]]
+[% endif %]
+[% endif %]

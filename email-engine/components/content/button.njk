@@ -1,0 +1,12 @@
+[# button: bulletproof CTA button, usable inside any mj-column.
+
+   Compatibility
+   - Outlook desktop (Word engine): border-radius is ignored, so the button renders square.
+   - Gmail apps: renders fine, it is a padded link inside a table cell (no image, no background image).
+   - Dark mode: colors swap through the dm-button (solid) or dm-button-outline classes where
+     prefers-color-scheme is honored. Elsewhere it keeps its light colors, which is fine because the
+     button carries its own background. Set darkMode to none to keep the light colors always.
+   - The href can be a Klaviyo tag such as {{ url }}. Never put the bare {% unsubscribe %} tag in an href,
+     use {% unsubscribe_link %}. #]
+[% set sizes = { small: ['10px 20px', '14px'], medium: [s.innerPadding, t.type.button.size], large: ['18px 36px', '18px'] } %]
+<mj-button[[ cc('dm-button' if s.darkMode == 'solid', 'dm-button-outline' if s.darkMode == 'outline', cls) ]] href="[[ data.href ]]" align="[[ s.align ]]" background-color="[[ s.background ]]" border-radius="[[ s.radius ]]"[% if s.borderWidth != '0' %] border="[[ s.borderWidth ]] solid [[ s.borderColor ]]"[% endif %] [[ typo('button', { color: s.color, size: sizes[s.size][1] }) ]] inner-padding="[[ sizes[s.size][0] ]]" padding="[[ s.padding ]]">[[ data.label ]]</mj-button>

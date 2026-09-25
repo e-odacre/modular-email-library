@@ -1,0 +1,88 @@
+[# examples/summer-collection: a complete marketing email written ONLY with library components, no raw MJML.
+
+   This is what authoring looks like: pick components with c('category/name', data, { variant, settings }), pass the content
+   as data. Preheader, announcement, header, hero, product section, feature section, social proof, promotion, call to action
+   and footer. Change the theme with `npm run remix -- ...` or build with `--theme luxury`, the content stays the same.
+   It uses placeholder images and example.com links, so it builds for the placeholder brand only. #]
+[% extends "layouts/base.mjml" %]
+
+[% block body %]
+[[ c('email/preheader', { text: 'Made for slower mornings and warmer days. The summer collection has landed.' }) ]]
+
+[[ c('promotional/announcement-bar', {
+  text: 'Free shipping on orders over $75.',
+  link: { label: 'Shop now', href: 'https://example.com/collections/summer' }
+}) ]]
+
+[[ c('email/header', { nav: [
+  { label: 'New', href: 'https://example.com/collections/new' },
+  { label: 'Women', href: 'https://example.com/collections/women' },
+  { label: 'Men', href: 'https://example.com/collections/men' },
+  { label: 'Sale', href: 'https://example.com/collections/sale' }
+] }) ]]
+
+[[ c('hero/standard', {
+  eyebrow: 'New for summer',
+  headline: 'Summer Collection',
+  description: 'Made for slower mornings and warmer days. Breathable linens and washed cottons, ready when you are.',
+  cta: { label: 'Shop the collection', href: 'https://example.com/collections/summer' },
+  image: { src: 'https://placehold.co/600x340/png?text=Summer+Collection', alt: 'A linen shirt, canvas tote and sun hat laid out on a sunny bench' }
+}) ]]
+
+[[ c('commerce/product-grid', {
+  heading: 'Our best sellers',
+  intro: 'The pieces our customers reach for again and again.',
+  products: [
+    { image: { src: 'https://placehold.co/400x400/png?text=Linen+Shirt', alt: 'The Coastal linen shirt in sand' }, name: 'Coastal Linen Shirt', price: '$120.00', salePrice: '$96.00', discount: 'Save 20%', badge: 'Best seller', url: 'https://example.com/products/coastal-linen-shirt', cta: { label: 'Shop now', href: 'https://example.com/products/coastal-linen-shirt' } },
+    { image: { src: 'https://placehold.co/400x400/png?text=Canvas+Tote', alt: 'A navy canvas tote bag' }, name: 'Everyday Canvas Tote', price: '$68.00', url: 'https://example.com/products/canvas-tote', cta: { label: 'Shop now', href: 'https://example.com/products/canvas-tote' } },
+    { image: { src: 'https://placehold.co/400x400/png?text=Wool+Socks', alt: 'Three pairs of merino socks in grey' }, name: 'Merino Sock 3-pack', price: '$32.00', badge: 'New', url: 'https://example.com/products/merino-socks', cta: { label: 'Shop now', href: 'https://example.com/products/merino-socks' } }
+  ],
+  cta: { label: 'View all best sellers', href: 'https://example.com/collections/best-sellers' }
+}, { variant: 'three-column' }) ]]
+
+[[ c('features/feature-grid', {
+  heading: 'Why you will love it',
+  intro: 'Everything we make comes with a promise.',
+  features: [
+    { icon: { src: 'https://placehold.co/96x96/png?text=Ship', alt: 'Shipping', decorative: true }, title: 'Free shipping', description: 'On every order over $75, tracked to your door.' },
+    { icon: { src: 'https://placehold.co/96x96/png?text=Return', alt: 'Returns', decorative: true }, title: '60-day returns', description: 'Not right? Send it back, we cover the postage.' },
+    { icon: { src: 'https://placehold.co/96x96/png?text=Repair', alt: 'Repairs', decorative: true }, title: 'Repaired for life', description: 'We mend it free, for as long as you own it.' }
+  ]
+}, { variant: 'tinted' }) ]]
+
+[[ c('social-proof/testimonial', {
+  quote: 'I have washed this shirt forty times and it just keeps getting softer. Easily the best linen I own.',
+  name: 'Priya N.',
+  title: 'Verified buyer, Portland',
+  avatar: { src: 'https://placehold.co/160x160/png?text=Priya', alt: 'Portrait of Priya N.' },
+  rating: 5
+}) ]]
+
+[[ c('promotional/discount-banner', {
+  discount: '10% off',
+  headline: 'Your first order',
+  text: 'A welcome gift for new customers.',
+  code: v('discount.code', { coupon: 'WELCOME10' }),
+  expires: 'Ends ' + v('discount.expires', { days: '14' }),
+  cta: { label: 'Shop now', href: 'https://example.com/collections/summer' }
+}) ]]
+
+[[ c('saas/cta-section', {
+  headline: 'Ready to find your summer uniform?',
+  text: 'Free shipping over $75, free returns for 60 days.',
+  primary: { label: 'Shop the collection', href: 'https://example.com/collections/summer' }
+}) ]]
+
+[[ c('email/footer', {
+  description: 'Sustainable everyday clothing, made to last.',
+  social: [
+    { network: 'instagram', href: 'https://instagram.com/example', label: 'Instagram' },
+    { network: 'facebook', href: 'https://facebook.com/example', label: 'Facebook' }
+  ],
+  legal: [
+    { label: 'Privacy policy', href: 'https://example.com/policies/privacy' },
+    { label: 'Terms of service', href: 'https://example.com/policies/terms' }
+  ],
+  copyright: '© ' + v('date.year') + ' ' + v('brand.name') + '. All rights reserved.'
+}, { variant: 'rich' }) ]]
+[% endblock %]

@@ -1,0 +1,10 @@
+[# saas/metrics: a metrics summary ("Your week in numbers"): two to four numbers, each with a label and an optional change note.
+
+   For usage and account emails. A preset of stats/stat-grid, the note under each number is where a change goes
+   ("+12% vs last week"). Values are text, so they can be Klaviyo tags.
+
+   Compatibility
+   - Outlook desktop: each row is a table with exact widths.
+   - Gmail apps: two per row on phones through a media query. Gmail on non-Google accounts shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[[ c('stats/stat-grid', { heading: data.heading, intro: data.period, stats: data.metrics }, { variant: ('two-stat' if (data.metrics | length) == 2 else ('four-stat' if (data.metrics | length) == 4 else 'default')), settings: { statVariant: 'plain', background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

@@ -1,0 +1,23 @@
+[# editorial/article-card: one article: image, category, linked title, excerpt, byline and a read link.
+
+   Sits in a column, so it works alone or in a layout/grid (see editorial/article-grid). The image and the title both
+   link to the article. The read link says what it is for, set linkLabel per email ("Read the full story").
+
+   Compatibility
+   - Outlook desktop: text and images honored.
+   - Gmail apps: fine. The image is a real img with alt text.
+   - Dark mode: text swaps via dm-text where prefers-color-scheme is honored. The title link takes the dark-mode link
+     color inside dm-text. Images are not recolored. #]
+[% set a = data.article %]
+[% set nodes = [] %]
+[% if a.image %][% set _ = nodes.push({ component: 'content/image', data: { image: { src: a.image.src, alt: a.image.alt, decorative: a.image.decorative, href: a.href } }, settings: { radius: s.imageRadius, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% if a.category %][% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: a.category }, settings: { align: s.align } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: '<a href="' + a.href + '" style="color:' + t.colors.text + ';text-decoration:none;">' + a.title + '</a>' }, settings: { level: s.titleLevel, tag: 'h3', align: s.align, padding: '0 0 @spacing.xs 0' } }) %]
+[% if s.showExcerpt and a.excerpt %][% set _ = nodes.push({ component: 'content/text', data: { text: a.excerpt }, settings: { level: 'bodySmall', align: s.align, padding: '0 0 @spacing.xs 0' } }) %][% endif %]
+[% set meta = [] %]
+[% if a.author %][% set _ = meta.push(a.author) %][% endif %]
+[% if a.date %][% set _ = meta.push(a.date) %][% endif %]
+[% if a.readTime %][% set _ = meta.push(a.readTime) %][% endif %]
+[% if s.showMeta and meta.length %][% set _ = nodes.push({ component: 'content/text', data: { text: meta | join(' &middot; ') }, settings: { level: 'caption', align: s.align, padding: '0 0 @spacing.xs 0' } }) %][% endif %]
+[% if s.showLink %][% set _ = nodes.push({ component: 'content/link', data: { label: s.linkLabel, href: a.href }, variant: 'arrow', settings: { align: s.align, level: 'bodySmall', padding: '0' } }) %][% endif %]
+[[ cn(nodes) ]]

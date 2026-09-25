@@ -1,0 +1,62 @@
+{
+  "name": "E-commerce",
+  "description": "Built to sell: clear prices, strong sale color, compact spacing, solid buttons and subtle card shadows.",
+  "overrides": {
+    "type": {
+      "price": {
+        "size": "22px"
+      },
+      "salePrice": {
+        "size": "22px"
+      },
+      "button": {
+        "weight": "700",
+        "size": "16px"
+      }
+    },
+    "spacing": {
+      "lg": "22px",
+      "xl": "28px"
+    },
+    "radius": {
+      "medium": "6px"
+    }
+  },
+  "button": {
+    "radius": "@radius.medium",
+    "innerPadding": "14px 32px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.border",
+    "borderWidth": "1px",
+    "radius": "@radius.medium",
+    "padding": "@spacing.md",
+    "shadow": "small"
+  },
+  "section": {
+    "paddingY": "@spacing.lg",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.error",
+    "color": "@colors.white",
+    "radius": "@radius.small"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.border",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.accent",
+    "lineWidth": "3px",
+    "lineLength": "48px"
+  },
+  "components": {}
+}

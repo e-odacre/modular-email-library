@@ -1,0 +1,18 @@
+[# hero/full-bleed: background image with heading, subheading and optional button.
+
+   Compatibility
+   - Outlook desktop: mj-hero writes a VML fallback so the background image still shows. The heading and text
+     sit on the hero background color if the image is blocked, so keep the text color readable on it.
+   - Gmail apps and most clients block or crop background images differently. The solid background-color
+     fallback is what people see when images are off, never rely on the image to carry the message.
+   - Dark mode: the hero keeps its own colors on purpose, it is a branded block.
+   - Leave image out to get a plain colored hero. #]
+<mj-hero[[ cc(cls) ]] mode="fixed-height" height="[[ s.height ]]" background-color="[[ s.background ]]"[% if data.image %] background-url="[[ data.image ]]" background-width="[[ t.layout.width ]]" background-height="[[ s.height ]]"[% endif %] background-position="center center" padding="0">
+  <mj-text align="[[ s.align ]]" [[ typo(s.headingLevel, { color: s.color }) ]] padding="0 32px 12px 32px">[[ data.heading ]]</mj-text>
+  [% if data.subheading %]
+  <mj-text align="[[ s.align ]]" [[ typo('body', { color: s.color }) ]] padding="0 32px">[[ data.subheading ]]</mj-text>
+  [% endif %]
+  [% if data.cta %]
+  [[ c('button', data.cta, { settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, padding: '24px 32px 0 32px', darkMode: 'none' } }) ]]
+  [% endif %]
+</mj-hero>

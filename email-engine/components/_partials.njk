@@ -1,0 +1,15 @@
+[# Shared template macros. Import with: [% from "components/_partials.njk" import section %]
+
+   section(s, cls, extra): an mj-section carrying the component's background and padding settings, with the
+   dark-mode class only when it sits on the brand surface or background. `extra` is raw attribute text such as
+   ' full-width="full-width"'. Body goes in via call:
+
+     [% call section(s, cls) %]<mj-column>...</mj-column>[% endcall %]
+
+   Compatibility (Outlook, Gmail, dark mode): these are plain mj-section wrappers, so the limits are the
+   including component's own. #]
+[% macro section(s, cls, extra='') %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]"[[ extra ]]>
+  [[ caller() ]]
+</mj-section>
+[% endmacro %]

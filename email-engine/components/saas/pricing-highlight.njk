@@ -1,0 +1,19 @@
+[# saas/pricing-highlight: one plan in a card: name, price, what is included and a button.
+
+   The price is text ("$29"), so currency and tags are yours. The featured variant fills the card with the primary color
+   for the plan you want people to pick. Only state real prices and terms.
+
+   Compatibility
+   - Outlook desktop: card background, border and padding honored, rounded corners are square.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface the card and text swap via dm-* classes, the featured card keeps its colors. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% if data.badge %][% set _ = nodes.push({ component: 'decorative/badge', data: { text: data.badge }, variant: 'pill', settings: { align: 'center' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.plan }, settings: { level: 'h3', tag: 'h2', align: 'center', color: tn.color, darkMode: tn.darkMode, padding: '0 0 4px 0' } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.price }, settings: { level: 'display', tag: 'div', align: 'center', color: tn.color, darkMode: tn.darkMode, padding: '0' } }) %]
+[% set _ = nodes.push({ component: 'content/text', data: { text: data.period }, settings: { level: 'caption', align: 'center', color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %]
+[% if data.description %][% set _ = nodes.push({ component: 'content/text', data: { text: data.description }, settings: { level: 'bodySmall', align: 'center', color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% if data.features %][% set _ = nodes.push({ component: 'content/list', data: { items: data.features }, variant: 'checklist', settings: { markerColor: s.markerColor, darkMode: tn.darkMode } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.xs 0 0 0' } }) %]
+[[ c('layout/section', { content: nodes }, { variant: s.frame, settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

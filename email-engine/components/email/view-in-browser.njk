@@ -1,0 +1,15 @@
+[# email/view-in-browser: a small "View it in your browser" line, usually the first thing in the email.
+
+   Uses Klaviyo's {% web_view_link %}, which returns only the URL, so it goes inside an href (verified against
+   Klaviyo's message personalization reference). The full-anchor {% web_view %} tag is not used here because
+   the link needs our own styling.
+
+   Compatibility
+   - Outlook desktop: honored, it is plain text and a link.
+   - Gmail apps: fine.
+   - Dark mode: text and link colors swap via dm-* classes where prefers-color-scheme is honored. #]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    <mj-text[[ cc(dm(s.background, 'muted')) ]] align="[[ s.align ]]" [[ typo('caption') ]] padding="0">[[ data.text ]] <a href="{% web_view_link %}" style="color:[[ s.linkColor ]];text-decoration:underline;">[[ data.label ]]</a></mj-text>
+  </mj-column>
+</mj-section>

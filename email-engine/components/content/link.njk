@@ -1,0 +1,9 @@
+[# content/link: a standalone text link, optionally with an arrow.
+
+   The label must say where the link goes ("Read the full story"), not "click here". That is checked.
+
+   Compatibility
+   - Outlook desktop: underline and color are honored.
+   - Gmail apps: fine.
+   - Dark mode: the link color swaps via dm-text where prefers-color-scheme is honored. #]
+<mj-text[[ cc('dm-text' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo(s.level) ]] padding="[[ s.padding ]]"><a href="[[ data.href ]]" style="color:[[ s.color ]];text-decoration:[[ 'underline' if s.underline else 'none' ]];font-weight:[[ s.weight ]];">[[ data.label ]][% if s.arrow %] &rarr;[% endif %]</a></mj-text>

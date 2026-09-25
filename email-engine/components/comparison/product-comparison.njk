@@ -1,0 +1,17 @@
+[# comparison/product-comparison: two to four products side by side: photo, name and price on top, spec rows, and a button under each.
+
+   A preset of comparison/comparison-table with product images in the column headers. Give every product a button or
+   none of them. Spec values are text ("Merino wool", "200 g"), yes and no become a check and a cross.
+
+   Compatibility
+   - Outlook desktop: tables, images and borders honored.
+   - Gmail apps: fine. On phones the columns shrink, keep product names short.
+   - Dark mode: cells on the brand surface or background swap via dm-* classes. Header cells keep their colors, product
+     images are not recolored. #]
+[% set cols = [] %]
+[% set foot = [] %]
+[% for p in data.products %]
+[% set _ = cols.push({ title: p.name, subtitle: p.price, image: p.image, highlight: p.highlight }) %]
+[% if p.cta %][% set _ = foot.push(p.cta) %][% endif %]
+[% endfor %]
+[[ c('comparison/comparison-table', { heading: data.heading, intro: data.intro, columns: cols, rows: data.rows, footer: (foot if foot.length else none) }, { variant: s.tableVariant, settings: { hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

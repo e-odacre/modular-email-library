@@ -1,0 +1,19 @@
+[# email/fallback-content: show one block in most clients and a simpler block in Outlook desktop.
+
+   Uses conditional comments, which only Outlook desktop understands: `primary` is hidden from Outlook and
+   `fallback` is shown only to it. Use it when a fancy block (a styled card, a stacked layout) degrades badly in
+   the Word engine. Both slots take content-level components.
+
+   Limits: conditional comments cannot be nested, so do not put components that emit their own (social-links,
+   outlook-safe-button, button-group inline) in either slot. That is checked for raw markup you pass in.
+
+   Compatibility
+   - Outlook desktop: shows only `fallback`.
+   - Gmail apps: shows only `primary`.
+   - Dark mode: nothing extra, the components inside carry their own colors. #]
+<mj-raw><!--[if !mso]><!--></mj-raw>
+[[ data.primary ]]
+<mj-raw><!--<![endif]--></mj-raw>
+<mj-raw><!--[if mso]></mj-raw>
+[[ data.fallback ]]
+<mj-raw><![endif]--></mj-raw>

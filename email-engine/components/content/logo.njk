@@ -1,0 +1,18 @@
+[# content/logo: the brand logo (or another logo you pass in), with the dark-mode swap.
+
+   With no data it uses the brand logo from the tokens and, when the brand defines dark.logoUrl, swaps to it in
+   dark mode. Pass src, alt (and optionally darkSrc) to show a different logo, for example a partner's.
+
+   Compatibility
+   - Outlook desktop: no dark-mode swap, so it always shows the light logo (the .logo-dark image stays hidden).
+   - Gmail apps: may auto-invert colors and ignore prefers-color-scheme. Use a logo with a transparent
+     background that reads on both light and dark if the swap matters.
+   - Dark logo swap: only emitted when a dark logo exists (brand dark.logoUrl or darkSrc). #]
+[% set src = data.src or t.logo.url %]
+[% set alt = data.alt or t.logo.alt %]
+[% set href = data.href or t.logo.href %]
+[% set darkSrc = data.darkSrc or ((t.dark.logoUrl if t.dark else none) if not data.src else none) %]
+<mj-image css-class="logo-light[[ ' ' + cls if cls else '' ]]" src="[[ src ]]" alt="[[ alt ]]" href="[[ href ]]" width="[[ s.width ]]" align="[[ s.align ]]" padding="[[ s.padding ]]" />
+[% if darkSrc %]
+<mj-image css-class="logo-dark[[ ' ' + cls if cls else '' ]]" src="[[ darkSrc ]]" alt="[[ alt ]]" href="[[ href ]]" width="[[ s.width ]]" align="[[ s.align ]]" padding="[[ s.padding ]]" />
+[% endif %]

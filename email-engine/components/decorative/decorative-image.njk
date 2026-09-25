@@ -1,0 +1,10 @@
+[# decorative/decorative-image: an image that adds no meaning (a flourish, texture or divider illustration).
+
+   The alt text is left empty on purpose, so screen readers skip it. If the image carries information use
+   content/image with real alt text instead.
+
+   Compatibility
+   - Outlook desktop: fixed width honored, border radius ignored.
+   - Gmail apps: fine. If images are blocked nothing meaningful is lost, by definition.
+   - Dark mode: images are not recolored. #]
+[[ c('content/image', { image: { src: data.src, decorative: true } }, { settings: { align: s.align, width: s.width, padding: s.padding, radius: s.radius, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

@@ -1,0 +1,20 @@
+[# promotional/discount-code: a boxed discount code with a label and an optional expiry.
+
+   The code is text, so it can be a fixed code ("SUMMER25") or a Klaviyo unique-code tag,
+   {% coupon_code 'SUMMER25' %} (verified against Klaviyo's coupon code help pages). A dashed border makes it read
+   as a coupon. Outlook desktop can draw dashed borders as solid.
+
+   Compatibility
+   - Outlook desktop: the box, colors and text are honored, dashed borders can render solid and rounded corners square.
+   - Gmail apps: fine. The code is real text so it can be selected and copied.
+   - Dark mode: the box keeps its own colors, use the on-color variant on colored bands. #]
+[% set typoBase = t.fonts.heading %]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="[[ s.align ]]" style="display:inline-table;"><tr>
+    <td align="center" style="border:[[ s.borderWidth ]] [[ s.borderStyle ]] [[ s.borderColor ]];border-radius:[[ s.radius ]];padding:14px 28px;background:[[ s.background ]];">
+      [% if data.label %]<div style="[[ typoCss('caption', { color: s.labelColor }) ]]padding-bottom:4px;">[[ data.label ]]</div>[% endif %]
+      <div style="font-family:[[ typoBase ]];font-size:[[ s.size ]];font-weight:bold;letter-spacing:3px;line-height:1.2;color:[[ s.color ]];">[[ data.code ]]</div>
+      [% if data.expires %]<div style="[[ typoCss('caption', { color: s.labelColor }) ]]padding-top:4px;">[[ data.expires ]]</div>[% endif %]
+    </td>
+  </tr></table>
+</mj-text>

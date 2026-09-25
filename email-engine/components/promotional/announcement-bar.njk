@@ -1,0 +1,14 @@
+[# promotional/announcement-bar: a thin band at the very top of the email with one line of news and an optional link.
+
+   Put it above the header. Keep it to one short line, it wraps on phones.
+
+   Compatibility
+   - Outlook desktop: a solid band with centered text, honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variants) text and background swap, on colored bars the colors stay. #]
+[% set tn = tone(s) %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    <mj-text[[ cc('dm-text' if tn.darkMode) ]] align="center" [[ typo('bodySmall', { color: tn.color }) ]] padding="0">[[ data.text ]][% if data.link %] <a href="[[ data.link.href ]]" style="color:[[ s.linkColor ]];font-weight:bold;text-decoration:underline;">[[ data.link.label ]]</a>[% endif %]</mj-text>
+  </mj-column>
+</mj-section>

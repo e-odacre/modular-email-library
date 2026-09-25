@@ -1,0 +1,87 @@
+{
+  "name": "Summer",
+  "description": "Bright and easygoing: heavy friendly headings, airy spacing, big rounded corners and a sun-colored accent.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "50px",
+        "weight": "800",
+        "letterSpacing": "-0.5px"
+      },
+      "h1": {
+        "size": "34px",
+        "weight": "800"
+      },
+      "h2": {
+        "size": "24px",
+        "weight": "700"
+      },
+      "eyebrow": {
+        "letterSpacing": "3px",
+        "weight": "800",
+        "color": "warning"
+      },
+      "button": {
+        "weight": "800"
+      }
+    },
+    "spacing": {
+      "lg": "28px",
+      "xl": "40px",
+      "2xl": "56px"
+    },
+    "radius": {
+      "small": "8px",
+      "medium": "14px",
+      "large": "26px",
+      "pill": "999px"
+    }
+  },
+  "button": {
+    "radius": "@radius.pill",
+    "innerPadding": "16px 34px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.background",
+    "borderWidth": "2px",
+    "radius": "@radius.large",
+    "padding": "@spacing.lg",
+    "shadow": "medium"
+  },
+  "section": {
+    "paddingY": "@spacing.xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.warning",
+    "color": "@colors.black",
+    "radius": "@radius.pill"
+  },
+  "divider": {
+    "width": "2px",
+    "color": "@colors.warning",
+    "style": "dashed"
+  },
+  "image": {
+    "radius": "@radius.large"
+  },
+  "accent": {
+    "color": "@colors.warning",
+    "lineWidth": "5px",
+    "lineLength": "56px"
+  },
+  "components": {
+    "commerce/product-card": {
+      "variant": "playful"
+    },
+    "commerce/product-grid": {
+      "variant": "playful"
+    },
+    "decorative/badge": {
+      "variant": "pill"
+    }
+  }
+}

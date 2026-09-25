@@ -1,0 +1,20 @@
+[# saas/case-study: a full case study teaser: the customer, a headline, a summary, up to three results as big numbers and a button.
+
+   Longer than saas/customer-story: it leads with the outcome. Only use results the customer has approved.
+
+   Compatibility
+   - Outlook desktop: each stats row is a table with exact widths.
+   - Gmail apps: fine. Stats sit two per row on phones through a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: 'Case study: ' + data.customer }, settings: { align: 'center' } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'h1', tag: 'h1', align: 'center' } }) %]
+[% if data.summary %][% set _ = nodes.push({ component: 'content/text', data: { text: data.summary }, settings: { level: 'bodyLarge', align: 'center', padding: '0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[[ c('stats/stat-grid', { stats: data.results }, { variant: ('two-stat' if (data.results | length) == 2 else 'default'), settings: { columns: (data.results | length), background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% set tail = [] %]
+[% if data.quote %][% set _ = tail.push({ component: 'content/quote', data: { text: data.quote, author: data.person, role: data.role }, variant: 'centered', settings: { align: 'center' } }) %][% endif %]
+[% if data.cta %][% set _ = tail.push({ component: 'content/button', data: data.cta, settings: { padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[% if tail.length %]
+[[ c('layout/container', { content: tail }, { settings: { background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

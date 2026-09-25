@@ -1,0 +1,16 @@
+[# stats/metric-highlight: one big number on a colored band with a label, a line of context and an optional button.
+
+   Use it for the number you want people to remember ("$2.4M donated", "98% would recommend").
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.metric }, settings: { level: 'display', tag: 'div', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0' } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.label }, settings: { level: 'h3', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '@spacing.xs 0 @spacing.sm 0' } }) %]
+[% if data.text %][% set _ = nodes.push({ component: 'content/text', data: { text: data.text }, settings: { align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0' } }) %][% endif %]
+[% if data.source %][% set _ = nodes.push({ component: 'content/text', data: { text: data.source }, settings: { level: 'caption', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.md 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

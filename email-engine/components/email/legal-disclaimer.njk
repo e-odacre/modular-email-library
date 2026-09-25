@@ -1,0 +1,9 @@
+[# email/legal-disclaimer: small print such as offer terms, price disclaimers or regulatory text.
+
+   Kept at 12px or above (the caption type level) so it stays legible. Long text is fine, it wraps.
+
+   Compatibility
+   - Outlook desktop: honored.
+   - Gmail apps: fine.
+   - Dark mode: the text swaps via dm-muted where prefers-color-scheme is honored. #]
+<mj-text[[ cc('dm-muted' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo('caption', { color: s.color }) ]] padding="[[ s.padding ]]">[% if s.prefix %][[ s.prefix ]] [% endif %][[ data.text ]]</mj-text>

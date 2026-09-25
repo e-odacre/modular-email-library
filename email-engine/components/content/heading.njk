@@ -1,0 +1,13 @@
+[# content/heading: a heading with a real h1-h6 tag and a separate visual size.
+
+   `level` is how it looks (display, h1..h4), `tag` is what it is in the document outline (h1..h6, or div for a
+   purely visual heading). Keep one h1 per email and don't skip levels.
+   The tag carries explicit font values, never "inherit", because Outlook desktop does not resolve inherit reliably.
+
+   Compatibility
+   - Outlook desktop: heading tags are honored with the explicit inline styles used here.
+   - Gmail apps: fine.
+   - Dark mode: text color swaps via the dm-text class where prefers-color-scheme is honored. Turn darkMode off
+     when the heading sits on a colored background. #]
+[% set mcls = ('m-' + s.mobileAlignment) if s.mobileAlignment != 'inherit' else '' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls, mcls) ]] align="[[ s.align ]]" [[ typo(s.level, { color: s.color, transform: s.transform, letterSpacing: s.tracking }) ]] padding="[[ s.padding ]]"><[[ s.tag ]] style="[[ typoCss(s.level, { color: s.color, transform: s.transform, letterSpacing: s.tracking }) ]]">[[ data.text ]]</[[ s.tag ]]></mj-text>

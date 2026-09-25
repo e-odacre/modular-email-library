@@ -1,0 +1,42 @@
+{
+  "name": "Minimal",
+  "description": "Neutral and quiet. Square-ish corners, hairline borders, no shadows, generous whitespace. The reference theme and the default.",
+  "overrides": {},
+  "button": {
+    "radius": "@radius.medium",
+    "innerPadding": "14px 28px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.border",
+    "borderWidth": "1px",
+    "radius": "@radius.medium",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.lg",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.accent",
+    "color": "@colors.white",
+    "radius": "@radius.small"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.border",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.accent",
+    "lineWidth": "3px",
+    "lineLength": "48px"
+  },
+  "components": {}
+}

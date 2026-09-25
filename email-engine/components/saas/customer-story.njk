@@ -1,0 +1,14 @@
+[# saas/customer-story: a short customer story: their logo, a quote, one headline result and a link to the full story.
+
+   Shorter than saas/case-study. Only use quotes and results the customer has approved.
+
+   Compatibility
+   - Outlook desktop: honored.
+   - Gmail apps: fine. The logo is an image, so its alt text names the customer if images are blocked.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set nodes = [] %]
+[% if data.logo %][% set _ = nodes.push({ component: 'content/image', data: { image: { src: data.logo.src, alt: data.logo.alt, decorative: data.logo.decorative, width: '120px' } }, settings: { align: 'left', padding: '0 0 @spacing.md 0' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/quote', data: { text: data.quote, author: data.person, role: (data.role + ', ' + data.customer) if data.role else data.customer } }) %]
+[% if data.metric %][% set _ = nodes.push({ component: 'stats/stat', data: data.metric, variant: 'left', settings: { valueLevel: 'h1' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/link', data: { label: data.cta.label, href: data.cta.href }, variant: 'arrow', settings: { padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[[ c('layout/container', { content: nodes }, { settings: { maxWidth: s.maxWidth, background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

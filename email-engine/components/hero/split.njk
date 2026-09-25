@@ -1,0 +1,15 @@
+[# hero/split: an image on one side and the message on the other. IMAGE | TEXT, or TEXT | IMAGE with the reverse variant.
+
+   Built on layout/media-text, so on mobile it stacks with the image first (set mobileLayout: reverse for text first).
+   Text comes from library components, so type, spacing and button style follow the theme.
+
+   Compatibility
+   - Outlook desktop: side by side as a table row.
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set content = [] %]
+[% if data.eyebrow %][% set _ = content.push({ component: 'decorative/eyebrow', data: { text: data.eyebrow } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: s.headingLevel, tag: 'h1' } }) %]
+[% if data.description %][% set _ = content.push({ component: 'content/text', data: { text: data.description }, settings: { level: 'bodyLarge' } }) %][% endif %]
+[% if data.cta %][% set _ = content.push({ component: 'content/button', data: data.cta, settings: { align: 'left', padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[[ c('layout/media-text', { media: data.image, content: content }, { settings: { imagePosition: s.imagePosition, split: s.split, valign: s.valign, background: s.background, padding: s.padding, mobileLayout: s.mobileLayout, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

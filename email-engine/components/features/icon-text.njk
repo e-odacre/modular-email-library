@@ -1,0 +1,20 @@
+[# features/icon-text: an icon on the left with a title and short description on the right, on one row.
+
+   Two table cells: the icon (a plain img with explicit size) and the text. Good for lists of benefits.
+   The icon is decorative by default (alt is empty) because the title says the same thing.
+
+   Compatibility
+   - Outlook desktop: table cells and images honored.
+   - Gmail apps: fine. The two cells stay side by side on phones, keep the text short.
+   - Dark mode: text swaps via dm-text and dm-muted where prefers-color-scheme is honored. Icons are not recolored. #]
+<mj-text[[ cc(cls) ]] align="left" padding="[[ s.padding ]]">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
+    <td width="[[ s.iconSize | replace('px', '') | int + (s.gap | replace('px', '') | int) ]]" valign="[[ s.valign ]]" style="width:[[ s.iconSize | replace('px', '') | int + (s.gap | replace('px', '') | int) ]]px;padding-right:[[ s.gap ]];">
+      <img src="[[ data.icon.src ]]" alt="[[ data.icon.alt ]]" width="[[ s.iconSize | replace('px', '') ]]" height="[[ s.iconSize | replace('px', '') ]]" style="display:block;border:0;width:[[ s.iconSize ]];height:[[ s.iconSize ]];border-radius:[[ s.iconRadius ]];">
+    </td>
+    <td valign="[[ s.valign ]]">
+      <div class="dm-text" style="[[ typoCss('h4') ]]padding-bottom:2px;">[[ data.title ]]</div>
+      [% if data.description %]<div class="dm-muted" style="[[ typoCss('bodySmall', { color: 'mutedText' }) ]]">[[ data.description ]]</div>[% endif %]
+    </td>
+  </tr></table>
+</mj-text>

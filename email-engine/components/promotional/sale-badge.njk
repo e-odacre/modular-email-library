@@ -1,0 +1,17 @@
+[# promotional/sale-badge: a big round or square SALE / percentage badge, for placing beside or above an offer.
+
+   A fixed-size table cell with a background color. The circle needs border-radius, which Outlook desktop ignores, so
+   it renders as a square there with the same text.
+
+   Compatibility
+   - Outlook desktop: size, color and text are honored, the circle becomes a square.
+   - Gmail apps: fine.
+   - Dark mode: the badge keeps its own colors. #]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="[[ s.align ]]" style="display:inline-table;"><tr>
+    <td align="center" valign="middle" width="[[ s.size ]]" height="[[ s.size ]]" bgcolor="[[ s.background ]]" style="width:[[ s.size ]];height:[[ s.size ]];border-radius:[[ s.radius ]];background:[[ s.background ]];color:[[ s.color ]];font-family:[[ t.fonts.heading ]];font-weight:bold;">
+      <div style="font-size:[[ s.textSize ]];line-height:1.1;text-transform:uppercase;letter-spacing:1px;">[[ data.text ]]</div>
+      [% if data.sub %]<div style="font-size:11px;line-height:1.2;padding-top:2px;text-transform:uppercase;letter-spacing:1px;">[[ data.sub ]]</div>[% endif %]
+    </td>
+  </tr></table>
+</mj-text>

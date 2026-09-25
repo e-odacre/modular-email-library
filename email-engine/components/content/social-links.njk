@@ -1,0 +1,19 @@
+[# content/social-links: a row of social network links, as icons or as text.
+
+   Icons come from MJML's built-in set, hosted by Mailjet (facebook, instagram, x, twitter, linkedin, youtube,
+   pinterest, snapchat, github, medium, vimeo, tumblr, web). Networks without a built-in icon (tiktok) need
+   your own `icon` URL. For production, prefer icons you host yourself, pass `icon` on each link.
+
+   Compatibility
+   - Outlook desktop: icons render as linked images, radius is ignored.
+   - Gmail apps: fine. Icons are images, so the alt text (the label) is what shows when images are blocked.
+   - Dark mode: icons keep their colors. The text variant follows the link color. #]
+[% if s.display == 'text' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo('bodySmall') ]] padding="[[ s.padding ]]">[% for l in data.links %]<a href="[[ l.href ]]" style="color:[[ s.color ]];text-decoration:underline;">[[ l.label or (l.network | capitalize) ]]</a>[% if not loop.last %] &nbsp;&middot;&nbsp; [% endif %][% endfor %]</mj-text>
+[% else %]
+<mj-social[[ cc(cls) ]] mode="horizontal" align="[[ s.align ]]" icon-size="[[ s.iconSize ]]" border-radius="[[ s.radius ]]" padding="[[ s.padding ]]">
+  [% for l in data.links %]
+  <mj-social-element name="[[ l.network ]]" href="[[ l.href ]]" alt="[[ l.label or (l.network | capitalize) ]]"[% if l.icon %] src="[[ l.icon ]]"[% endif %] padding="0 [[ s.gap ]]" />
+  [% endfor %]
+</mj-social>
+[% endif %]

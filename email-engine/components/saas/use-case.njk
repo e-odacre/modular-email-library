@@ -1,0 +1,16 @@
+[# saas/use-case: show how one kind of customer uses the product: an eyebrow naming the use case, a heading, text, key points and an image.
+
+   A layout/media-text with the picture on one side. Good for a series ("For agencies", "For freelancers") in a
+   product email.
+
+   Compatibility
+   - Outlook desktop: side by side as a table row.
+   - Gmail apps: fine. It stacks on phones through a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set content = [] %]
+[% if data.eyebrow %][% set _ = content.push({ component: 'decorative/eyebrow', data: { text: data.eyebrow } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', tag: 'h2' } }) %]
+[% if data.text %][% set _ = content.push({ component: 'content/text', data: { text: data.text } }) %][% endif %]
+[% if data.points %][% set _ = content.push({ component: 'content/list', data: { items: data.points }, variant: 'checklist' }) %][% endif %]
+[% if data.cta %][% set _ = content.push({ component: 'content/link', data: { label: data.cta.label, href: data.cta.href }, variant: 'arrow', settings: { padding: '0' } }) %][% endif %]
+[[ c('layout/media-text', { media: data.image, content: content }, { settings: { imagePosition: s.imagePosition, split: '45/55', background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

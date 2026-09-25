@@ -1,0 +1,13 @@
+[# stats/stat: one statistic: a big value, a label and an optional note ("98%", "Customer satisfaction").
+
+   Sits in a column. Use stats/stat-grid for two to four together, or stats/metric-highlight for a full-width band.
+
+   Compatibility
+   - Outlook desktop: text and colors honored.
+   - Gmail apps: fine.
+   - Dark mode: the label swaps via dm-text where prefers-color-scheme is honored. The value keeps its color. #]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.value }, settings: { level: s.valueLevel, tag: 'div', align: s.align, color: s.valueColor, darkMode: false, padding: '0 0 4px 0' } }) %]
+[% set _ = nodes.push({ component: 'content/text', data: { text: data.label }, settings: { level: 'body', align: s.align, color: s.labelColor, darkMode: s.darkMode, padding: '0' } }) %]
+[% if data.note %][% set _ = nodes.push({ component: 'content/text', data: { text: data.note }, settings: { level: 'caption', align: s.align, darkMode: s.darkMode, padding: '4px 0 0 0' } }) %][% endif %]
+[[ cn(nodes) ]]

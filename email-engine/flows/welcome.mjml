@@ -1,0 +1,19 @@
+[# flows/welcome: the welcome flow, written with the welcome recipe.
+
+   The recipe supplies the structure (preheader, header, hero, footer), and the data here supplies the content. Only the
+   hero is filled in, since the rest of a welcome email needs real brand copy, products and reviews. Add sections as the
+   brand has them: brandIntro, benefits, bestSellers, socialProof and cta (see docs/recipes.md). Brand values come from the
+   tokens (t.*) so this builds for any brand. #]
+[% extends "layouts/base.mjml" %]
+
+[% block body %]
+[[ recipe('welcome', {
+  hero: {
+    eyebrow: 'Welcome, ' + v('customer.first_name'),
+    headline: 'Welcome to ' + t.brand.name,
+    description: 'Thanks for joining us. Here is what happens next.',
+    cta: { label: 'Start exploring', href: v('brand.url') },
+    image: { src: t.images.hero, alt: 'Welcome to ' + t.brand.name }
+  }
+}) ]]
+[% endblock %]

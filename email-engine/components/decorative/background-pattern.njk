@@ -1,0 +1,14 @@
+[# decorative/background-pattern: a section with a repeating pattern or texture image behind its content.
+
+   MJML writes a VML fallback for Outlook desktop, so the pattern still shows there. The solid background color is
+   what people see when images are blocked, so keep it close to the pattern's tone and keep the message in text.
+
+   Compatibility
+   - Outlook desktop: background image via the VML fallback MJML generates. Repeat patterns tile.
+   - Gmail apps: background images can be blocked or dropped in some clients, the solid color shows instead.
+   - Dark mode: the pattern and its background color stay as they are, they are a branded block. #]
+<mj-section[[ cc(cls) ]] background-color="[[ s.background ]]" background-url="[[ data.pattern ]]" background-repeat="[[ s.repeat ]]" background-size="[[ s.size ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    [[ data.content ]]
+  </mj-column>
+</mj-section>

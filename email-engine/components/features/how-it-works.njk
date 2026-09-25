@@ -1,0 +1,9 @@
+[# features/how-it-works: a process section: "How it works" and three to four steps side by side with a closing button.
+
+   A preset of features/numbered-steps in its horizontal layout with circled numbers.
+
+   Compatibility
+   - Outlook desktop: number markers are table cells, circles render as squares.
+   - Gmail apps: the steps stack on phones through a media query, Gmail on non-Google accounts keeps the desktop row.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[[ c('features/numbered-steps', { heading: data.heading, intro: data.intro, steps: data.steps, cta: data.cta }, { variant: 'horizontal-circles', settings: { background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

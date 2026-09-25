@@ -1,0 +1,28 @@
+[# promotional/free-shipping: a free-shipping message, optionally with a progress bar toward the threshold.
+
+   Pass `progress` (0 to 100) to show how close the customer is, for example in an abandoned-cart email. The bar is
+   two table cells with background colors, so no images. Progress is computed by you (or by Klaviyo tags), this
+   component only draws it.
+
+   Compatibility
+   - Outlook desktop: the bar is a table with two colored cells, honored. Rounded ends are square.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface the text swaps via dm-* classes, on a colored band the colors stay. #]
+[% set tn = tone(s) %]
+[% set done = (data.progress | default(0)) %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    <mj-text[[ cc('dm-text' if tn.darkMode) ]] align="center" [[ typo('body', { color: tn.color, weight: '700' }) ]] padding="0 0 [[ s.gap if data.progress is defined else '0' ]] 0">[[ data.text ]]</mj-text>
+    [% if data.progress is defined %]
+    <mj-text align="center" padding="0">
+      <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="border-radius:[[ s.radius ]];"><tr>
+        [% if done > 0 %]<td width="[[ done ]]%" height="[[ s.barHeight ]]" bgcolor="[[ s.barColor ]]" style="width:[[ done ]]%;height:[[ s.barHeight ]];background:[[ s.barColor ]];font-size:0;line-height:0;">&nbsp;</td>[% endif %]
+        [% if done < 100 %]<td width="[[ 100 - done ]]%" height="[[ s.barHeight ]]" bgcolor="[[ s.trackColor ]]" style="width:[[ 100 - done ]]%;height:[[ s.barHeight ]];background:[[ s.trackColor ]];font-size:0;line-height:0;">&nbsp;</td>[% endif %]
+      </tr></table>
+    </mj-text>
+    [% endif %]
+    [% if data.remaining %]
+    <mj-text[[ cc('dm-muted' if tn.darkMode) ]] align="center" [[ typo('bodySmall', { color: tn.color }) ]] padding="[[ s.gap ]] 0 0 0">[[ data.remaining ]]</mj-text>
+    [% endif %]
+  </mj-column>
+</mj-section>

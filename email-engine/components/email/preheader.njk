@@ -1,0 +1,18 @@
+[# email/preheader: hidden preview text that appears next to the subject line in the inbox.
+
+   Without text it emits Klaviyo's {% render_variable preview_text %}, which shows the preview text set on the
+   email screen in Klaviyo. The hidden div is padded with zero-width characters so the first lines of the email
+   body don't leak into the preview. layouts/base.mjml also has a `preview` block (MJML's mj-preview), use one or
+   the other, not both.
+
+   Compatibility
+   - Outlook desktop: the div is hidden with display:none and zero size, and the preview is not shown in the
+     inbox list there.
+   - Gmail apps: the preview text shows in the inbox list and is padded so body text does not follow it.
+   - Dark mode: the text is invisible, nothing to swap. #]
+<mj-raw>
+<div style="display:none;font-size:1px;color:[[ s.color ]];line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;">
+[% if data.text %][[ data.text ]][% else %]{% render_variable preview_text %}[% endif %]
+[% if s.pad %][% for i in range(0, s.padLength) %]&zwnj;&nbsp;[% endfor %][% endif %]
+</div>
+</mj-raw>

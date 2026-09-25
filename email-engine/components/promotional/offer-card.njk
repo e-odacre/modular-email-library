@@ -1,0 +1,18 @@
+[# promotional/offer-card: a bordered card presenting one offer: badge, title, description, the discount, a code and a button.
+
+   A layout/section card, so its border, radius and padding come from the theme card style. It is a section-level
+   block (one card per row). For several offers side by side use a layout/grid of content components instead.
+
+   Compatibility
+   - Outlook desktop: card background, border and padding are honored, rounded corners are square.
+   - Gmail apps: fine.
+   - Dark mode: the card background and text swap via dm-* classes when it sits on the brand surface. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% if data.badge %][% set _ = nodes.push({ component: 'decorative/badge', data: { text: data.badge }, settings: { align: s.align } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.title }, settings: { level: 'h3', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %]
+[% if data.discount %][% set _ = nodes.push({ component: 'content/heading', data: { text: data.discount }, settings: { level: 'display', tag: 'div', align: s.align, color: s.discountColor, darkMode: false, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% if data.description %][% set _ = nodes.push({ component: 'content/text', data: { text: data.description }, settings: { align: s.align, color: tn.color, darkMode: tn.darkMode } }) %][% endif %]
+[% if data.code %][% set _ = nodes.push({ component: 'promotional/discount-code', data: { code: data.code, expires: data.expires }, settings: { align: s.align } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { variant: 'card', settings: { background: s.background, padding: s.padding, columnPadding: '@spacing.sm', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

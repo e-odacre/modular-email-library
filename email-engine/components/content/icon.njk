@@ -1,0 +1,10 @@
+[# content/icon: a small icon image, sized and aligned. Use it above a heading or beside a short line of text.
+
+   Icons are images (SVG is not supported in most email clients), so export PNGs at 2x. Pass decorative: true when
+   the icon sits next to text that already says the same thing.
+
+   Compatibility
+   - Outlook desktop: fixed width is honored.
+   - Gmail apps: fine. Images are blocked by default in some clients, so keep meaning in the adjacent text.
+   - Dark mode: icons are not recolored. Use a mid-tone icon or one with its own solid background. #]
+<mj-image[[ cc(cls) ]] src="[[ data.icon.src ]]" alt="[[ data.icon.alt ]]"[% if data.icon.href %] href="[[ data.icon.href ]]"[% endif %] width="[[ data.icon.width or s.size ]]" align="[[ s.align ]]" border-radius="[[ s.radius ]]" padding="[[ s.padding ]]" />

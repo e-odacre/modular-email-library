@@ -1,0 +1,27 @@
+[# content/quote: a pull quote with an optional author. Layouts: bar (accent bar on the left), centered (large quote mark), plain.
+
+   The bar is a table cell with a background color, not a border, so Outlook desktop draws it. Text and author
+   carry their own dm-* classes so they swap in dark mode.
+
+   Compatibility
+   - Outlook desktop: the accent bar is a shaded table cell, honored. Italics are honored.
+   - Gmail apps: fine.
+   - Dark mode: quote text and author swap via dm-text and dm-muted where prefers-color-scheme is honored. #]
+[% set quoteStyle = typoCss('bodyLarge') + 'font-style:italic;text-align:' + s.align + ';' %]
+[% set authorStyle = typoCss('caption') + 'padding-top:8px;text-align:' + s.align + ';' %]
+[% set authorLine %][[ data.author ]][% if data.role %], [[ data.role ]][% endif %][% endset %]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+[% if s.layout == 'bar' %]
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
+    <td width="[[ s.barWidth ]]" bgcolor="[[ s.barColor ]]" style="width:[[ s.barWidth ]];font-size:0;line-height:0;">&nbsp;</td>
+    <td style="padding:0 0 0 16px;">
+      <p class="dm-text" style="[[ quoteStyle ]]">&ldquo;[[ data.text ]]&rdquo;</p>
+      [% if data.author %]<p class="dm-muted" style="[[ authorStyle ]]">&mdash; [[ authorLine ]]</p>[% endif %]
+    </td>
+  </tr></table>
+[% else %]
+  [% if s.layout == 'centered' %]<p style="margin:0;font-size:48px;line-height:40px;color:[[ s.barColor ]];font-family:Georgia, serif;text-align:[[ s.align ]];">&ldquo;</p>[% endif %]
+  <p class="dm-text" style="[[ quoteStyle ]]">[% if s.layout == 'plain' %]&ldquo;[[ data.text ]]&rdquo;[% else %][[ data.text ]][% endif %]</p>
+  [% if data.author %]<p class="dm-muted" style="[[ authorStyle ]]">&mdash; [[ authorLine ]]</p>[% endif %]
+[% endif %]
+</mj-text>

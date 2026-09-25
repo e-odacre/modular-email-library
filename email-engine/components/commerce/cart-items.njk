@@ -1,0 +1,28 @@
+[# commerce/cart-items: the products in a customer's cart or order, repeated from Klaviyo event data.
+
+   Unlike commerce/product-grid, the items are not known when you build: Klaviyo fills them in at send time. This wraps one
+   row in {% for item in event.extra.line_items %} ... {% endfor %} (inside mj-raw, so MJML keeps the tags), and each row
+   shows the image, title, quantity and price through Klaviyo variables. The default variable names are the Shopify ones from
+   variables/klaviyo.json. Event variables depend on your ecommerce integration and must be copied exactly from your event
+   preview in Klaviyo, so check them there before sending. The preview shows the tags un-rendered, that is expected.
+
+   Compatibility
+   - Outlook desktop: each row is a media-text table row.
+   - Gmail apps: rows stack on phones through a media query. Gmail on non-Google accounts keeps the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set a = data.alias %]
+[% if data.heading %]
+[[ c('layout/section', { content: [{ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', align: 'center', padding: '@spacing.sm' } }] }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+<mj-raw>{% for [[ a ]] in [[ data.itemsVariable ]] %}</mj-raw>
+[% set content = [{ component: 'content/heading', data: { text: data.item.title }, settings: { level: 'h4', tag: 'h3', padding: '0 0 4px 0' } }] %]
+[% if data.item.quantity %][% set _ = content.push({ component: 'content/text', data: { text: 'Qty: ' + data.item.quantity }, settings: { level: 'bodySmall', padding: '0 0 4px 0' } }) %][% endif %]
+[% if data.item.price %][% set _ = content.push({ component: 'content/heading', data: { text: data.item.price }, settings: { level: 'price', tag: 'div', padding: '0' } }) %][% endif %]
+[[ c('layout/media-text', { media: { src: data.item.image, alt: data.item.imageAlt or data.item.title }, content: content }, { settings: { split: s.split, valign: 'middle', background: s.background, padding: s.rowPadding, mobileLayout: 'stack', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+<mj-raw>{% endfor %}</mj-raw>
+[% if data.total %]
+[[ c('layout/section', { content: [{ component: 'content/heading', data: { text: data.totalLabel + ' ' + data.total }, settings: { level: 'h3', tag: 'div', align: 'right', padding: '0' } }] }, { settings: { background: s.background, padding: '@spacing.sm ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[% if data.cta %]
+[[ c('layout/section', { content: [{ component: 'content/button', data: data.cta, settings: { padding: '0' } }] }, { settings: { background: s.background, padding: '@spacing.md ' + s.paddingX + ' ' + s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

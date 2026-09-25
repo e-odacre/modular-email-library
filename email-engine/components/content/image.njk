@@ -1,0 +1,13 @@
+[# content/image: a responsive image with required alt text, optionally linked.
+
+   Alt text is required by the data schema. Pass decorative: true for images that add no meaning (a texture, a
+   flourish) and the alt is left empty on purpose so screen readers skip it.
+
+   Compatibility
+   - Outlook desktop: width is honored, border radius is ignored (square corners). Images need an explicit width
+     to size correctly, MJML sets one from the column width.
+   - Gmail apps: fine. Images are blocked by default in some clients, so alt text is what people see first.
+   - Dark mode: images are not recolored. Use images with transparent backgrounds carefully, or give them a solid one. #]
+[% set mcls = ('m-' + s.mobileAlignment) if s.mobileAlignment != 'inherit' else '' %]
+[% set w = data.image.width or s.width %]
+<mj-image[[ cc(cls, mcls) ]] src="[[ data.image.src ]]" alt="[[ data.image.alt ]]"[% if data.image.href %] href="[[ data.image.href ]]"[% endif %][% if w != 'auto' %] width="[[ w ]]"[% endif %] align="[[ s.align ]]" border-radius="[[ s.radius ]]" padding="[[ s.padding ]]"[% if s.fluidOnMobile %] fluid-on-mobile="true"[% endif %] />

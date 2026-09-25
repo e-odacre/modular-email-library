@@ -1,0 +1,10 @@
+[# promotional/limited-time: a limited-time offer band: a label, the offer, when it ends and a button.
+
+   Built on promotional/promo-banner. The end date is text, so it can be a fixed date or a Klaviyo tag.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set line = (data.text + '<br>' if data.text else '') + ('Ends ' + data.endsAt if data.endsAt else '') %]
+[[ c('promotional/promo-banner', { eyebrow: data.label, headline: data.headline, text: line if line else none, cta: data.cta }, { variant: s.bandVariant, settings: { align: s.align, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

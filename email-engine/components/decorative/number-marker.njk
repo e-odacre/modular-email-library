@@ -1,0 +1,18 @@
+[# decorative/number-marker: a big step number ("01", "2") in plain, circle or outline style. Used by steps and process sections.
+
+   Circle and outline use table cells with a background or border. Outlook desktop ignores border radius, so the
+   circle renders as a square there, the number stays clear.
+
+   Compatibility
+   - Outlook desktop: number and colors honored, circle becomes a square.
+   - Gmail apps: fine.
+   - Dark mode: markers keep the accent color. #]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+[% if s.shape == 'plain' %]
+  <span style="font-family:[[ t.fonts.heading ]];font-size:[[ s.size ]];font-weight:bold;line-height:1;color:[[ s.color ]];">[[ data.number ]]</span>
+[% else %]
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="[[ s.align ]]" style="display:inline-table;"><tr>
+    <td align="center" valign="middle" width="[[ s.box ]]" height="[[ s.box ]]"[% if s.shape == 'circle' %] bgcolor="[[ s.color ]]"[% endif %] style="width:[[ s.box ]];height:[[ s.box ]];border-radius:[[ s.radius ]];[% if s.shape == 'circle' %]background:[[ s.color ]];color:[[ s.numberColor ]];[% else %]border:2px solid [[ s.color ]];color:[[ s.color ]];[% endif %]font-family:[[ t.fonts.heading ]];font-size:[[ s.size ]];font-weight:bold;line-height:[[ s.box ]];">[[ data.number ]]</td>
+  </tr></table>
+[% endif %]
+</mj-text>

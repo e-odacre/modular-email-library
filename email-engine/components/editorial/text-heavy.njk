@@ -1,0 +1,15 @@
+[# editorial/text-heavy: a long-form text section in a reading-width column: heading, byline and rich body copy.
+
+   For newsletters and letters where the words are the content. The body is rich text (paragraphs, links, short
+   lists, bold and italics), set in the larger body size for comfortable reading. Keep paragraphs short.
+
+   Compatibility
+   - Outlook desktop: honored, paragraph margins can differ slightly.
+   - Gmail apps: fine. Very long emails can be clipped by Gmail above about 102 KB, the build warns about that.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set nodes = [] %]
+[% if data.heading %][% set _ = nodes.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h1', tag: 'h2', align: s.align } }) %][% endif %]
+[% if data.byline %][% set _ = nodes.push({ component: 'content/text', data: { text: data.byline }, settings: { level: 'caption', align: s.align, padding: '0 0 @spacing.md 0' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/rich-text', data: { html: data.html }, settings: { level: s.level, align: s.align } }) %]
+[% if data.signoff %][% set _ = nodes.push({ component: 'content/text', data: { text: data.signoff }, settings: { level: 'bodyLarge', align: s.align } }) %][% endif %]
+[[ c('layout/container', { content: nodes }, { settings: { maxWidth: s.maxWidth, background: s.background, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

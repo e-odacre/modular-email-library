@@ -1,0 +1,41 @@
+[# email/footer: brand, address, links, unsubscribe and manage-preferences. Compliant by construction.
+
+   Always includes the Klaviyo tags every commercial email needs, verified against Klaviyo's help center (message
+   personalization reference):
+   - {% unsubscribe_link %} and {% manage_preferences_link %} return only the URL, so they go inside an href.
+   - {{ organization.full_address }} comes from Settings > Organization > Contact information in Klaviyo.
+   - Klaviyo requires an unsubscribe tag and adds its own footer if it does not find one.
+   Optional parts: logo, description, social links, navigation links, legal links, copyright and a disclaimer.
+
+   Compatibility
+   - Outlook desktop: renders fine, footer text is small (the caption type level), keep it at 12px or above.
+   - Gmail apps: fine. Gmail may still add its own unsubscribe link above the message, that is separate.
+   - Dark mode: text and link colors swap through dm-* classes where prefers-color-scheme is honored. #]
+[% set linkStyle = 'color:' + s.linkColor + ';text-decoration:underline;' %]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    <mj-divider css-class="dm-border" border-width="1px" border-color="[[ t.colors.border ]]" padding="0 0 [[ s.gap ]] 0" />
+    [% if s.showLogo %]
+    [[ c('content/logo', {}, { settings: { width: s.logoWidth, padding: '0 0 ' + s.gap + ' 0' } }) ]]
+    [% endif %]
+    [% if data.description %]
+    [[ c('content/text', { text: data.description }, { settings: { level: 'bodySmall', align: 'center', color: '@colors.mutedText', padding: '0 0 ' + s.gap + ' 0' } }) ]]
+    [% endif %]
+    [% if data.social %]
+    [[ c('content/social-links', { links: data.social }, { variant: s.socialVariant, settings: { padding: '0 0 ' + s.gap + ' 0' } }) ]]
+    [% endif %]
+    [% if data.nav %]
+    <mj-text css-class="dm-muted" align="center" [[ typo('caption', { lineHeight: '1.8' }) ]] padding="0 0 [[ s.gap ]] 0">[% for l in data.nav %]<a href="[[ l.href ]]" style="[[ linkStyle ]]">[[ l.label ]]</a>[% if not loop.last %] &nbsp;|&nbsp; [% endif %][% endfor %]</mj-text>
+    [% endif %]
+    <mj-text css-class="dm-muted" align="center" [[ typo('caption', { lineHeight: '1.6' }) ]] padding="0">
+      [[ t.brand.name ]]<br>
+      {{ organization.full_address }}<br><br>
+      <a href="{% unsubscribe_link %}" style="[[ linkStyle ]]">[[ s.unsubscribeLabel ]]</a>
+      &nbsp;|&nbsp;
+      <a href="{% manage_preferences_link %}" style="[[ linkStyle ]]">[[ s.preferencesLabel ]]</a>
+      [% if data.legal %]<br>[% for l in data.legal %]<a href="[[ l.href ]]" style="[[ linkStyle ]]">[[ l.label ]]</a>[% if not loop.last %] &nbsp;|&nbsp; [% endif %][% endfor %][% endif %]
+      [% if data.copyright %]<br><br>[[ data.copyright ]][% endif %]
+      [% if data.disclaimer %]<br><br>[[ data.disclaimer ]][% endif %]
+    </mj-text>
+  </mj-column>
+</mj-section>

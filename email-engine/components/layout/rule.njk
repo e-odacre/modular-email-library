@@ -1,0 +1,11 @@
+[# layout/rule: a horizontal rule as its own section, for use between sections.
+
+   Compatibility
+   - Outlook desktop: see layout/divider. Dashed and dotted lines can render as solid.
+   - Gmail apps: fine.
+   - Dark mode: background and border color swap via dm-* classes when on the brand colors. #]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    <mj-divider[[ cc('dm-border' if s.color == t.colors.border) ]] border-width="[[ s.thickness ]]" border-style="[[ s.style ]]" border-color="[[ s.color ]]" width="[[ s.width ]]" padding="0" />
+  </mj-column>
+</mj-section>

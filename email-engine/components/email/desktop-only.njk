@@ -1,0 +1,12 @@
+[# email/desktop-only: sections that are hidden on phones (below 480px wide).
+
+   Uses the hide-mobile class from layouts/base.mjml. Clients that ignore media queries (Outlook desktop, Gmail on
+   non-Google accounts) show it always, which is the safe default for a desktop-only block.
+
+   Compatibility
+   - Outlook desktop: always shown (no media queries).
+   - Gmail apps: hidden on phones. Gmail on non-Google accounts drops media queries and shows it on phones too.
+   - Dark mode: nothing extra, the sections inside carry their own colors. #]
+<mj-wrapper css-class="hide-mobile" padding="0">
+  [[ data.content ]]
+</mj-wrapper>

@@ -1,0 +1,23 @@
+[# email/tracking-safe-cta: a button that adds UTM parameters to its link without breaking the URL.
+
+   It appends utm_source, utm_medium, utm_campaign, utm_content and utm_term (whichever you pass) to the href,
+   using ? or &amp; depending on whether the URL already has a query string, and placing them before any #anchor.
+   When the href is a Klaviyo tag, whether it already contains a query string is only known at send time, so
+   set `separator` to '?' (no query string yet) or '&' (already has one). The href itself, including Klaviyo
+   tags, is left exactly as written. Klaviyo also rewrites links for click
+   tracking, check your Klaviyo account's UTM and tracking settings so the two do not both add parameters.
+
+   Compatibility
+   - Outlook desktop: it is a content/button, see that component for Outlook limits (square corners).
+   - Gmail apps: fine.
+   - Dark mode: as content/button. #]
+[% set parts = data.href.split('#') %]
+[% set base = parts[0] %]
+[% set hash = ('#' + parts[1]) if parts.length > 1 else '' %]
+[% set query = [] %]
+[% for key in ['source', 'medium', 'campaign', 'content', 'term'] %]
+[% if data.utm[key] %][% set _ = query.push('utm_' + key + '=' + data.utm[key]) %][% endif %]
+[% endfor %]
+[% set joiner = ('&amp;' if s.separator == '&' else ('?' if s.separator == '?' else ('&amp;' if '?' in base else '?'))) %]
+[% set tracked = base + (joiner + query.join('&amp;') if query.length else '') + hash %]
+[[ c('content/button', { label: data.label, href: tracked }, { variant: s.buttonVariant, settings: { align: s.align } }) ]]

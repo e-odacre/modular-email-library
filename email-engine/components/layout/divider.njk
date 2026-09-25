@@ -1,0 +1,8 @@
+[# layout/divider: a horizontal rule inside a column, styled by the theme.
+
+   Compatibility
+   - Outlook desktop: mj-divider renders a bordered table cell, solid lines are honored. Dashed and dotted
+     lines render as solid in some Outlook versions.
+   - Gmail apps: fine.
+   - Dark mode: the border color swaps via the dm-border class when it uses the brand border color. #]
+<mj-divider[[ cc('dm-border' if s.color == t.colors.border, cls) ]] border-width="[[ s.thickness ]]" border-style="[[ s.style ]]" border-color="[[ s.color ]]" width="[[ s.width ]]" align="[[ s.align ]]" padding="[[ s.padding ]]" />

@@ -1,0 +1,19 @@
+[# editorial/article-grid: articles in a grid of 1 to 3 columns, with an optional heading and a "more articles" button.
+
+   Each article is an editorial/article-card. Built on layout/grid, two per row on phones with mobileColumns: 2.
+
+   Compatibility
+   - Outlook desktop: each row is a table with exact widths. mobileColumns is ignored (no media queries).
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set head = [] %]
+[% if data.heading %][% set _ = head.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', align: 'center', padding: '@spacing.sm' } }) %][% endif %]
+[% set items = [] %]
+[% for a in data.articles %][% set _ = items.push([{ component: 'editorial/article-card', variant: s.cardVariant, data: { article: a } }]) %][% endfor %]
+[% if head.length %]
+[[ c('layout/section', { content: head }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[[ c('layout/grid', { items: items }, { settings: { columns: s.columns, mobileColumns: s.mobileColumns, background: s.background, paddingY: s.paddingY, paddingX: s.paddingX, columnPadding: '@spacing.sm', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% if data.cta %]
+[[ c('layout/section', { content: [{ component: 'content/button', data: data.cta, variant: 'outline', settings: { padding: '0' } }] }, { settings: { background: s.background, padding: '0 ' + s.paddingX + ' ' + s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

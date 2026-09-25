@@ -1,0 +1,29 @@
+[# email/outlook-safe-button: a call-to-action button with true rounded corners in Outlook desktop, using VML.
+
+   Outlook desktop (the Word engine) ignores border-radius, so a normal button renders square there. This one draws
+   a VML rounded rectangle for Outlook and a normal styled link everywhere else. It has a fixed width and height
+   (VML needs them), so keep labels short. Use content/button when square corners in Outlook are acceptable, it
+   sizes to its label.
+
+   Compatibility
+   - Outlook desktop: rounded corners via <v:roundrect>, with an anchor lock so the whole shape is clickable.
+   - Gmail apps: a normal inline-block link with border-radius, fine.
+   - Dark mode: the button keeps its own colors. #]
+[% set h = (s.height | replace('px', '') | int) %]
+[% set r = (s.radius | replace('px', '') | int) %]
+[% set arc = ((r / h * 100) | round(0)) if r < (h / 2) else 50 %]
+<mj-raw>
+<tr>
+  <td align="[[ s.align ]]" style="font-size:0px;padding:[[ s.padding ]];word-break:break-word;">
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="[[ data.href ]]" style="height:[[ s.height ]];v-text-anchor:middle;width:[[ s.width ]];" arcsize="[[ arc ]]%" strokecolor="[[ s.background ]]" fillcolor="[[ s.background ]]">
+      <w:anchorlock/>
+      <center style="color:[[ s.color ]];font-family:[[ t.fonts.heading ]];font-size:[[ t.type.button.size ]];font-weight:bold;">[[ data.label ]]</center>
+    </v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <a href="[[ data.href ]]" target="_blank" style="display:inline-block;width:[[ s.width ]];background:[[ s.background ]];border-radius:[[ s.radius ]];color:[[ s.color ]];[[ typoCss('button', { color: s.color }) ]]line-height:[[ s.height ]];text-align:center;text-decoration:none;">[[ data.label ]]</a>
+    <!--<![endif]-->
+  </td>
+</tr>
+</mj-raw>

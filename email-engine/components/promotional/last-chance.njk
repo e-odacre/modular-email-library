@@ -1,0 +1,17 @@
+[# promotional/last-chance: the final-reminder block: a "Last chance" label, a display headline, a line of text and a button.
+
+   Dark by default so it stands out after lighter sections. Use it once, at the end of a sale sequence, and only
+   when the deadline is real.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: data.label }, settings: { align: s.align, color: tn.color } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.headline }, settings: { level: 'display', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %]
+[% if data.text %][% set _ = nodes.push({ component: 'content/text', data: { text: data.text }, settings: { level: 'bodyLarge', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.xs 0' } }) %][% endif %]
+[% if data.deadline %][% set _ = nodes.push({ component: 'content/heading', data: { text: data.deadline }, settings: { level: 'h4', tag: 'div', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0' } }) %][% endif %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.md 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

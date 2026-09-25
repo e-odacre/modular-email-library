@@ -1,0 +1,76 @@
+{
+  "name": "Valentine's",
+  "description": "Romantic: soft rounded shapes, light headings, pill buttons and accent-colored hairlines and dot ornaments.",
+  "overrides": {
+    "type": {
+      "display": {
+        "weight": "400",
+        "letterSpacing": "0.5px"
+      },
+      "h1": {
+        "weight": "400"
+      },
+      "h2": {
+        "weight": "400"
+      },
+      "eyebrow": {
+        "letterSpacing": "4px",
+        "weight": "400"
+      },
+      "button": {
+        "weight": "600",
+        "letterSpacing": "1px"
+      }
+    },
+    "radius": {
+      "small": "8px",
+      "medium": "16px",
+      "large": "28px",
+      "pill": "999px"
+    }
+  },
+  "button": {
+    "radius": "@radius.pill",
+    "innerPadding": "15px 34px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.accent",
+    "borderWidth": "1px",
+    "radius": "@radius.large",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.accent",
+    "color": "@colors.white",
+    "radius": "@radius.pill"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.accent",
+    "style": "dotted"
+  },
+  "image": {
+    "radius": "@radius.large"
+  },
+  "accent": {
+    "color": "@colors.accent",
+    "lineWidth": "2px",
+    "lineLength": "40px"
+  },
+  "components": {
+    "decorative/line": {
+      "variant": "ornament"
+    },
+    "decorative/badge": {
+      "variant": "pill"
+    }
+  }
+}

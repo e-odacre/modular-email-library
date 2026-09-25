@@ -1,0 +1,15 @@
+[# editorial/blog-post-preview: a compact post teaser: a small image beside the title, a two-line excerpt and a read link.
+
+   For lists of recent posts, stack several. Built on layout/media-text with a narrow image.
+
+   Compatibility
+   - Outlook desktop: side by side as a table row.
+   - Gmail apps: fine. It stacks on phones through a media query.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set a = data.article %]
+[% set content = [] %]
+[% if a.category %][% set _ = content.push({ component: 'decorative/eyebrow', data: { text: a.category } }) %][% endif %]
+[% set _ = content.push({ component: 'content/heading', data: { text: '<a href="' + a.href + '" style="color:' + t.colors.text + ';text-decoration:none;">' + a.title + '</a>' }, settings: { level: 'h3', tag: 'h3', padding: '0 0 4px 0' } }) %]
+[% if a.excerpt %][% set _ = content.push({ component: 'content/text', data: { text: a.excerpt }, settings: { level: 'bodySmall', padding: '0 0 4px 0' } }) %][% endif %]
+[% set _ = content.push({ component: 'content/link', data: { label: s.linkLabel, href: a.href }, variant: 'arrow', settings: { level: 'bodySmall', padding: '0' } }) %]
+[[ c('layout/media-text', { media: { src: a.image.src, alt: a.image.alt, decorative: a.image.decorative, href: a.href }, content: content }, { settings: { imagePosition: s.imagePosition, split: '35/65', valign: 'middle', background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

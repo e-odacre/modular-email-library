@@ -1,0 +1,16 @@
+const { n, urls, entry, section, eyebrow, heading, text, link, columns, rule } = require('./shared');
+const footer = (rich = false) => n('email/footer', rich ? {
+  nav: [{ label: 'Articles', href: urls.articles }, { label: 'Training', href: urls.training }, { label: 'Contact', href: urls.contact }],
+} : {}, { settings: { linkColor: '@colors.link', padding: '@spacing.xl' } });
+module.exports = [
+  entry('header-left', 'Signature masthead', 'Frame', 'A restrained left-aligned logo with a short accent rule.', [n('email/header', {}, { variant: 'left' }), section([rule()], 'navy', { padding: '0 @spacing.xl' })], undefined, { role: 'header' }),
+  entry('header-center', 'Centered masthead', 'Frame', 'Centered logo for announcements and shorter messages.', [n('email/header')], undefined, { role: 'header' }),
+  entry('header-navigation', 'Resource masthead', 'Frame', 'Logo and a compact three-link resource menu.', [n('email/header', { nav: [{ label: 'Platform', href: urls.platform }, { label: 'Resources', href: urls.articles }, { label: 'Contact', href: urls.contact }] }, { settings: { linkColor: '@colors.link' } })], undefined, { role: 'header' }),
+  entry('footer-minimal', 'Essential footer', 'Frame', 'Brand, organization address, unsubscribe and preferences.', [footer()], undefined, { role: 'footer' }),
+  entry('footer-resources', 'Resource footer', 'Frame', 'Adds useful destinations above the subscription controls.', [footer(true)], undefined, { role: 'footer' }),
+  entry('announcement', 'Peach notice strip', 'Frame', 'A compact announcement for a training or resource-led email.', [section([text('Practical water knowledge for your next team conversation.', 'peach', { level: 'bodySmall', align: 'center', padding: '0' })], 'peach', { padding: '@spacing.md @spacing.lg' })], [urls.training]),
+  entry('section-marker', 'Editorial chapter marker', 'Details', 'An oversized chapter number with a title and fine rule.', [columns([[eyebrow('FIELD NOTES'), heading('01', 'navy', 'display')], [heading('A closer look at water'), text('Ideas to bring to your next operational review.'), rule()]], 'navy', '30/70')], [urls.articles]),
+  entry('topic-navigation', 'Choose your next read', 'Details', 'A paper navigation panel for a three-part reading journey.', [section([eyebrow('IN THIS EDITION', 'paper'), link('01 / Monitoring', urls.monitoring, 'paper'), link('02 / The business case', urls.economics, 'paper'), link('03 / Understanding pH', urls.ph, 'paper')], 'paper')], [urls.articles]),
+  entry('followup-note', 'Personal follow-up note', 'Details', 'A quiet message without a large promotional headline.', [section([text('Hello,'), text('Which water-management question is most relevant to your team right now? The resources below may be a useful starting point.'), link('Share your question with SanEcoTec', urls.contact)])], [urls.contact]),
+  entry('closing-signoff', 'Team sign-off', 'Details', 'A short, human ending before the subscription footer.', [section([rule(), text('Let’s keep the conversation going.', 'navy', { level: 'bodyLarge' }), text('The SanEcoTec team', 'navy', { level: 'bodySmall', padding: '0' })], 'navy', { padding: '@spacing.lg @spacing.xl' })], [urls.contact]),
+];

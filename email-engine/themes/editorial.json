@@ -1,0 +1,89 @@
+{
+  "name": "Editorial",
+  "description": "Magazine-like: large confident headlines, generous reading sizes, strong rules and square edges.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "52px",
+        "lineHeight": "1.05",
+        "letterSpacing": "-1px",
+        "weight": "700"
+      },
+      "h1": {
+        "size": "36px",
+        "lineHeight": "1.15",
+        "letterSpacing": "-0.5px"
+      },
+      "h2": {
+        "size": "26px",
+        "lineHeight": "1.2",
+        "letterSpacing": "-0.25px"
+      },
+      "body": {
+        "size": "17px",
+        "lineHeight": "1.7"
+      },
+      "bodyLarge": {
+        "size": "20px",
+        "lineHeight": "1.7"
+      },
+      "eyebrow": {
+        "letterSpacing": "3px",
+        "color": "secondary"
+      }
+    },
+    "spacing": {
+      "lg": "28px",
+      "xl": "40px"
+    },
+    "radius": {
+      "small": "0",
+      "medium": "0",
+      "large": "0"
+    }
+  },
+  "button": {
+    "radius": "@radius.none",
+    "innerPadding": "14px 32px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.text",
+    "borderWidth": "1px",
+    "radius": "@radius.none",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.text",
+    "color": "@colors.surface",
+    "radius": "@radius.none"
+  },
+  "divider": {
+    "width": "2px",
+    "color": "@colors.text",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.text",
+    "lineWidth": "4px",
+    "lineLength": "48px"
+  },
+  "components": {
+    "commerce/product-card": {
+      "variant": "editorial"
+    },
+    "commerce/product-grid": {
+      "variant": "editorial"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+[# editorial/editorial-image: a full-width photograph with a caption and credit underneath, like a magazine figure.
+
+   The image needs alt text (or decorative). The caption is small text, the credit follows it.
+
+   Compatibility
+   - Outlook desktop: honored.
+   - Gmail apps: fine. Images can be blocked, the alt text describes what is missing.
+   - Dark mode: the caption swaps via dm-muted where prefers-color-scheme is honored, the image is not recolored. #]
+[% set nodes = [{ component: 'content/image', data: { image: data.image }, settings: { padding: '0', radius: '0' } }] %]
+[% set line = (data.caption or '') + (' ' if data.caption and data.credit else '') + (('<em>' + data.credit + '</em>') if data.credit else '') %]
+[% if line %][% set _ = nodes.push({ component: 'content/text', data: { text: line }, settings: { level: 'caption', align: s.captionAlign, padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

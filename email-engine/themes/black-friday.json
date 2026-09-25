@@ -1,0 +1,98 @@
+{
+  "name": "Black Friday",
+  "description": "Maximum urgency: shouty uppercase display type, hard square edges, thick black rules and the warning color as the highlight.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "58px",
+        "weight": "900",
+        "letterSpacing": "-1px",
+        "transform": "uppercase",
+        "lineHeight": "1"
+      },
+      "h1": {
+        "size": "38px",
+        "weight": "900",
+        "transform": "uppercase"
+      },
+      "h2": {
+        "weight": "900",
+        "transform": "uppercase"
+      },
+      "eyebrow": {
+        "weight": "900",
+        "letterSpacing": "4px",
+        "color": "warning"
+      },
+      "price": {
+        "weight": "900",
+        "size": "22px"
+      },
+      "salePrice": {
+        "weight": "900",
+        "size": "24px"
+      },
+      "button": {
+        "weight": "900",
+        "size": "17px",
+        "letterSpacing": "2px",
+        "transform": "uppercase"
+      }
+    },
+    "radius": {
+      "small": "0",
+      "medium": "0",
+      "large": "0"
+    }
+  },
+  "button": {
+    "radius": "@radius.none",
+    "innerPadding": "18px 44px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.black",
+    "borderWidth": "3px",
+    "radius": "@radius.none",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.black",
+    "color": "@colors.warning",
+    "radius": "@radius.none"
+  },
+  "divider": {
+    "width": "3px",
+    "color": "@colors.black",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.warning",
+    "lineWidth": "8px",
+    "lineLength": "64px"
+  },
+  "components": {
+    "promotional/discount-banner": {
+      "variant": "dark"
+    },
+    "promotional/urgency-banner": {
+      "variant": "dark"
+    },
+    "promotional/last-chance": {
+      "variant": "urgent"
+    },
+    "decorative/badge": {
+      "variant": "urgent"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+[# decorative/corner-accent: a section framed by an accent-colored corner (top and left edges, or top and right).
+
+   Made from section borders, so there are no images. The corner is drawn on the section's own border, which
+   keeps the content aligned.
+
+   Compatibility
+   - Outlook desktop: borders on the section table are honored.
+   - Gmail apps: fine.
+   - Dark mode: the section background swaps via dm-* classes when on the brand surface, the accent border stays. #]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]" border-top="[[ s.thickness ]] solid [[ s.color ]]"[% if s.corner == 'left' %] border-left="[[ s.thickness ]] solid [[ s.color ]]"[% else %] border-right="[[ s.thickness ]] solid [[ s.color ]]"[% endif %]>
+  <mj-column>
+    [[ data.content ]]
+  </mj-column>
+</mj-section>

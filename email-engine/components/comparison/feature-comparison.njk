@@ -1,0 +1,12 @@
+[# comparison/feature-comparison: which features each option has, as rows of yes, no or partial marks.
+
+   A preset of comparison/comparison-table for feature checklists: two or three columns of names (the first is
+   highlighted, that is usually you) and rows of features with yes, no or partial values.
+
+   Compatibility
+   - Outlook desktop: tables, colors and borders honored.
+   - Gmail apps: fine. On phones the columns shrink, keep the option names short.
+   - Dark mode: cells on the brand surface or background swap via dm-* classes. Header cells keep their colors. #]
+[% set cols = [] %]
+[% for name in data.columns %][% set _ = cols.push({ title: name, highlight: (loop.first and s.highlightFirst) }) %][% endfor %]
+[[ c('comparison/comparison-table', { heading: data.heading, intro: data.intro, columns: cols, rows: data.rows }, { variant: s.tableVariant, settings: { hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

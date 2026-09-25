@@ -1,0 +1,71 @@
+{
+  "name": "Christmas",
+  "description": "Festive: red and green from the brand roles for accents, rounded pill buttons, dashed and dotted ornament.",
+  "overrides": {
+    "type": {
+      "display": {
+        "weight": "700",
+        "letterSpacing": "0px"
+      },
+      "eyebrow": {
+        "letterSpacing": "4px",
+        "color": "error"
+      },
+      "button": {
+        "weight": "700",
+        "letterSpacing": "1px"
+      }
+    },
+    "radius": {
+      "small": "4px",
+      "medium": "10px",
+      "large": "20px"
+    }
+  },
+  "button": {
+    "radius": "@radius.pill",
+    "innerPadding": "15px 34px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.error",
+    "borderWidth": "2px",
+    "radius": "@radius.large",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.sm"
+  },
+  "badge": {
+    "background": "@colors.success",
+    "color": "@colors.white",
+    "radius": "@radius.pill"
+  },
+  "divider": {
+    "width": "2px",
+    "color": "@colors.error",
+    "style": "dotted"
+  },
+  "image": {
+    "radius": "@radius.large"
+  },
+  "accent": {
+    "color": "@colors.error",
+    "lineWidth": "4px",
+    "lineLength": "56px"
+  },
+  "components": {
+    "decorative/line": {
+      "settings": {
+        "style": "dotted"
+      }
+    },
+    "decorative/badge": {
+      "variant": "pill"
+    }
+  }
+}

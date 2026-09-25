@@ -1,0 +1,58 @@
+[# comparison/comparison-table: a comparison table: column headers, rows of label and values, and an optional button row.
+
+   Built on mj-table, so it is a real HTML table that fills the email width and works in every client. Cells are text.
+   The words yes, no and partial become a check, a cross and a tilde (with a screen reader label), anything else shows as
+   written. One column can be highlighted ("Recommended"). Column headers can carry a small image and a subtitle (a price).
+   Keep it to 2 to 4 value columns and short cell text: tables do not stack on phones, they get narrower.
+
+   Compatibility
+   - Outlook desktop: tables, colors and borders are honored. Rounded corners are not used.
+   - Gmail apps: fine. On phones the columns shrink, so long cell text wraps onto several lines.
+   - Dark mode: cells on the brand surface or background swap via dm-* classes. Header cells keep their colors. #]
+[% from "components/_partials.njk" import section %]
+[% macro ca(bg) %][% if dm(bg, 'bg') %] class="[[ dm(bg, 'bg') ]] dm-text"[% endif %][% endmacro %]
+[% set n = (data.columns | length) %]
+[% set labelPct = (s.labelWidth | replace('%', '') | int) %]
+[% set colPct = (((100 - labelPct) / n) | round(2)) %]
+[% set symbols = { yes: ['&#10003;', s.yesColor, 'Yes'], no: ['&#10005;', s.noColor, 'No'], partial: ['~', s.noColor, 'Partly'] } %]
+[% set border = '1px solid ' + s.borderColor %]
+[% call section(s, cls) %]
+<mj-column>
+  [% if data.heading %][[ c('content/heading', { text: data.heading }, { settings: { level: 'h2', align: 'center', padding: ('4px' if data.intro else '@spacing.md') } }) ]][% endif %]
+  [% if data.intro %][[ c('content/text', { text: data.intro }, { settings: { align: 'center', padding: '@spacing.md' } }) ]][% endif %]
+  <mj-table padding="0" width="100%" table-layout="fixed">
+    <tr>
+      <th width="[[ labelPct ]]%" style="width:[[ labelPct ]]%;padding:12px 8px;border-bottom:[[ border ]];">&nbsp;</th>
+      [% for col in data.columns %]
+      <th width="[[ colPct ]]%" align="center" valign="bottom" bgcolor="[[ s.highlightHeader if col.highlight else s.headerBackground ]]" style="width:[[ colPct ]]%;padding:12px 8px;background:[[ s.highlightHeader if col.highlight else s.headerBackground ]];[[ typoCss('bodySmall', { color: s.headerColor, weight: '700' }) ]]">
+        [% if col.image %]<img src="[[ col.image.src ]]" alt="[[ col.image.alt ]]" width="64" style="display:block;margin:0 auto 6px auto;border:0;width:64px;height:auto;">[% endif %]
+        [[ col.title ]]
+        [% if col.subtitle %]<br><span style="font-weight:400;font-size:12px;">[[ col.subtitle ]]</span>[% endif %]
+      </th>
+      [% endfor %]
+    </tr>
+    [% for r in data.rows %]
+    [% set rowBg = (s.zebraColor if (s.zebra and loop.index0 % 2 == 1) else s.background) %]
+    <tr>
+      <td[[ ca(rowBg) ]] bgcolor="[[ rowBg ]]" style="padding:12px 8px;background:[[ rowBg ]];border-bottom:[[ border ]];[[ typoCss('bodySmall', { weight: '700' }) ]]">[[ r.label ]]</td>
+      [% for v in r.values %]
+      [% set cellBg = (s.highlightBackground if data.columns[loop.index0].highlight else rowBg) %]
+      <td[[ ca(cellBg) ]] align="center" bgcolor="[[ cellBg ]]" style="padding:12px 8px;background:[[ cellBg ]];border-bottom:[[ border ]];[[ typoCss('bodySmall') ]]">[% if v in symbols %]<span role="img" aria-label="[[ symbols[v][2] ]]" style="color:[[ symbols[v][1] ]];font-size:18px;font-weight:bold;">[[ symbols[v][0] ]]</span>[% else %][[ v ]][% endif %]</td>
+      [% endfor %]
+    </tr>
+    [% endfor %]
+    [% if data.footer %]
+    <tr>
+      <td style="padding:14px 8px;">&nbsp;</td>
+      [% for f in data.footer %]
+      <td align="center" style="padding:14px 4px;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center"><tr>
+          <td align="center" bgcolor="[[ s.buttonBackground ]]" style="border-radius:[[ s.radius ]];background:[[ s.buttonBackground ]];mso-padding-alt:8px 14px;"><a href="[[ f.href ]]" target="_blank" style="display:inline-block;padding:8px 14px;color:[[ s.buttonColor ]];[[ typoCss('bodySmall', { color: s.buttonColor, weight: '700' }) ]]text-decoration:none;">[[ f.label ]]</a></td>
+        </tr></table>
+      </td>
+      [% endfor %]
+    </tr>
+    [% endif %]
+  </mj-table>
+</mj-column>
+[% endcall %]

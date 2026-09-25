@@ -1,0 +1,24 @@
+[# saas/product-update: release notes: a heading with a version and date, then a list of updates each tagged New, Improved, Fixed or Deprecated.
+
+   Each update is a badge, a short title and a description. Updates are separated by hairlines. Keep it to the changes
+   your readers care about, link to full release notes with the button.
+
+   Compatibility
+   - Outlook desktop: honored, it is text and small badge tables.
+   - Gmail apps: fine.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set kinds = { new: { label: 'New', variant: 'success' }, improved: { label: 'Improved', variant: 'default' }, fixed: { label: 'Fixed', variant: 'outline' }, deprecated: { label: 'Deprecated', variant: 'urgent' } } %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h1', tag: 'h1', padding: '4px' } }) %]
+[% set stamp = [] %]
+[% if data.version %][% set _ = stamp.push(data.version) %][% endif %]
+[% if data.date %][% set _ = stamp.push(data.date) %][% endif %]
+[% if stamp.length %][% set _ = nodes.push({ component: 'content/text', data: { text: stamp | join(' &middot; ') }, settings: { level: 'caption', padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% for u in data.updates %]
+[% set _ = nodes.push({ component: 'layout/divider', settings: { padding: '@spacing.sm 0' } }) %]
+[% set _ = nodes.push({ component: 'decorative/badge', data: { text: kinds[u.type].label }, variant: kinds[u.type].variant, settings: { padding: '0 0 @spacing.xs 0' } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: u.title }, settings: { level: 'h4', tag: 'h2', padding: '0 0 4px 0' } }) %]
+[% if u.description %][% set _ = nodes.push({ component: 'content/text', data: { text: u.description }, settings: { level: 'bodySmall', padding: '0' } }) %][% endif %]
+[% endfor %]
+[% if data.cta %][% set _ = nodes.push({ component: 'content/button', data: data.cta, variant: 'outline', settings: { align: 'left', padding: '@spacing.md 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

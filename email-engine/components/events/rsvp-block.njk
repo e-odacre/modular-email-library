@@ -1,0 +1,21 @@
+[# events/rsvp-block: an RSVP prompt: a label, the event name, one line of details, a button and a reply-by date.
+
+   Shorter than events/event-block: use it after the event details, or as the whole invitation. The details line is
+   built from the date, time and location you pass, joined with dots.
+
+   Compatibility
+   - Outlook desktop: all parts are tables or text, honored. Rounded button corners are square.
+   - Gmail apps: fine.
+   - Dark mode: on the brand surface (light variant) text and background swap, on colored bands the colors stay. #]
+[% set tn = tone(s) %]
+[% set bits = [] %]
+[% if data.date %][% set _ = bits.push(data.date) %][% endif %]
+[% if data.time %][% set _ = bits.push(data.time) %][% endif %]
+[% if data.location %][% set _ = bits.push(data.location) %][% endif %]
+[% set nodes = [] %]
+[% set _ = nodes.push({ component: 'decorative/eyebrow', data: { text: s.label }, settings: { align: s.align, color: tn.color } }) %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: data.eventTitle }, settings: { level: 'h1', tag: 'h2', align: s.align, color: tn.color, darkMode: tn.darkMode } }) %]
+[% if bits.length %][% set _ = nodes.push({ component: 'content/text', data: { text: bits | join(' &middot; ') }, settings: { level: 'bodyLarge', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '0 0 @spacing.sm 0' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/button', data: data.cta, settings: { align: s.align, background: s.buttonBackground, color: s.buttonColor, darkMode: tn.buttonDark, padding: '@spacing.xs 0 0 0' } }) %]
+[% if data.deadline %][% set _ = nodes.push({ component: 'content/text', data: { text: 'Please reply by ' + data.deadline }, settings: { level: 'caption', align: s.align, color: tn.color, darkMode: tn.darkMode, padding: '@spacing.sm 0 0 0' } }) %][% endif %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

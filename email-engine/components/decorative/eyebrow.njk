@@ -1,0 +1,11 @@
+[# decorative/eyebrow: a small uppercase label above a heading ("NEW ARRIVALS", "LIMITED EDITION").
+
+   Uses the eyebrow type level, which is accent-colored and letter-spaced in most themes.
+
+   Compatibility
+   - Outlook desktop: letter-spacing and uppercase are honored.
+   - Gmail apps: fine.
+   - Dark mode: the accent color stays (it has its own dark value where the brand defines one). Text on a colored
+     background should use darkMode off. #]
+[% set mcls = ('m-' + s.mobileAlignment) if s.mobileAlignment != 'inherit' else '' %]
+<mj-text[[ cc(cls, mcls) ]] align="[[ s.align ]]" [[ typo('eyebrow', { color: s.color }) ]] padding="[[ s.padding ]]">[[ data.text ]]</mj-text>

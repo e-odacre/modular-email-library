@@ -1,0 +1,19 @@
+[# features/benefits: a heading and a checklist of benefits, with an optional image beside it and a button.
+
+   With an image it is a layout/media-text (image on one side, the benefits on the other), without one it is a plain
+   section. The list uses check marks in the accent color.
+
+   Compatibility
+   - Outlook desktop: side by side as a table row when there is an image. Check marks are text glyphs.
+   - Gmail apps: stacking works. Gmail on non-Google accounts shows the desktop layout on phones.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set content = [] %]
+[% if data.heading %][% set _ = content.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', tag: 'h2' } }) %][% endif %]
+[% if data.intro %][% set _ = content.push({ component: 'content/text', data: { text: data.intro } }) %][% endif %]
+[% set _ = content.push({ component: 'content/list', data: { items: data.items }, variant: 'checklist' }) %]
+[% if data.cta %][% set _ = content.push({ component: 'content/button', data: data.cta, settings: { align: 'left', padding: '@spacing.xs 0 0 0' } }) %][% endif %]
+[% if data.image %]
+[[ c('layout/media-text', { media: data.image, content: content }, { settings: { imagePosition: s.imagePosition, split: s.split, background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% else %]
+[[ c('layout/section', { content: content }, { settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

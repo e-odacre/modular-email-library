@@ -1,0 +1,18 @@
+[# email/header: logo bar, with optional navigation links under the logo.
+
+   Compatibility
+   - Outlook desktop: no dark-mode swap, so it always shows the light logo (the .logo-dark image stays hidden).
+   - Gmail apps: may auto-invert colors and ignore prefers-color-scheme. Use a logo with a transparent
+     background that reads on both light and dark if the dark swap matters.
+   - Dark logo swap: only emitted when the brand defines dark.logoUrl. #]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    <mj-image css-class="logo-light" src="[[ t.logo.url ]]" alt="[[ t.logo.alt ]]" href="[[ t.logo.href ]]" width="[[ t.logo.width ]]" align="[[ s.align ]]" padding="0" />
+    [% if t.dark %]
+    <mj-image css-class="logo-dark" src="[[ t.dark.logoUrl ]]" alt="[[ t.logo.alt ]]" href="[[ t.logo.href ]]" width="[[ t.logo.width ]]" align="[[ s.align ]]" padding="0" />
+    [% endif %]
+    [% if data.nav %]
+    <mj-text[[ cc(dm(s.background, 'muted')) ]] align="[[ s.align ]]" [[ typo('bodySmall', { color: s.linkColor }) ]] padding="[[ s.navGap ]] 0 0 0">[% for l in data.nav %]<a href="[[ l.href ]]" style="color:[[ s.linkColor ]];text-decoration:none;">[[ l.label ]]</a>[% if not loop.last %] &nbsp;&nbsp;&nbsp; [% endif %][% endfor %]</mj-text>
+    [% endif %]
+  </mj-column>
+</mj-section>

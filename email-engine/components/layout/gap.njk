@@ -1,0 +1,11 @@
+[# layout/gap: vertical space between sections, on a background so it blends with its neighbours.
+
+   Compatibility
+   - Outlook desktop: a section with a fixed-height spacer, honored.
+   - Gmail apps: fine.
+   - Dark mode: swaps to the dark surface via dm-* classes when on the brand surface or background color. #]
+<mj-section[[ cc(dm(s.background, 'bg'), cls) ]] background-color="[[ s.background ]]" padding="0">
+  <mj-column>
+    <mj-spacer height="[[ s.height ]]" />
+  </mj-column>
+</mj-section>

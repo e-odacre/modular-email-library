@@ -1,0 +1,100 @@
+{
+  "name": "Fashion",
+  "description": "High-contrast and runway-minimal: spaced uppercase labels, light display type, sharp edges and bare backgrounds.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "46px",
+        "weight": "300",
+        "letterSpacing": "5px",
+        "transform": "uppercase"
+      },
+      "h1": {
+        "size": "30px",
+        "weight": "300",
+        "letterSpacing": "4px",
+        "transform": "uppercase"
+      },
+      "h2": {
+        "size": "20px",
+        "weight": "400",
+        "letterSpacing": "3px",
+        "transform": "uppercase"
+      },
+      "h3": {
+        "weight": "400",
+        "letterSpacing": "2px",
+        "transform": "uppercase"
+      },
+      "body": {
+        "size": "15px",
+        "lineHeight": "1.7"
+      },
+      "eyebrow": {
+        "letterSpacing": "5px",
+        "weight": "400",
+        "size": "11px"
+      },
+      "button": {
+        "weight": "400",
+        "size": "12px",
+        "letterSpacing": "4px",
+        "transform": "uppercase"
+      }
+    },
+    "spacing": {
+      "xl": "44px",
+      "2xl": "60px"
+    },
+    "radius": {
+      "small": "0",
+      "medium": "0",
+      "large": "0",
+      "pill": "0"
+    }
+  },
+  "button": {
+    "radius": "@radius.none",
+    "innerPadding": "16px 44px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.text",
+    "borderWidth": "1px",
+    "radius": "@radius.none",
+    "padding": "@spacing.lg",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.2xl",
+    "paddingX": "@spacing.lg",
+    "paddingTight": "@spacing.md"
+  },
+  "badge": {
+    "background": "@colors.black",
+    "color": "@colors.white",
+    "radius": "@radius.none"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.text",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.text",
+    "lineWidth": "1px",
+    "lineLength": "32px"
+  },
+  "components": {
+    "commerce/product-card": {
+      "variant": "luxury"
+    },
+    "commerce/product-grid": {
+      "variant": "editorial"
+    }
+  }
+}

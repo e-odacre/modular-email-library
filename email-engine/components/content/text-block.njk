@@ -1,0 +1,17 @@
+[# text-block: heading plus body copy, with an optional button. A full-width section.
+
+   Compatibility
+   - Gmail apps: fine. Fonts are web-safe stacks from the brand tokens, so there is no webfont fallback problem.
+   - Dark mode: text and background swap through dm-* classes where prefers-color-scheme is honored.
+   - Outlook desktop: line-height on <p> is honored, but margins between paragraphs can differ slightly. #]
+<mj-section[[ cc('dm-surface', cls) ]] background-color="[[ s.background ]]" padding="[[ s.padding ]]">
+  <mj-column>
+    [% if data.heading %]
+    <mj-text css-class="dm-text" align="[[ s.align ]]" [[ typo('h2') ]] padding="0 0 12px 0">[[ data.heading ]]</mj-text>
+    [% endif %]
+    <mj-text css-class="dm-text" align="[[ s.align ]]" padding="0">[[ data.body ]]</mj-text>
+    [% if data.cta %]
+    [[ c('button', data.cta, { settings: { align: s.align } }) ]]
+    [% endif %]
+  </mj-column>
+</mj-section>

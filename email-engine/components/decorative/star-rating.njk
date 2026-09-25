@@ -1,0 +1,15 @@
+[# decorative/star-rating: filled and empty stars for a rating out of 5, with an optional label ("4.9 out of 5").
+
+   Stars are text glyphs (filled and outline), so they work without images. The rating is rounded to the nearest
+   whole star. A screen reader reads the label, so always pass one for a real rating (the stars are marked
+   aria-hidden).
+
+   Compatibility
+   - Outlook desktop: star glyphs render from the system symbol font.
+   - Gmail apps: fine.
+   - Dark mode: filled stars keep the star color, empty stars use the border color. #]
+[% set full = data.rating | round(0) | int %]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+  <span aria-hidden="true" style="font-family:Arial, Helvetica, sans-serif;font-size:[[ s.size ]];letter-spacing:2px;line-height:1;color:[[ s.color ]];">[% for i in range(0, 5) %][% if i < full %]&#9733;[% else %]<span style="color:[[ s.emptyColor ]];">&#9733;</span>[% endif %][% endfor %]</span>
+  [% if data.label %]<span style="[[ typoCss('bodySmall') ]]margin-left:6px;">[[ data.label ]]</span>[% endif %]
+</mj-text>

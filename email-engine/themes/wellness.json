@@ -1,0 +1,92 @@
+{
+  "name": "Wellness",
+  "description": "Calm and soft: light headings, relaxed line height, generous space, rounded corners and no shadows.",
+  "overrides": {
+    "type": {
+      "display": {
+        "size": "42px",
+        "weight": "300",
+        "letterSpacing": "0.5px"
+      },
+      "h1": {
+        "size": "30px",
+        "weight": "300",
+        "letterSpacing": "0.5px"
+      },
+      "h2": {
+        "size": "22px",
+        "weight": "400",
+        "letterSpacing": "0.5px"
+      },
+      "body": {
+        "size": "17px",
+        "lineHeight": "1.75"
+      },
+      "bodyLarge": {
+        "size": "19px",
+        "lineHeight": "1.75"
+      },
+      "eyebrow": {
+        "letterSpacing": "3px",
+        "weight": "400"
+      },
+      "button": {
+        "weight": "400",
+        "letterSpacing": "1px"
+      }
+    },
+    "spacing": {
+      "lg": "28px",
+      "xl": "40px",
+      "2xl": "56px",
+      "3xl": "80px"
+    },
+    "radius": {
+      "small": "8px",
+      "medium": "16px",
+      "large": "24px",
+      "pill": "999px"
+    }
+  },
+  "button": {
+    "radius": "@radius.pill",
+    "innerPadding": "16px 36px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.border",
+    "borderWidth": "1px",
+    "radius": "@radius.large",
+    "padding": "@spacing.xl",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.2xl",
+    "paddingX": "@spacing.xl",
+    "paddingTight": "@spacing.md"
+  },
+  "badge": {
+    "background": "@colors.secondary",
+    "color": "@colors.white",
+    "radius": "@radius.pill"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.border",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.large"
+  },
+  "accent": {
+    "color": "@colors.secondary",
+    "lineWidth": "2px",
+    "lineLength": "40px"
+  },
+  "components": {
+    "commerce/product-grid": {
+      "variant": "minimal"
+    }
+  }
+}

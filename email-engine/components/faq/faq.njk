@@ -1,0 +1,33 @@
+[# faq/faq: questions and answers, all visible, with a heading and an optional "more questions" link.
+
+   Email has no JavaScript, and the CSS-only accordion tricks (checkbox or details/summary) fail in Gmail and Outlook, so
+   every answer is shown. Keep each answer short and lead with the question people actually ask. Questions are real
+   h3 headings so screen reader users can jump between them.
+
+   Compatibility
+   - Outlook desktop: honored, it is headings and text.
+   - Gmail apps: fine.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set head = [] %]
+[% if data.heading %][% set _ = head.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', tag: 'h2', align: 'center', padding: ('4px' if data.intro else '@spacing.sm') } }) %][% endif %]
+[% if data.intro %][% set _ = head.push({ component: 'content/text', data: { text: data.intro }, settings: { align: 'center', padding: '@spacing.sm' } }) %][% endif %]
+[% if head.length %]
+[[ c('layout/section', { content: head }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[% if s.frame == 'card' %]
+[% for it in data.items %]
+[[ c('layout/section', { content: [{ component: 'content/heading', data: { text: it.question }, settings: { level: 'h4', tag: 'h3', padding: '0 0 4px 0' } }, { component: 'content/rich-text', data: { html: it.answer }, settings: { level: 'bodySmall', padding: '0' } }] }, { variant: 'card', settings: { background: s.background, padding: '@spacing.md', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[[ c('layout/gap', {}, { settings: { background: s.background, height: '@spacing.sm' } }) ]]
+[% endfor %]
+[% else %]
+[% set nodes = [] %]
+[% for it in data.items %]
+[% if s.frame == 'rules' and not loop.first %][% set _ = nodes.push({ component: 'layout/divider', settings: { padding: '@spacing.sm 0' } }) %][% endif %]
+[% set _ = nodes.push({ component: 'content/heading', data: { text: it.question }, settings: { level: 'h4', tag: 'h3', padding: '0 0 4px 0' } }) %]
+[% set _ = nodes.push({ component: 'content/rich-text', data: { html: it.answer }, settings: { level: 'bodySmall', padding: ('0' if s.frame == 'rules' else '0 0 @spacing.md 0') } }) %]
+[% endfor %]
+[[ c('layout/section', { content: nodes }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[% if data.cta %]
+[[ c('layout/section', { content: [{ component: 'content/link', data: { label: data.cta.label, href: data.cta.href }, variant: 'arrow', settings: { align: 'center', padding: '0' } }] }, { settings: { background: s.background, padding: '0 ' + s.paddingX + ' ' + s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

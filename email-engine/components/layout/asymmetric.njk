@@ -1,0 +1,16 @@
+[# layout/asymmetric: an editorial two-column layout with unequal columns and the smaller one offset downward.
+
+   The offset gives the layout its staggered look. On mobile the columns stack, main first.
+
+   Compatibility
+   - Outlook desktop: renders as a table row. The offset is a spacer, so it works.
+   - Gmail apps: stacking works. Gmail on non-Google accounts shows the desktop layout on phones.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set offsetBlock %][[ c('layout/spacer', {}, { settings: { height: s.offset } }) ]][% endset %]
+[% set aside = offsetBlock + data.aside %]
+[% set splitReversed = s.split.split('/') | reverse | join('/') %]
+[% if s.asidePosition == 'right' %]
+[[ c('layout/columns', { columns: [data.main, aside] }, { settings: { split: s.split, valign: 'top', background: s.background, padding: s.padding, columnPadding: s.columnPadding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% else %]
+[[ c('layout/columns', { columns: [aside, data.main] }, { settings: { split: splitReversed, valign: 'top', background: s.background, padding: s.padding, columnPadding: s.columnPadding, mobileLayout: 'reverse', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

@@ -1,0 +1,11 @@
+[# email/unsubscribe: an unsubscribe link using Klaviyo's {% unsubscribe_link %} inside an href.
+
+   {% unsubscribe_link %} returns only the URL, so it belongs in an href. The bare {% unsubscribe %} tag outputs a
+   whole anchor and breaks inside an href (verified against Klaviyo's message personalization reference). Klaviyo
+   requires an unsubscribe link in every email.
+
+   Compatibility
+   - Outlook desktop: plain text link, honored.
+   - Gmail apps: fine. Gmail may also show its own unsubscribe control above the message, that is separate.
+   - Dark mode: the link color swaps via dm-muted where prefers-color-scheme is honored. #]
+<mj-text[[ cc('dm-muted' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo('caption', { color: s.color }) ]] padding="[[ s.padding ]]"><a href="{% unsubscribe_link %}" style="color:[[ s.color ]];text-decoration:underline;">[[ data.label ]]</a></mj-text>

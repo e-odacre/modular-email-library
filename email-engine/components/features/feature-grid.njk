@@ -1,0 +1,24 @@
+[# features/feature-grid: features in a grid of 1 to 4 columns, with an optional heading and button.
+
+   The 2-, 3- and 4-feature layouts are variants. Each feature is a features/feature-card (icon or number, title,
+   description, optional link). The `list` variant shows features one per row as icon + text.
+
+   Compatibility
+   - Outlook desktop: each row is a table with exact widths. mobileColumns is ignored (no media queries).
+   - Gmail apps: stacking works. Gmail on non-Google accounts drops media queries and shows the desktop layout.
+   - Dark mode: swaps via dm-* classes when on the brand surface or background color. #]
+[% set head = [] %]
+[% if data.heading %][% set _ = head.push({ component: 'content/heading', data: { text: data.heading }, settings: { level: 'h2', align: 'center', padding: ('4px' if data.intro else '@spacing.sm') } }) %][% endif %]
+[% if data.intro %][% set _ = head.push({ component: 'content/text', data: { text: data.intro }, settings: { align: 'center', padding: '0' } }) %][% endif %]
+[% set items = [] %]
+[% for f in data.features %]
+[% if s.item == 'row' and f.icon %][% set _ = items.push([{ component: 'features/icon-text', data: { icon: f.icon, title: f.title, description: f.description } }]) %]
+[% else %][% set _ = items.push([{ component: 'features/feature-card', data: { feature: f }, variant: s.cardVariant }]) %][% endif %]
+[% endfor %]
+[% if head.length %]
+[[ c('layout/section', { content: head }, { settings: { background: s.background, padding: s.paddingY + ' ' + s.paddingX + ' 0 ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]
+[[ c('layout/grid', { items: items }, { settings: { columns: s.columns, mobileColumns: s.mobileColumns, background: s.background, paddingY: s.paddingY, paddingX: s.paddingX, columnPadding: '@spacing.sm', hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% if data.cta %]
+[[ c('layout/section', { content: [{ component: 'content/button', data: data.cta, settings: { padding: '0' } }] }, { settings: { background: s.background, padding: '0 ' + s.paddingX + ' ' + s.paddingY + ' ' + s.paddingX, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
+[% endif %]

@@ -1,0 +1,10 @@
+[# email/preference-center: a "Manage your preferences" link using Klaviyo's {% manage_preferences_link %} in an href.
+
+   {% manage_preferences_link %} returns only the URL, so it belongs in an href (verified against Klaviyo's message
+   personalization reference). The bare {% manage_preferences %} tag outputs a whole anchor.
+
+   Compatibility
+   - Outlook desktop: plain text link, honored.
+   - Gmail apps: fine.
+   - Dark mode: the link color swaps via dm-muted where prefers-color-scheme is honored. #]
+<mj-text[[ cc('dm-muted' if s.darkMode, cls) ]] align="[[ s.align ]]" [[ typo('caption', { color: s.color }) ]] padding="[[ s.padding ]]"><a href="{% manage_preferences_link %}" style="color:[[ s.color ]];text-decoration:underline;">[[ data.label ]]</a></mj-text>

@@ -1,0 +1,113 @@
+{
+  "name": "Luxury",
+  "description": "Quiet and expensive: thin uppercase type with wide tracking, square corners, hairlines and lots of white space.",
+  "overrides": {
+    "type": {
+      "display": {
+        "weight": "300",
+        "letterSpacing": "4px",
+        "transform": "uppercase",
+        "size": "40px"
+      },
+      "h1": {
+        "weight": "300",
+        "letterSpacing": "3px",
+        "transform": "uppercase",
+        "size": "28px"
+      },
+      "h2": {
+        "weight": "300",
+        "letterSpacing": "2px",
+        "transform": "uppercase",
+        "size": "20px"
+      },
+      "h3": {
+        "weight": "400",
+        "letterSpacing": "2px",
+        "transform": "uppercase",
+        "size": "16px"
+      },
+      "h4": {
+        "weight": "400",
+        "letterSpacing": "2px",
+        "transform": "uppercase",
+        "size": "13px"
+      },
+      "eyebrow": {
+        "letterSpacing": "4px",
+        "weight": "400"
+      },
+      "price": {
+        "weight": "400"
+      },
+      "salePrice": {
+        "weight": "400"
+      },
+      "button": {
+        "weight": "400",
+        "size": "12px",
+        "letterSpacing": "3px",
+        "transform": "uppercase"
+      }
+    },
+    "spacing": {
+      "lg": "32px",
+      "xl": "48px",
+      "2xl": "64px",
+      "3xl": "96px"
+    },
+    "radius": {
+      "small": "0",
+      "medium": "0",
+      "large": "0",
+      "pill": "0"
+    }
+  },
+  "button": {
+    "radius": "@radius.none",
+    "innerPadding": "16px 40px",
+    "borderWidth": "0"
+  },
+  "card": {
+    "background": "@colors.surface",
+    "border": "@colors.border",
+    "borderWidth": "1px",
+    "radius": "@radius.none",
+    "padding": "@spacing.xl",
+    "shadow": "none"
+  },
+  "section": {
+    "paddingY": "@spacing.2xl",
+    "paddingX": "@spacing.xl",
+    "paddingTight": "@spacing.md"
+  },
+  "badge": {
+    "background": "@colors.black",
+    "color": "@colors.white",
+    "radius": "@radius.none"
+  },
+  "divider": {
+    "width": "1px",
+    "color": "@colors.border",
+    "style": "solid"
+  },
+  "image": {
+    "radius": "@radius.none"
+  },
+  "accent": {
+    "color": "@colors.secondary",
+    "lineWidth": "1px",
+    "lineLength": "64px"
+  },
+  "components": {
+    "commerce/product-card": {
+      "variant": "luxury"
+    },
+    "commerce/product-grid": {
+      "variant": "luxury"
+    },
+    "decorative/badge": {
+      "variant": "outline"
+    }
+  }
+}

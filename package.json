@@ -4,7 +4,12 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "email:install": "npm ci --prefix email-engine",
+        "email:test": "npm test --prefix email-engine",
+        "email:build": "npm run build --prefix email-engine",
+        "email:themes": "npm run build:themes --prefix email-engine",
+        "email:gallery": "npm run gallery:brand --prefix email-engine -- sanecotec"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

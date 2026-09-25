@@ -1,0 +1,12 @@
+[# content/text: a paragraph of body copy. Sits inside a column.
+
+   Pick the size with `level` (body, bodyLarge, bodySmall, caption). Use content/heading for headings, so the
+   document has a real heading structure.
+
+   Compatibility
+   - Outlook desktop: line-height and padding are honored.
+   - Gmail apps: fine. Web-safe font stacks from the brand tokens, so no webfont fallback problem.
+   - Dark mode: text color swaps via the dm-text class where prefers-color-scheme is honored. Turn darkMode off
+     when the text sits on a colored background. #]
+[% set mcls = ('m-' + s.mobileAlignment) if s.mobileAlignment != 'inherit' else '' %]
+<mj-text[[ cc('dm-text' if s.darkMode, cls, mcls) ]] align="[[ s.align ]]" [[ typo(s.level, { color: s.color }) ]] padding="[[ s.padding ]]">[[ data.text ]]</mj-text>

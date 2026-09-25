@@ -1,0 +1,11 @@
+[# email/outlook-safe-background: a section with a photo behind its content, with a VML fallback for Outlook desktop.
+
+   MJML writes the VML for section background images, so the photo still shows in Outlook. The solid background
+   color is what people see when images are blocked, so pick one close to the photo's tone, and keep the message
+   in text on top, never in the image. Prefer hero/full-bleed for a hero, this is the general-purpose version.
+
+   Compatibility
+   - Outlook desktop: background image via VML, the section grows to fit its content.
+   - Gmail apps: background images can be dropped, the solid color shows and the text stays readable.
+   - Dark mode: keeps its own colors, it is a photo block. #]
+[[ c('decorative/background-pattern', { pattern: data.image, content: data.content }, { variant: 'cover', settings: { background: s.background, padding: s.padding, hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]

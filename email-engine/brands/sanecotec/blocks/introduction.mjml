@@ -1,0 +1,14 @@
+[# SanEcoTec introduction: draft copy, based on the public platform offering.
+   Outlook: live text and table layout; rounded buttons can render square.
+   Gmail: no hero image needed. Dark mode: automatic recoloring remains untested. #]
+[[ c('hero/text-only', {
+  eyebrow: 'Water Health Index',
+  headline: 'A clearer view of your water systems',
+  description: 'Bring monitoring and operational insight together. Explore how SanEcoTec helps your team understand water performance and plan its next steps.',
+  cta: { label: 'Explore the platform', href: 'https://sanecotec.com/services/water-health-index-app' }
+}, { variant: 'left', settings: {
+  background: t.colors.background,
+  buttonBackground: t.colors.accent,
+  buttonColor: t.colors.background,
+  padding: '@spacing.xl @spacing.xl @spacing.2xl @spacing.xl'
+} }) ]]

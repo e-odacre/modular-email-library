@@ -1,0 +1,18 @@
+[# decorative/shapes: a strip of colored blocks (squares, circles or bars) in the brand colors, as a graphic accent.
+
+   Table cells with background colors, so no images to host. Circles need border-radius, which Outlook desktop
+   ignores, so they render as squares there.
+
+   Compatibility
+   - Outlook desktop: colored cells are honored, circles fall back to squares.
+   - Gmail apps: fine.
+   - Dark mode: the blocks keep their colors. #]
+[% set palette = [t.colors.primary, t.colors.accent, t.colors.secondary] %]
+<mj-text[[ cc(cls) ]] align="[[ s.align ]]" padding="[[ s.padding ]]">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="[[ s.align ]]" style="display:inline-table;"><tr>
+    [% for i in range(0, s.count) %]
+    [% if i > 0 %]<td style="width:[[ s.gap ]];font-size:0;line-height:0;">&nbsp;</td>[% endif %]
+    <td width="[[ s.size ]]" height="[[ s.height ]]" bgcolor="[[ palette[i % 3] ]]" style="width:[[ s.size ]];height:[[ s.height ]];background:[[ palette[i % 3] ]];border-radius:[[ s.radius ]];font-size:0;line-height:0;">&nbsp;</td>
+    [% endfor %]
+  </tr></table>
+</mj-text>

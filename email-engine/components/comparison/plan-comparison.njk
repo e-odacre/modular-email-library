@@ -1,0 +1,16 @@
+[# comparison/plan-comparison: pricing plans side by side: each plan's name and price on top, feature rows, and a button under each plan.
+
+   A preset of comparison/comparison-table. Mark one plan as the recommended one with `highlight`. Give every plan a
+   button or none of them. Only state real prices and terms.
+
+   Compatibility
+   - Outlook desktop: tables, colors and borders honored.
+   - Gmail apps: fine. On phones the columns shrink, keep plan names and prices short.
+   - Dark mode: cells on the brand surface or background swap via dm-* classes. Header cells keep their colors. #]
+[% set cols = [] %]
+[% set foot = [] %]
+[% for p in data.plans %]
+[% set _ = cols.push({ title: p.name, subtitle: (p.price + (' ' + p.period if p.period else '')), highlight: p.highlight }) %]
+[% if p.cta %][% set _ = foot.push(p.cta) %][% endif %]
+[% endfor %]
+[[ c('comparison/comparison-table', { heading: data.heading, intro: data.intro, columns: cols, rows: data.rows, footer: (foot if foot.length else none) }, { variant: s.tableVariant, settings: { hideOnMobile: s.hideOnMobile, hideOnDesktop: s.hideOnDesktop } }) ]]
