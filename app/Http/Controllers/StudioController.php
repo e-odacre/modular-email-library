@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class StudioController extends Controller
 {
@@ -30,13 +31,53 @@ class StudioController extends Controller
     public function show(Request $request, string $id, string $kind): View
     {
         $inventory = $this->engine->request(['operation' => 'inventory']);
-        $library = ['email' => 'emails', 'recipe' => 'recipes', 'component' => 'components'][$kind];
+        $library = ['email' => 'emails', 'recipe' => 'recipes', 'component' => 'components', 'draft' => 'drafts'][$kind];
         $entry = collect($inventory[$library])->firstWhere('id', $id);
         abort_unless($entry, 404, 'Design not found.');
-        $theme = $this->theme($request, $inventory);
-        $result = $this->engine->request($this->renderRequest($request, $kind, $id));
+        $theme = $kind === 'draft' && ! $request->has('theme') ? $entry['theme'] : $this->theme($request, $inventory);
+        try {
+            $result = $this->engine->request($this->renderRequest($request, $kind, $id));
+        } catch (HttpException $exception) {
+            if ($kind !== 'draft' || $exception->getStatusCode() !== 422) {
+                throw $exception;
+            }
+            $result = ['bytes' => 0, 'brand' => $entry['category'], 'diagnostics' => ['errors' => [$exception->getMessage()], 'warnings' => []]];
+        }
 
         return view('studio.show', compact('inventory', 'theme', 'library', 'entry', 'kind', 'result'));
+    }
+
+    public function brand(Request $request, string $brand): View
+    {
+        $inventory = $this->engine->request(['operation' => 'inventory']);
+        $collection = $this->engine->request(['operation' => 'collection', 'brand' => $brand]);
+        $theme = $request->query('theme', $collection['themes'][0]);
+        $group = $request->query('kind', 'emails');
+        abort_unless(is_string($theme) && in_array($theme, $collection['themes'], true), 422, 'Unknown collection style.');
+        abort_unless(in_array($group, ['emails', 'blocks'], true), 422, 'Unknown collection type.');
+        $inventory['themes'] = $collection['themes'];
+        $entries = array_map(fn (array $entry): array => [...$entry,
+            'href' => route('studio.collection.item', ['brand' => $brand, 'group' => $group, 'id' => $entry['id'], 'theme' => $theme]),
+            'frame' => route('studio.collection.artifact', ['brand' => $brand, 'artifact' => $theme.'/'.$group.'/'.$entry['id'].'.html']),
+        ], $collection[$group]);
+
+        return view('studio.brand', ['inventory' => $inventory, 'collection' => $collection, 'theme' => $theme, 'group' => $group, 'entries' => $entries, 'library' => 'brands']);
+    }
+
+    public function brandItem(Request $request, string $brand, string $group, string $id): View
+    {
+        $inventory = $this->engine->request(['operation' => 'inventory']);
+        $collection = $this->engine->request(['operation' => 'collection', 'brand' => $brand]);
+        $entry = collect($collection[$group])->firstWhere('id', $id);
+        abort_unless($entry, 404, 'Design not found.');
+        $theme = $request->query('theme', $collection['themes'][0]);
+        abort_unless(is_string($theme) && in_array($theme, $collection['themes'], true), 422, 'Unknown collection style.');
+        $inventory['themes'] = $collection['themes'];
+        $result = $this->engine->request(['operation' => 'collection-render', 'brand' => $brand, 'kind' => $group, 'id' => $id, 'theme' => $theme]);
+        $frame = route('studio.collection.artifact', ['brand' => $brand, 'artifact' => $theme.'/'.$group.'/'.$id.'.html']);
+        $back = route('studio.collection', ['brand' => $brand, 'kind' => $group, 'theme' => $theme]);
+
+        return view('studio.show', ['inventory' => $inventory, 'theme' => $theme, 'library' => 'brands', 'entry' => $entry, 'kind' => 'collection', 'result' => $result, 'frame' => $frame, 'back' => $back]);
     }
 
     public function frame(Request $request, string $kind, string $id): Response

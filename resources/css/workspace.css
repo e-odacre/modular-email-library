@@ -1,20 +1,14 @@
-/* Compact application chrome; brand email output is isolated in frames. */
-.masthead { min-height: 70px; padding-top: 12px; padding-bottom: 12px; }
-main { padding-bottom: 40px; }
-.intro, .back-link + .intro { display: block; padding: 28px 0 20px; }
-.intro h1 { font-size: 30px; line-height: 1.2; letter-spacing: -.7px; margin: 0; }
-.intro p { font-size: 14px; color: var(--muted); margin-bottom: 0; }
-.path-card { padding: 22px; }
-.path-card h2 { margin: 0; font-size: 22px; font-weight: 500; }
-.path-card p { margin-bottom: 0; }
-.collection-card { margin-top: 24px; padding: 24px; }
-.collection-card h2 { margin-top: 0; }
-.export-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
-.export-actions span { font-size: 12px; color: var(--muted); }
-.toolbar { flex-wrap: wrap; }
-.notes { overflow-wrap: anywhere; }
-@media (max-width: 640px) {
-    .masthead nav { flex-wrap: wrap; }
-    .intro h1 { font-size: 26px; }
-    .toolbar .filters { width: 100%; }
-}
+[hidden]{display:none!important}
+.design-thumbnail{position:relative;display:block;height:245px;overflow:hidden;background:var(--color-base-200)}
+.design-thumbnail iframe{position:absolute;left:50%;top:18px;width:600px;height:1000px;border:0;background:white;pointer-events:none;transform:translateX(-50%) scale(var(--preview-scale,.4));transform-origin:top center}
+.preview-stage{padding:24px 12px;overflow:auto;display:flex;justify-content:center;background:var(--color-base-300);border-radius:12px}
+.email-preview{width:600px;max-width:100%;min-height:700px;border:0;background:white;flex-shrink:0}
+.workspace-grid[data-view='list']{grid-template-columns:1fr}
+.workspace-grid[data-view='list'] .design-thumbnail{display:none}
+.workspace-grid[data-view='list'] .design-card-body{flex-direction:row;align-items:center;flex-wrap:wrap}
+.workspace-grid[data-view='list'] .design-card-copy{flex:1;min-width:180px}
+.workspace-grid[data-view='list'] .design-description{display:none}
+.workspace-grid[data-view='list'] .design-actions{margin-top:0}
+summary{cursor:pointer} textarea{tab-size:2}
+@media(max-width:640px){.preview-stage{padding:12px 0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:0s!important}}
