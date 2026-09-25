@@ -6,6 +6,7 @@
         "build": "vite build",
         "dev": "vite",
         "email:install": "npm ci --prefix email-engine",
+        "email:check": "node email-engine/scripts/check-draft.js",
         "email:test": "npm test --prefix email-engine",
         "email:build": "npm run build --prefix email-engine",
         "email:themes": "npm run build:themes --prefix email-engine",

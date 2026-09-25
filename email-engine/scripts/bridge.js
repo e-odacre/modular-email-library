@@ -9,7 +9,8 @@ const { listThemes } = require('./lib/themes');
 const { loadBrand } = require('./lib/tokens');
 const { renderEmail, renderComponent, renderRecipe } = require('./lib/render');
 const { runChecks } = require('./lib/checks');
-const { loadCollection } = require('./lib/brand-collection');
+const { loadCollection, renderCollectionItem, composeItem } = require('./lib/brand-collection');
+const { listDrafts, readDraft, renderDraft } = require('./lib/drafts');
 
 function fail(message, status = 422) {
   throw Object.assign(new Error(message), { status });
@@ -28,7 +29,7 @@ function collections() {
 
 function inventory() {
   return {
-    brands: listBrands(), themes: listThemes(), sections: [...loadSections().keys()],
+    brands: listBrands(), themes: listThemes(), sections: [...loadSections().keys()], drafts: listDrafts(),
     emails: listEmails({ examples: true }).map(id => ({ id, name: id.split('/').pop().replace(/-/g, ' '), category: id.split('/')[0], description: 'Complete email' })),
     recipes: [...loadRecipes()].map(([id, recipe]) => ({ id, name: recipe.name, description: recipe.description, category: recipe.suggestedTheme || 'minimal' })),
     components: loadRegistry().all().map(entry => ({ id: entry.id, category: entry.category, ...entry.meta })),
@@ -41,6 +42,20 @@ async function execute(request) {
   const allowed = ['operation', 'kind', 'id', 'brand', 'theme', 'variant', 'mode'];
   if (Object.keys(request).some(key => !allowed.includes(key))) fail('Unexpected request field.');
   if (request.operation === 'inventory') return inventory();
+  if (request.operation === 'collection') {
+    if (!collections().some(collection => collection.id === request.brand)) fail('Unknown collection.', 404);
+    const { catalog, placeholderIssues } = loadCollection(request.brand);
+    return { ...catalog, brand: request.brand, placeholderIssues };
+  }
+  if (request.operation === 'collection-render') {
+    const collection = loadCollection(request.brand);
+    const { item } = composeItem(collection, request.kind, request.id);
+    const result = await renderCollectionItem(collection, request.kind, request.id, request.theme);
+    return { ...result, brand: request.brand, theme: request.theme, mode: 'draft',
+      diagnostics: { errors: [], warnings: [...collection.placeholderIssues, ...result.warnings] },
+      composition: request.kind === 'blocks' ? { brand: request.brand, nodes: item.nodes } : { brand: request.brand, blockIds: item.blockIds },
+      sources: item.sources || [] };
+  }
   if (request.operation === 'gallery') {
     if (!collections().some(collection => collection.id === request.brand)) fail('Unknown collection.', 404);
     const { buildGallery } = require('./brand-gallery');
@@ -49,6 +64,10 @@ async function execute(request) {
   }
   if (request.operation !== 'render') fail('Unknown operation.');
   const { kind, id, brand = 'placeholder', theme = 'minimal', variant, mode = 'draft' } = request;
+  if (kind === 'draft') {
+    if (!listDrafts().some(draft => draft.id === id)) fail('Unknown draft.', 404);
+    return renderDraft(readDraft(id), { theme: request.theme, mode });
+  }
   if (!['email', 'recipe', 'component'].includes(kind)) fail('Unknown design type.', 404);
   if (typeof id !== 'string') fail('A design ID is required.');
   if (!listBrands().includes(brand)) fail('Unknown production token brand.', 404);
