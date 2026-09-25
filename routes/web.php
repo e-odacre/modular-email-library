@@ -23,3 +23,5 @@ Route::get('/brands/{brand}', fn (string $brand) => redirect('/brands/'.$brand.'
 Route::get('/brands/{brand}/{artifact}', [StudioController::class, 'collection'])
     ->where('brand', '[a-z0-9-]+')->where('artifact', '.+')
     ->withoutMiddleware(InjectBoost::class)->name('studio.collection.artifact');
+
+Route::get('test', [StudioController::class, 'test']);

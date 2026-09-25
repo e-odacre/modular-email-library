@@ -22,6 +22,11 @@ class StudioController extends Controller
         return view('studio.index', compact('inventory', 'theme', 'library', 'entries'));
     }
 
+    public function test(): View
+    {
+        return view('test');
+    }
+
     public function show(Request $request, string $id, string $kind): View
     {
         $inventory = $this->engine->request(['operation' => 'inventory']);
